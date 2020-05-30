@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		66073770D1998960A838C853 /* Pods_Excite_ExciteUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AD0C498F7288D75FF03593DB /* Pods_Excite_ExciteUITests.framework */; };
+		703FBBD62481E5C400438F94 /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 703FBBD52481E5C400438F94 /* Models.swift */; };
 		7054D598245F7507007DA9BA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7054D597245F7507007DA9BA /* AppDelegate.swift */; };
 		7054D59A245F7507007DA9BA /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7054D599245F7507007DA9BA /* SceneDelegate.swift */; };
 		7054D59C245F7507007DA9BA /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7054D59B245F7507007DA9BA /* LoginViewController.swift */; };
@@ -45,6 +46,7 @@
 /* Begin PBXFileReference section */
 		14F3440FD214E137E869D5F5 /* Pods_ExciteTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ExciteTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4B3112B2EAD0500421CCA693 /* Pods_Excite.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Excite.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		703FBBD52481E5C400438F94 /* Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
 		7054D594245F7507007DA9BA /* Excite.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Excite.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7054D597245F7507007DA9BA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7054D599245F7507007DA9BA /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -101,6 +103,33 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		703FBBD72481EB9D00438F94 /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				70AA64CA247F6C2600F56CB3 /* MainTabBarController.swift */,
+				70AA64CE247F6D4E00F56CB3 /* ChatViewController.swift */,
+				70AA64CC247F6D0300F56CB3 /* FindDateViewController.swift */,
+				70AA64D42481D5C100F56CB3 /* ProfileViewController.swift */,
+			);
+			path = UI;
+			sourceTree = "<group>";
+		};
+		703FBBD82481EBAF00438F94 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				70FB575D2481D8F900CB24C4 /* Extensions.swift */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
+		703FBBD92481EBCF00438F94 /* Auth */ = {
+			isa = PBXGroup;
+			children = (
+				7054D59B245F7507007DA9BA /* LoginViewController.swift */,
+			);
+			path = Auth;
+			sourceTree = "<group>";
+		};
 		7054D58B245F7507007DA9BA = {
 			isa = PBXGroup;
 			children = (
@@ -126,18 +155,16 @@
 		7054D596245F7507007DA9BA /* Excite */ = {
 			isa = PBXGroup;
 			children = (
+				703FBBD92481EBCF00438F94 /* Auth */,
+				703FBBD82481EBAF00438F94 /* Helpers */,
+				703FBBD72481EB9D00438F94 /* UI */,
 				7054D5C7245F755F007DA9BA /* GoogleService-Info.plist */,
 				7054D597245F7507007DA9BA /* AppDelegate.swift */,
 				7054D599245F7507007DA9BA /* SceneDelegate.swift */,
-				7054D59B245F7507007DA9BA /* LoginViewController.swift */,
 				7054D5A0245F750B007DA9BA /* Assets.xcassets */,
 				7054D5A2245F750B007DA9BA /* LaunchScreen.storyboard */,
 				7054D5A5245F750B007DA9BA /* Info.plist */,
-				70AA64CA247F6C2600F56CB3 /* MainTabBarController.swift */,
-				70AA64CC247F6D0300F56CB3 /* FindDateViewController.swift */,
-				70AA64CE247F6D4E00F56CB3 /* ChatViewController.swift */,
-				70AA64D42481D5C100F56CB3 /* ProfileViewController.swift */,
-				70FB575D2481D8F900CB24C4 /* Extensions.swift */,
+				703FBBD52481E5C400438F94 /* Models.swift */,
 			);
 			path = Excite;
 			sourceTree = "<group>";
@@ -446,6 +473,7 @@
 				70FB575E2481D8F900CB24C4 /* Extensions.swift in Sources */,
 				70AA64CD247F6D0300F56CB3 /* FindDateViewController.swift in Sources */,
 				70AA64D52481D5C100F56CB3 /* ProfileViewController.swift in Sources */,
+				703FBBD62481E5C400438F94 /* Models.swift in Sources */,
 				70AA64CF247F6D4E00F56CB3 /* ChatViewController.swift in Sources */,
 				7054D59A245F7507007DA9BA /* SceneDelegate.swift in Sources */,
 			);
