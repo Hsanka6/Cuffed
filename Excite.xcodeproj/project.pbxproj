@@ -3,20 +3,24 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		66073770D1998960A838C853 /* Pods_Excite_ExciteUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AD0C498F7288D75FF03593DB /* Pods_Excite_ExciteUITests.framework */; };
 		7054D598245F7507007DA9BA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7054D597245F7507007DA9BA /* AppDelegate.swift */; };
 		7054D59A245F7507007DA9BA /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7054D599245F7507007DA9BA /* SceneDelegate.swift */; };
-		7054D59C245F7507007DA9BA /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7054D59B245F7507007DA9BA /* ViewController.swift */; };
-		7054D59F245F7507007DA9BA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7054D59D245F7507007DA9BA /* Main.storyboard */; };
+		7054D59C245F7507007DA9BA /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7054D59B245F7507007DA9BA /* LoginViewController.swift */; };
 		7054D5A1245F750B007DA9BA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7054D5A0245F750B007DA9BA /* Assets.xcassets */; };
 		7054D5A4245F750B007DA9BA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7054D5A2245F750B007DA9BA /* LaunchScreen.storyboard */; };
 		7054D5AF245F750B007DA9BA /* ExciteTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7054D5AE245F750B007DA9BA /* ExciteTests.swift */; };
 		7054D5BA245F750B007DA9BA /* ExciteUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7054D5B9245F750B007DA9BA /* ExciteUITests.swift */; };
 		7054D5C8245F755F007DA9BA /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7054D5C7245F755F007DA9BA /* GoogleService-Info.plist */; };
+		70AA64CB247F6C2600F56CB3 /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70AA64CA247F6C2600F56CB3 /* MainTabBarController.swift */; };
+		70AA64CD247F6D0300F56CB3 /* FindDateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70AA64CC247F6D0300F56CB3 /* FindDateViewController.swift */; };
+		70AA64CF247F6D4E00F56CB3 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70AA64CE247F6D4E00F56CB3 /* ChatViewController.swift */; };
+		70AA64D52481D5C100F56CB3 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70AA64D42481D5C100F56CB3 /* ProfileViewController.swift */; };
+		70FB575E2481D8F900CB24C4 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70FB575D2481D8F900CB24C4 /* Extensions.swift */; };
 		AC3EDBA5ECEA5D50F29BA520 /* Pods_ExciteTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 14F3440FD214E137E869D5F5 /* Pods_ExciteTests.framework */; };
 		D8EE311ED3256FAB5A1073CE /* Pods_Excite.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B3112B2EAD0500421CCA693 /* Pods_Excite.framework */; };
 /* End PBXBuildFile section */
@@ -44,8 +48,7 @@
 		7054D594245F7507007DA9BA /* Excite.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Excite.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7054D597245F7507007DA9BA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7054D599245F7507007DA9BA /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		7054D59B245F7507007DA9BA /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		7054D59E245F7507007DA9BA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		7054D59B245F7507007DA9BA /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		7054D5A0245F750B007DA9BA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		7054D5A3245F750B007DA9BA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		7054D5A5245F750B007DA9BA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -56,6 +59,11 @@
 		7054D5B9245F750B007DA9BA /* ExciteUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExciteUITests.swift; sourceTree = "<group>"; };
 		7054D5BB245F750B007DA9BA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7054D5C7245F755F007DA9BA /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		70AA64CA247F6C2600F56CB3 /* MainTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
+		70AA64CC247F6D0300F56CB3 /* FindDateViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindDateViewController.swift; sourceTree = "<group>"; };
+		70AA64CE247F6D4E00F56CB3 /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
+		70AA64D42481D5C100F56CB3 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		70FB575D2481D8F900CB24C4 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		7D77A8C99DCA9BB55A474B85 /* Pods-Excite.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Excite.debug.xcconfig"; path = "Target Support Files/Pods-Excite/Pods-Excite.debug.xcconfig"; sourceTree = "<group>"; };
 		87CA71A9876B1FEC9F0AFD8B /* Pods-Excite-ExciteUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Excite-ExciteUITests.release.xcconfig"; path = "Target Support Files/Pods-Excite-ExciteUITests/Pods-Excite-ExciteUITests.release.xcconfig"; sourceTree = "<group>"; };
 		921E7C468E9EFDB1CDD3C2B3 /* Pods-ExciteTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ExciteTests.debug.xcconfig"; path = "Target Support Files/Pods-ExciteTests/Pods-ExciteTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -121,11 +129,15 @@
 				7054D5C7245F755F007DA9BA /* GoogleService-Info.plist */,
 				7054D597245F7507007DA9BA /* AppDelegate.swift */,
 				7054D599245F7507007DA9BA /* SceneDelegate.swift */,
-				7054D59B245F7507007DA9BA /* ViewController.swift */,
-				7054D59D245F7507007DA9BA /* Main.storyboard */,
+				7054D59B245F7507007DA9BA /* LoginViewController.swift */,
 				7054D5A0245F750B007DA9BA /* Assets.xcassets */,
 				7054D5A2245F750B007DA9BA /* LaunchScreen.storyboard */,
 				7054D5A5245F750B007DA9BA /* Info.plist */,
+				70AA64CA247F6C2600F56CB3 /* MainTabBarController.swift */,
+				70AA64CC247F6D0300F56CB3 /* FindDateViewController.swift */,
+				70AA64CE247F6D4E00F56CB3 /* ChatViewController.swift */,
+				70AA64D42481D5C100F56CB3 /* ProfileViewController.swift */,
+				70FB575D2481D8F900CB24C4 /* Extensions.swift */,
 			);
 			path = Excite;
 			sourceTree = "<group>";
@@ -168,7 +180,6 @@
 				921E7C468E9EFDB1CDD3C2B3 /* Pods-ExciteTests.debug.xcconfig */,
 				B73279018DF84D55D148AB48 /* Pods-ExciteTests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -184,6 +195,7 @@
 				7054D591245F7507007DA9BA /* Frameworks */,
 				7054D592245F7507007DA9BA /* Resources */,
 				40A554FD03F14B305AA16709 /* [CP] Embed Pods Frameworks */,
+				70FB575F2481DCB400CB24C4 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -284,7 +296,6 @@
 				7054D5A4245F750B007DA9BA /* LaunchScreen.storyboard in Resources */,
 				7054D5C8245F755F007DA9BA /* GoogleService-Info.plist in Resources */,
 				7054D5A1245F750B007DA9BA /* Assets.xcassets in Resources */,
-				7054D59F245F7507007DA9BA /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -366,6 +377,23 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Excite/Pods-Excite-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		70FB575F2481DCB400CB24C4 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/SwiftLint/swiftlint\"\n";
+		};
 		72833F122A4C59A068F98205 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -412,8 +440,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7054D59C245F7507007DA9BA /* ViewController.swift in Sources */,
+				7054D59C245F7507007DA9BA /* LoginViewController.swift in Sources */,
 				7054D598245F7507007DA9BA /* AppDelegate.swift in Sources */,
+				70AA64CB247F6C2600F56CB3 /* MainTabBarController.swift in Sources */,
+				70FB575E2481D8F900CB24C4 /* Extensions.swift in Sources */,
+				70AA64CD247F6D0300F56CB3 /* FindDateViewController.swift in Sources */,
+				70AA64D52481D5C100F56CB3 /* ProfileViewController.swift in Sources */,
+				70AA64CF247F6D4E00F56CB3 /* ChatViewController.swift in Sources */,
 				7054D59A245F7507007DA9BA /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -450,14 +483,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		7054D59D245F7507007DA9BA /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				7054D59E245F7507007DA9BA /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		7054D5A2245F750B007DA9BA /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (

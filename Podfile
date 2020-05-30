@@ -9,6 +9,8 @@ target 'Excite' do
   pod 'SnapKit', '~> 5.0.0'
   pod 'Firebase/Analytics'
   pod 'TwilioVideo', '~> 3.2'
+  pod 'SwiftLint'
+
   target 'ExciteTests' do
     inherit! :search_paths
     # Pods for testing
