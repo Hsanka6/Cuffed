@@ -16,12 +16,18 @@ struct User {
     let email: String
     let profile: Profile
     let currentMoments: [Moment]
-    let interest: [GenderType]
 }
 
 enum GenderType: String {
     case MALE
     case FEMALE
+    case OTHER
+}
+
+enum Availability: INT {
+    case NOW = 15 // 0 - 15
+    case SOON = 30 // 16 - 30
+    case LATER = 60 // 31 - 60
 }
 
 struct Moment {
@@ -38,6 +44,11 @@ struct Profile {
     let lat: Double
     let lon: Double
     let height: Int //inches
+    let ethnicity: String
+    let jobTitle: String
+    let company: String
+    let gender: GenderType
+    let filter: Filter
 }
 
 struct Question {
@@ -54,3 +65,11 @@ struct SocialProfile {
     let platform: String
     let profileLink: String
 }
+
+struct Filter {
+    let interest: [GenderType]
+    let distance: Int
+    let time: Availability
+    let age: Int
+}
+
