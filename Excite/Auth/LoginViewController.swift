@@ -12,14 +12,11 @@ import SnapKit
 class LoginViewController: UIViewController {
 
     var loginButton = UIButton()
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
         makeUI()
-        
     }
-    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(true, animated: animated)
@@ -30,7 +27,6 @@ class LoginViewController: UIViewController {
         // Show the navigation bar on other view controllers
         self.navigationController?.setNavigationBarHidden(false, animated: animated)
     }
-    
     func makeUI() {
         self.view.addSubview(loginButton)
         loginButton.backgroundColor = .black
@@ -50,6 +46,4 @@ class LoginViewController: UIViewController {
        self.navigationController?.pushViewController(newViewController, animated: true)
     }
 
-    
 }
-

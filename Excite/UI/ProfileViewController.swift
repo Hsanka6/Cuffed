@@ -15,7 +15,6 @@ class ProfileViewController: UIViewController {
         view.backgroundColor = .white
         // Do any additional setup after loading the view.
     }
-    
 
     /*
     // MARK: - Navigation
