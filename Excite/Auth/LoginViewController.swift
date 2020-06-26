@@ -30,7 +30,8 @@ class LoginViewController: UIViewController {
     func makeUI() {
         self.view.addSubview(loginButton)
         loginButton.backgroundColor = .black
-        loginButton.setTitle("Login", for: .normal)
+        // test first commit
+        loginButton.setTitle("Login Screen", for: .normal)
         loginButton.snp.makeConstraints { (make) -> Void in
             make.height.equalTo(40)
             make.width.equalTo(100)

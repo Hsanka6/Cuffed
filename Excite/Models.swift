@@ -24,7 +24,7 @@ enum GenderType: String {
     case OTHER
 }
 
-enum Availability: INT {
+enum Availability: Int {
     case NOW = 15 // 0 - 15
     case SOON = 30 // 16 - 30
     case LATER = 60 // 31 - 60
