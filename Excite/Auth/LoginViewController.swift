@@ -9,12 +9,29 @@
 import UIKit
 import SnapKit
 
+class Colors {
+    var gl : CAGradientLayer
+
+    init() {
+        let colorTop = UIColor(hexString: "6CA0FF").cgColor
+        let colorBottom = UIColor(hexString: "FF6299").cgColor
+
+        self.gl = CAGradientLayer()
+        self.gl.colors = [colorTop, colorBottom]
+        self.gl.locations = [0.0, 1.0]
+    }
+}
+
 class LoginViewController: UIViewController {
 
     var loginButton = UIButton()
+    let colors = Colors()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
+        let backgroundLayer = colors.gl
+        backgroundLayer.frame = view.frame
+        view.layer.insertSublayer(backgroundLayer, at: 0)
         makeUI()
     }
     override func viewWillAppear(_ animated: Bool) {
@@ -28,9 +45,11 @@ class LoginViewController: UIViewController {
         self.navigationController?.setNavigationBarHidden(false, animated: animated)
     }
     func makeUI() {
+        
         self.view.addSubview(loginButton)
         loginButton.backgroundColor = .black
         // test first commit
+        
         loginButton.setTitle("Login Screen", for: .normal)
         loginButton.snp.makeConstraints { (make) -> Void in
             make.height.equalTo(40)
