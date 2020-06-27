@@ -85,8 +85,6 @@ class LoginViewController: UIViewController {
         
 //        loginButton.addTarget(self, action: #selector(self.login), for: .touchUpInside)
     }
-
-
     @objc func login(sender: UIButton!) {
        let newViewController = MainTabBarController()
        self.navigationController?.pushViewController(newViewController, animated: true)

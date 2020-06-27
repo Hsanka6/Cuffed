@@ -113,6 +113,14 @@
 			path = DatingAudioVideoControllers;
 			sourceTree = "<group>";
 		};
+		701F1CDA249D7BD10096B564 /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+				703FBBD52481E5C400438F94 /* Models.swift */,
+			);
+			path = Networking;
+			sourceTree = "<group>";
+		};
 		703FBBD72481EB9D00438F94 /* UI */ = {
 			isa = PBXGroup;
 			children = (
@@ -166,6 +174,7 @@
 		7054D596245F7507007DA9BA /* Excite */ = {
 			isa = PBXGroup;
 			children = (
+				701F1CDA249D7BD10096B564 /* Networking */,
 				703FBBD92481EBCF00438F94 /* Auth */,
 				703FBBD82481EBAF00438F94 /* Helpers */,
 				703FBBD72481EB9D00438F94 /* UI */,
@@ -175,7 +184,6 @@
 				7054D5A0245F750B007DA9BA /* Assets.xcassets */,
 				7054D5A2245F750B007DA9BA /* LaunchScreen.storyboard */,
 				7054D5A5245F750B007DA9BA /* Info.plist */,
-				703FBBD52481E5C400438F94 /* Models.swift */,
 			);
 			path = Excite;
 			sourceTree = "<group>";
