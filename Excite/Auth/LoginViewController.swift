@@ -50,40 +50,49 @@ class LoginViewController: UIViewController {
         self.navigationController?.setNavigationBarHidden(false, animated: animated)
     }
     func makeUI() {
+        let width = UIScreen.main.bounds.width - 20
+        self.view.addSubview(stackView)
+        // add the two subviews
+        stackView.addSubview(logo)
+        stackView.addSubview(loginButton)
         
+        stackView.spacing = 10.0
         stackView.axis = .vertical
         stackView.alignment = .center
         stackView.distribution = .equalSpacing
         stackView.translatesAutoresizingMaskIntoConstraints = false
-        self.view.addSubview(stackView)
 
+        
         stackView.snp.makeConstraints { (make) in
-            make.edges.equalToSuperview()
+            make.height.equalTo(80)
+            make.width.equalTo(width)
+            make.center.equalTo(self.view)
         }
+        // modify the views here
+        
+
         logo.textColor = .white
-//        logo.backgroundColor = .black
+        logo.backgroundColor = .black
         logo.text = "ExciteDate"
         logo.snp.makeConstraints { (make) -> Void in
             make.height.equalTo(50)
             make.width.equalTo(200)
+            make.center.equalTo(self.view)
         }
-        stackView.addSubview(logo)
-//
-//        loginButton.backgroundColor = .black
-//        // test first commit
-//        loginButton.setTitle("Login Screen", for: .normal)
-//        loginButton.snp.makeConstraints { (make) -> Void in
-//            make.height.equalTo(40)
-//            make.width.equalTo(100)
-//           make.center.equalTo(self.view)
-//        }
+        
+        loginButton.setTitle("Login Screen", for: .normal)
+        loginButton.snp.makeConstraints { (make) -> Void in
+            make.height.equalTo(40)
+            make.width.equalTo(100)
+           make.center.equalTo(self.view)
+        }
 //
 //        stackView.addSubview(logo)
 //        stackView.addSubview(loginButton)
 //
 //
         
-//        loginButton.addTarget(self, action: #selector(self.login), for: .touchUpInside)
+        loginButton.addTarget(self, action: #selector(self.login), for: .touchUpInside)
     }
     @objc func login(sender: UIButton!) {
        let newViewController = MainTabBarController()
