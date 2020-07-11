@@ -10,6 +10,8 @@ target 'Excite' do
   pod 'Firebase/Analytics'
   pod 'TwilioVideo', '~> 3.2'
   pod 'SwiftLint'
+  pod 'NotificationBannerSwift', '~> 3.0.0'
+
 
   target 'ExciteTests' do
     inherit! :search_paths
