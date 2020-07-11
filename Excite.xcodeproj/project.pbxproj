@@ -180,6 +180,7 @@
 		7054D596245F7507007DA9BA /* Excite */ = {
 			isa = PBXGroup;
 			children = (
+				70C52B7324BA4011002CFFEA /* Profile */,
 				701F1CDA249D7BD10096B564 /* Networking */,
 				703FBBD92481EBCF00438F94 /* Auth */,
 				703FBBD82481EBAF00438F94 /* Helpers */,
@@ -210,6 +211,13 @@
 				7054D5BB245F750B007DA9BA /* Info.plist */,
 			);
 			path = ExciteUITests;
+			sourceTree = "<group>";
+		};
+		70C52B7324BA4011002CFFEA /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Profile;
 			sourceTree = "<group>";
 		};
 		7BAD68E3441810E103F65D9B /* Frameworks */ = {
