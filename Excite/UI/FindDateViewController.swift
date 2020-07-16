@@ -26,9 +26,9 @@ class FindDateViewController: UIViewController {
         startDateButton.backgroundColor = .black
         startDateButton.setTitle("Login", for: .normal)
         startDateButton.snp.makeConstraints { (make) -> Void in
-            make.height.equalTo(40)
-            make.width.equalTo(100)
-           make.center.equalTo(self.view)
+            make.top.equalTo(self.view.safeAreaLayoutGuide.snp.top)
+            make.height.equalTo(200)
+            make.width.equalTo(UIScreen.main.bounds.width)
         }
         startDateButton.addTarget(self, action: #selector(self.startDate), for: .touchUpInside)
     }
