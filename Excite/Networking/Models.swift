@@ -72,4 +72,3 @@ struct Filter: Decodable {
     let time: Availability
     let age: Int
 }
-

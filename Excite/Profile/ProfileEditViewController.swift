@@ -50,15 +50,15 @@ class ProfileEditViewController: UIViewController {
             })
             NetworkRequesterMock().getQuestion(completion: { (results) in
                 switch results {
-                   case .success(let response):
-                       print(response)
-                       self.viewModel?.questions = response
-//                       runOnMainThread {
-//                           self.tableView.reloadData()
-//                       }
-                   default:
-                       break
-                   }
+                case .success(let response):
+                   print(response)
+                   self.viewModel?.questions = response
+                //                       runOnMainThread {
+                //                           self.tableView.reloadData()
+                //                       }
+                default:
+                   break
+                }
             })
         }
        }

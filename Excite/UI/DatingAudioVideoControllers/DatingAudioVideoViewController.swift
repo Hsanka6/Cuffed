@@ -384,7 +384,7 @@ class DatingAudioVideoViewController: UIViewController {
 }
 
 struct TokenUtils {
-    static func fetchToken(url:String) throws -> String {
+    static func fetchToken(url: String) throws -> String {
         var token: String = "TWILIO_ACCESS_TOKEN"
         let requestURL: URL = URL(string: url)!
         do {
