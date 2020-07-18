@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-struct User {
+struct User: Decodable {
     let userId: String
     let fullName: String
     let age: Int
@@ -18,55 +18,55 @@ struct User {
     let currentMoments: [Moment]
 }
 
-enum GenderType: String {
+enum GenderType: String, Decodable {
     case MALE
     case FEMALE
     case OTHER
 }
 
-enum Availability: Int {
+enum Availability: Int, Decodable {
     case NOW = 15 // 0 - 15
     case SOON = 30 // 16 - 30
     case LATER = 60 // 31 - 60
 }
 
-struct Moment {
+struct Moment: Decodable {
     let match: Match
     let time: Date
 }
 
-struct Profile {
-    let photos: [String]?
-    let matches: [Match]
-    let socials: [SocialProfile]
-    let questions: [Question]
-    let location: String
-    let lat: Double
-    let lon: Double
-    let height: Int //inches
-    let ethnicity: String
-    let jobTitle: String
-    let company: String
-    let gender: GenderType
-    let filter: Filter
+struct Profile: Codable {
+    let photos: [String]!
 }
+//    let matches: [Match]
+//    let socials: [SocialProfile]
+//    let questions: [Question]
+//    let location: String
+//    let lat: Double
+//    let lon: Double
+//    let height: Int //inches
+//    let ethnicity: String
+//    let jobTitle: String
+//    let company: String
+//    let gender: GenderType
+//    let filter: Filter
 
-struct Question {
+struct Question: Decodable {
     let question: String
     let answer: String
 }
-struct Match {
+struct Match: Decodable {
     let matchId: String
     let userId1: String
     let userId2: User
 }
 
-struct SocialProfile {
+struct SocialProfile: Decodable {
     let platform: String
     let profileLink: String
 }
 
-struct Filter {
+struct Filter: Decodable {
     let interest: [GenderType]
     let distance: Int
     let time: Availability
