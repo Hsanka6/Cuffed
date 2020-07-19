@@ -25,8 +25,8 @@ class Colors {
 class LoginViewController: UIViewController {
 
     let colors = Colors()
-    let mainView: UIView = {
-        let view = UIView()
+    let mainStackview: UIStackView = {
+        let view = UIStackView()
         view.backgroundColor = UIColor(white: 0.6, alpha: 0.4)
         view.layer.cornerRadius = 20
         return view
@@ -44,23 +44,20 @@ class LoginViewController: UIViewController {
         view.layer.cornerRadius = 10
         return view
     }()
-    
     let passwordView: UIView = {
         let view = UIView()
         view.backgroundColor = UIColor.blue
         view.layer.cornerRadius = 10
         return view
     }()
-    
     let loginButton: UIView = {
         let view = UIView()
         view.backgroundColor = UIColor.green
         view.layer.cornerRadius = 10
         return view
     }()
-    
-    lazy var loginStack: UIStackView = {
-        let stackView = UIStackView(arrangedSubviews: [usernameView, passwordView, loginButton])
+    var loginStack: UIStackView = {
+        let stackView = UIStackView()
         stackView.axis = .vertical
         stackView.distribution = .equalCentering
         return stackView
@@ -72,8 +69,7 @@ class LoginViewController: UIViewController {
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-        // constructBackground()
-        view.backgroundColor = .white
+         constructBackground()
         makeUI()
     }
     override func viewWillAppear(_ animated: Bool) {
@@ -86,26 +82,29 @@ class LoginViewController: UIViewController {
         self.navigationController?.setNavigationBarHidden(false, animated: animated)
     }
     func makeUI() {
-        view.addSubview(mainView)
+        view.addSubview(mainStackview)
+        mainStackview.addSubview(logo)
         
-        mainView.addSubview(loginStack)
-        mainView.addSubview(logo)
-        usernameView.snp.makeConstraints { (make) in
-            make.height.equalTo(50)
-        }
-        passwordView.snp.makeConstraints { (make) in
-            make.height.equalTo(50)
-        }
-        mainView.snp.makeConstraints { (make) in
+        // mainStackview.addSubview(loginStack)
+        
+        // loginStack.addSubview(usernameView)
+        // loginStack.addSubview(passwordView)
+//        usernameView.snp.makeConstraints { (make) in
+//            make.height.equalTo(50)
+//        }
+//        passwordView.snp.makeConstraints { (make) in
+//            make.height.equalTo(50)
+//        }
+        mainStackview.snp.makeConstraints { (make) in
             make.center.equalToSuperview()
             make.top.equalTo(100)
             make.width.equalTo(300)
             make.bottom.equalTo(-20)
         }
-        loginStack.snp.makeConstraints { (make) in
-            make.width.height.equalTo(300)
-            make.center.equalTo(self.mainView)
-        }
+//        loginStack.snp.makeConstraints { (make) in
+//            make.width.height.equalTo(300)
+//            make.center.equalTo(self.mainStackview)
+//        }
     }
 //    @objc func login(sender: UIButton!) {
 //       let newViewController = MainTabBarController()
