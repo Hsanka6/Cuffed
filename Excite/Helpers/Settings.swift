@@ -16,7 +16,6 @@ class Settings: NSObject {
                                                           PcmaCodec(),
                                                           PcmuCodec(),
                                                           G722Codec()]
-    
     let supportedVideoCodecs: [VideoCodec] = [Vp8Codec(),
                                               Vp8Codec(simulcast: true),
                                               H264Codec(),
@@ -36,7 +35,7 @@ class Settings: NSObject {
                                                "us2"]
 
 
-    let supportedSignalingRegionDisplayString: [String : String] = ["gll": "Global Low Latency",
+    let supportedSignalingRegionDisplayString: [String:String] = ["gll": "Global Low Latency",
                                                                     "au1": "Australia",
                                                                     "br1": "Brazil",
                                                                     "de1": "Germany",
@@ -46,7 +45,6 @@ class Settings: NSObject {
                                                                     "sg1": "Singapore",
                                                                     "us1": "US East Coast (Virginia)",
                                                                     "us2": "US West Coast (Oregon)"]
-    
     var audioCodec: TwilioVideo.AudioCodec?
     var videoCodec: VideoCodec?
 
@@ -55,19 +53,16 @@ class Settings: NSObject {
 
     var signalingRegion: String?
 
-    func getEncodingParameters() -> EncodingParameters?  {
+    func getEncodingParameters() -> EncodingParameters? {
         if maxAudioBitrate == 0 && maxVideoBitrate == 0 {
-            return nil;
+            return nil
         } else {
             return EncodingParameters(audioBitrate: maxAudioBitrate,
                                       videoBitrate: maxVideoBitrate)
         }
     }
-    
     private override init() {
         // Can't initialize a singleton
     }
-    
-    // MARK:- Shared Instance
     static let shared = Settings()
 }

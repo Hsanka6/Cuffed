@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		66073770D1998960A838C853 /* Pods_Excite_ExciteUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AD0C498F7288D75FF03593DB /* Pods_Excite_ExciteUITests.framework */; };
+		700F6B8D24C04D3E008C891F /* ProfileEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 700F6B8C24C04D3E008C891F /* ProfileEditViewController.swift */; };
 		7010798124A6C9C300E640B9 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7010798024A6C9C300E640B9 /* Settings.swift */; };
 		7010798324A6CC1F00E640B9 /* DatingAudioVideoViewControllerExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7010798224A6CC1F00E640B9 /* DatingAudioVideoViewControllerExtensions.swift */; };
 		701F1CD8249D70080096B564 /* DatingAudioVideoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 701F1CD7249D70080096B564 /* DatingAudioVideoViewController.swift */; };
@@ -20,10 +21,17 @@
 		7054D5AF245F750B007DA9BA /* ExciteTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7054D5AE245F750B007DA9BA /* ExciteTests.swift */; };
 		7054D5BA245F750B007DA9BA /* ExciteUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7054D5B9245F750B007DA9BA /* ExciteUITests.swift */; };
 		7054D5C8245F755F007DA9BA /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7054D5C7245F755F007DA9BA /* GoogleService-Info.plist */; };
+		709B2C3D24C2B40E008BA374 /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 709B2C3C24C2B40E008BA374 /* ProfileViewModel.swift */; };
+		709B2C3F24C2B43E008BA374 /* Profile.json in Resources */ = {isa = PBXBuildFile; fileRef = 709B2C3E24C2B43E008BA374 /* Profile.json */; };
+		709B2C4124C2B737008BA374 /* ProfilePhotosCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 709B2C4024C2B737008BA374 /* ProfilePhotosCell.swift */; };
+		70A3AC4B24C3A8E7008BB1FF /* UserTableTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A3AC4A24C3A8E7008BB1FF /* UserTableTableViewCell.swift */; };
+		70A3AC4D24C3A98A008BB1FF /* UserDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A3AC4C24C3A98A008BB1FF /* UserDetailTableViewCell.swift */; };
 		70AA64CB247F6C2600F56CB3 /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70AA64CA247F6C2600F56CB3 /* MainTabBarController.swift */; };
 		70AA64CD247F6D0300F56CB3 /* FindDateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70AA64CC247F6D0300F56CB3 /* FindDateViewController.swift */; };
 		70AA64CF247F6D4E00F56CB3 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70AA64CE247F6D4E00F56CB3 /* ChatViewController.swift */; };
 		70AA64D52481D5C100F56CB3 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70AA64D42481D5C100F56CB3 /* ProfileViewController.swift */; };
+		70F5882324C15F8D007E4C83 /* NetworkRequester.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F5882224C15F8D007E4C83 /* NetworkRequester.swift */; };
+		70F5882624C16706007E4C83 /* Question.json in Resources */ = {isa = PBXBuildFile; fileRef = 70F5882524C16706007E4C83 /* Question.json */; };
 		70FB575E2481D8F900CB24C4 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70FB575D2481D8F900CB24C4 /* Extensions.swift */; };
 		AC3EDBA5ECEA5D50F29BA520 /* Pods_ExciteTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 14F3440FD214E137E869D5F5 /* Pods_ExciteTests.framework */; };
 		D8EE311ED3256FAB5A1073CE /* Pods_Excite.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B3112B2EAD0500421CCA693 /* Pods_Excite.framework */; };
@@ -49,6 +57,7 @@
 /* Begin PBXFileReference section */
 		14F3440FD214E137E869D5F5 /* Pods_ExciteTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ExciteTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4B3112B2EAD0500421CCA693 /* Pods_Excite.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Excite.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		700F6B8C24C04D3E008C891F /* ProfileEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileEditViewController.swift; sourceTree = "<group>"; };
 		7010798024A6C9C300E640B9 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		7010798224A6CC1F00E640B9 /* DatingAudioVideoViewControllerExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatingAudioVideoViewControllerExtensions.swift; sourceTree = "<group>"; };
 		701F1CD7249D70080096B564 /* DatingAudioVideoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatingAudioVideoViewController.swift; sourceTree = "<group>"; };
@@ -67,10 +76,17 @@
 		7054D5B9245F750B007DA9BA /* ExciteUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExciteUITests.swift; sourceTree = "<group>"; };
 		7054D5BB245F750B007DA9BA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7054D5C7245F755F007DA9BA /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		709B2C3C24C2B40E008BA374 /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
+		709B2C3E24C2B43E008BA374 /* Profile.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Profile.json; sourceTree = "<group>"; };
+		709B2C4024C2B737008BA374 /* ProfilePhotosCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePhotosCell.swift; sourceTree = "<group>"; };
+		70A3AC4A24C3A8E7008BB1FF /* UserTableTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserTableTableViewCell.swift; sourceTree = "<group>"; };
+		70A3AC4C24C3A98A008BB1FF /* UserDetailTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDetailTableViewCell.swift; sourceTree = "<group>"; };
 		70AA64CA247F6C2600F56CB3 /* MainTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
 		70AA64CC247F6D0300F56CB3 /* FindDateViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindDateViewController.swift; sourceTree = "<group>"; };
 		70AA64CE247F6D4E00F56CB3 /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
 		70AA64D42481D5C100F56CB3 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		70F5882224C15F8D007E4C83 /* NetworkRequester.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkRequester.swift; sourceTree = "<group>"; };
+		70F5882524C16706007E4C83 /* Question.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Question.json; sourceTree = "<group>"; };
 		70FB575D2481D8F900CB24C4 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		7D77A8C99DCA9BB55A474B85 /* Pods-Excite.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Excite.debug.xcconfig"; path = "Target Support Files/Pods-Excite/Pods-Excite.debug.xcconfig"; sourceTree = "<group>"; };
 		87CA71A9876B1FEC9F0AFD8B /* Pods-Excite-ExciteUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Excite-ExciteUITests.release.xcconfig"; path = "Target Support Files/Pods-Excite-ExciteUITests/Pods-Excite-ExciteUITests.release.xcconfig"; sourceTree = "<group>"; };
@@ -121,7 +137,9 @@
 		701F1CDA249D7BD10096B564 /* Networking */ = {
 			isa = PBXGroup;
 			children = (
+				70F5882424C166C1007E4C83 /* Mock JSON */,
 				703FBBD52481E5C400438F94 /* Models.swift */,
+				70F5882224C15F8D007E4C83 /* NetworkRequester.swift */,
 			);
 			path = Networking;
 			sourceTree = "<group>";
@@ -133,7 +151,6 @@
 				70AA64CA247F6C2600F56CB3 /* MainTabBarController.swift */,
 				70AA64CE247F6D4E00F56CB3 /* ChatViewController.swift */,
 				70AA64CC247F6D0300F56CB3 /* FindDateViewController.swift */,
-				70AA64D42481D5C100F56CB3 /* ProfileViewController.swift */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -216,8 +233,23 @@
 		70C52B7324BA4011002CFFEA /* Profile */ = {
 			isa = PBXGroup;
 			children = (
+				70AA64D42481D5C100F56CB3 /* ProfileViewController.swift */,
+				700F6B8C24C04D3E008C891F /* ProfileEditViewController.swift */,
+				709B2C3C24C2B40E008BA374 /* ProfileViewModel.swift */,
+				709B2C4024C2B737008BA374 /* ProfilePhotosCell.swift */,
+				70A3AC4A24C3A8E7008BB1FF /* UserTableTableViewCell.swift */,
+				70A3AC4C24C3A98A008BB1FF /* UserDetailTableViewCell.swift */,
 			);
 			path = Profile;
+			sourceTree = "<group>";
+		};
+		70F5882424C166C1007E4C83 /* Mock JSON */ = {
+			isa = PBXGroup;
+			children = (
+				70F5882524C16706007E4C83 /* Question.json */,
+				709B2C3E24C2B43E008BA374 /* Profile.json */,
+			);
+			path = "Mock JSON";
 			sourceTree = "<group>";
 		};
 		7BAD68E3441810E103F65D9B /* Frameworks */ = {
@@ -354,6 +386,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				7054D5A4245F750B007DA9BA /* LaunchScreen.storyboard in Resources */,
+				709B2C3F24C2B43E008BA374 /* Profile.json in Resources */,
+				70F5882624C16706007E4C83 /* Question.json in Resources */,
 				7054D5C8245F755F007DA9BA /* GoogleService-Info.plist in Resources */,
 				7054D5A1245F750B007DA9BA /* Assets.xcassets in Resources */,
 			);
@@ -500,6 +534,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				709B2C4124C2B737008BA374 /* ProfilePhotosCell.swift in Sources */,
+				70A3AC4D24C3A98A008BB1FF /* UserDetailTableViewCell.swift in Sources */,
+				70A3AC4B24C3A8E7008BB1FF /* UserTableTableViewCell.swift in Sources */,
 				7054D59C245F7507007DA9BA /* LoginViewController.swift in Sources */,
 				7054D598245F7507007DA9BA /* AppDelegate.swift in Sources */,
 				70AA64CB247F6C2600F56CB3 /* MainTabBarController.swift in Sources */,
@@ -509,9 +546,12 @@
 				703FBBD62481E5C400438F94 /* Models.swift in Sources */,
 				70AA64CF247F6D4E00F56CB3 /* ChatViewController.swift in Sources */,
 				7010798324A6CC1F00E640B9 /* DatingAudioVideoViewControllerExtensions.swift in Sources */,
+				709B2C3D24C2B40E008BA374 /* ProfileViewModel.swift in Sources */,
 				701F1CD8249D70080096B564 /* DatingAudioVideoViewController.swift in Sources */,
 				7010798124A6C9C300E640B9 /* Settings.swift in Sources */,
+				700F6B8D24C04D3E008C891F /* ProfileEditViewController.swift in Sources */,
 				7054D59A245F7507007DA9BA /* SceneDelegate.swift in Sources */,
+				70F5882324C15F8D007E4C83 /* NetworkRequester.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

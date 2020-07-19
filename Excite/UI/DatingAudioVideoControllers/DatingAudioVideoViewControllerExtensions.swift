@@ -9,15 +9,14 @@
 import UIKit
 import TwilioVideo
 
-extension DatingAudioVideoViewController : UITextFieldDelegate {
+extension DatingAudioVideoViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         self.connect(sender: textField)
         return true
     }
 }
 
-// MARK:- RoomDelegate
-extension DatingAudioVideoViewController : RoomDelegate {
+extension DatingAudioVideoViewController: RoomDelegate {
     func roomDidConnect(room: Room) {
         logMessage(messageText: "Connected to room \(room.name) as \(room.localParticipant?.identity ?? "")")
 
@@ -29,17 +28,14 @@ extension DatingAudioVideoViewController : RoomDelegate {
 
     func roomDidDisconnect(room: Room, error: Error?) {
         logMessage(messageText: "Disconnected from room \(room.name), error = \(String(describing: error))")
-        
         self.cleanupRemoteParticipant()
         self.room = nil
-        
         self.showRoomUI(inRoom: false)
     }
 
     func roomDidFailToConnect(room: Room, error: Error) {
         logMessage(messageText: "Failed to connect to room with error = \(String(describing: error))")
         self.room = nil
-        
         self.showRoomUI(inRoom: false)
     }
 
@@ -65,12 +61,10 @@ extension DatingAudioVideoViewController : RoomDelegate {
     }
 }
 
-// MARK:- RemoteParticipantDelegate
-extension DatingAudioVideoViewController : RemoteParticipantDelegate {
+extension DatingAudioVideoViewController: RemoteParticipantDelegate {
 
     func remoteParticipantDidPublishVideoTrack(participant: RemoteParticipant, publication: RemoteVideoTrackPublication) {
         // Remote Participant has offered to share the video Track.
-        
         logMessage(messageText: "Participant \(participant.identity) published \(publication.trackName) video track")
     }
 
@@ -97,15 +91,13 @@ extension DatingAudioVideoViewController : RemoteParticipantDelegate {
 
         logMessage(messageText: "Subscribed to \(publication.trackName) video track for Participant \(participant.identity)")
 
-        if (self.remoteParticipant == nil) {
+        if self.remoteParticipant == nil {
             _ = renderRemoteParticipant(participant: participant)
         }
     }
-    
     func didUnsubscribeFromVideoTrack(videoTrack: RemoteVideoTrack, publication: RemoteVideoTrackPublication, participant: RemoteParticipant) {
         // We are unsubscribed from the remote Participant's video Track. We will no longer receive the
         // remote Participant's video.
-        
         logMessage(messageText: "Unsubscribed from \(publication.trackName) video track for Participant \(participant.identity)")
 
         if self.remoteParticipant == participant {
@@ -126,11 +118,8 @@ extension DatingAudioVideoViewController : RemoteParticipantDelegate {
        
         logMessage(messageText: "Subscribed to \(publication.trackName) audio track for Participant \(participant.identity)")
     }
-    
     func didUnsubscribeFromAudioTrack(audioTrack: RemoteAudioTrack, publication: RemoteAudioTrackPublication, participant: RemoteParticipant) {
-        // We are unsubscribed from the remote Participant's audio Track. We will no longer receive the
-        // remote Participant's audio.
-        
+        // We are unsubscribed from the remote Participant's audio Track. We will no longer receive the remote Participant's audio.
         logMessage(messageText: "Unsubscribed from \(publication.trackName) audio track for Participant \(participant.identity)")
     }
 
@@ -159,15 +148,13 @@ extension DatingAudioVideoViewController : RemoteParticipantDelegate {
     }
 }
 
-// MARK:- VideoViewDelegate
-extension DatingAudioVideoViewController : VideoViewDelegate {
+extension DatingAudioVideoViewController: VideoViewDelegate {
     func videoViewDimensionsDidChange(view: VideoView, dimensions: CMVideoDimensions) {
         self.view.setNeedsLayout()
     }
 }
 
-// MARK:- CameraSourceDelegate
-extension DatingAudioVideoViewController : CameraSourceDelegate {
+extension DatingAudioVideoViewController: CameraSourceDelegate {
     func cameraSourceDidFail(source: CameraSource, error: Error) {
         logMessage(messageText: "Camera source failed with error: \(error.localizedDescription)")
     }
