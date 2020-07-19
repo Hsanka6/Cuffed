@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		66073770D1998960A838C853 /* Pods_Excite_ExciteUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AD0C498F7288D75FF03593DB /* Pods_Excite_ExciteUITests.framework */; };
+		7010798124A6C9C300E640B9 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7010798024A6C9C300E640B9 /* Settings.swift */; };
+		7010798324A6CC1F00E640B9 /* DatingAudioVideoViewControllerExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7010798224A6CC1F00E640B9 /* DatingAudioVideoViewControllerExtensions.swift */; };
 		701F1CD8249D70080096B564 /* DatingAudioVideoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 701F1CD7249D70080096B564 /* DatingAudioVideoViewController.swift */; };
 		703FBBD62481E5C400438F94 /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 703FBBD52481E5C400438F94 /* Models.swift */; };
 		7054D598245F7507007DA9BA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7054D597245F7507007DA9BA /* AppDelegate.swift */; };
@@ -47,6 +49,8 @@
 /* Begin PBXFileReference section */
 		14F3440FD214E137E869D5F5 /* Pods_ExciteTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ExciteTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4B3112B2EAD0500421CCA693 /* Pods_Excite.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Excite.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		7010798024A6C9C300E640B9 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
+		7010798224A6CC1F00E640B9 /* DatingAudioVideoViewControllerExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatingAudioVideoViewControllerExtensions.swift; sourceTree = "<group>"; };
 		701F1CD7249D70080096B564 /* DatingAudioVideoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatingAudioVideoViewController.swift; sourceTree = "<group>"; };
 		703FBBD52481E5C400438F94 /* Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
 		7054D594245F7507007DA9BA /* Excite.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Excite.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -109,6 +113,7 @@
 			isa = PBXGroup;
 			children = (
 				701F1CD7249D70080096B564 /* DatingAudioVideoViewController.swift */,
+				7010798224A6CC1F00E640B9 /* DatingAudioVideoViewControllerExtensions.swift */,
 			);
 			path = DatingAudioVideoControllers;
 			sourceTree = "<group>";
@@ -137,6 +142,7 @@
 			isa = PBXGroup;
 			children = (
 				70FB575D2481D8F900CB24C4 /* Extensions.swift */,
+				7010798024A6C9C300E640B9 /* Settings.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -174,6 +180,7 @@
 		7054D596245F7507007DA9BA /* Excite */ = {
 			isa = PBXGroup;
 			children = (
+				70C52B7324BA4011002CFFEA /* Profile */,
 				701F1CDA249D7BD10096B564 /* Networking */,
 				703FBBD92481EBCF00438F94 /* Auth */,
 				703FBBD82481EBAF00438F94 /* Helpers */,
@@ -204,6 +211,13 @@
 				7054D5BB245F750B007DA9BA /* Info.plist */,
 			);
 			path = ExciteUITests;
+			sourceTree = "<group>";
+		};
+		70C52B7324BA4011002CFFEA /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Profile;
 			sourceTree = "<group>";
 		};
 		7BAD68E3441810E103F65D9B /* Frameworks */ = {
@@ -494,7 +508,9 @@
 				70AA64D52481D5C100F56CB3 /* ProfileViewController.swift in Sources */,
 				703FBBD62481E5C400438F94 /* Models.swift in Sources */,
 				70AA64CF247F6D4E00F56CB3 /* ChatViewController.swift in Sources */,
+				7010798324A6CC1F00E640B9 /* DatingAudioVideoViewControllerExtensions.swift in Sources */,
 				701F1CD8249D70080096B564 /* DatingAudioVideoViewController.swift in Sources */,
+				7010798124A6C9C300E640B9 /* Settings.swift in Sources */,
 				7054D59A245F7507007DA9BA /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
