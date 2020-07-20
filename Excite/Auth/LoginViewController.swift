@@ -37,7 +37,12 @@ class LoginViewController: UIViewController {
         view.textColor = .black
         return view
     }()
-    
+    let logo2: UILabel = {
+        let view = UILabel()
+        view.text = "Pinned2"
+        view.textColor = .black
+        return view
+    }()
     let usernameView: UIView = {
         let view = UIView()
         view.backgroundColor = UIColor.red
@@ -83,12 +88,25 @@ class LoginViewController: UIViewController {
     }
     func makeUI() {
         view.addSubview(mainStackview)
-        mainStackview.addSubview(logo)
-        
-        // mainStackview.addSubview(loginStack)
-        
-        // loginStack.addSubview(usernameView)
-        // loginStack.addSubview(passwordView)
+        mainStackview.axis = .vertical
+        mainStackview.alignment = .center
+        mainStackview.distribution = .equalSpacing
+        mainStackview.spacing = 0.2
+        mainStackview.addArrangedSubview(logo)
+        mainStackview.addArrangedSubview(logo2)
+        logo.snp.makeConstraints { (make) in
+            make.center.equalToSuperview()
+            make.height.equalTo(40)
+            make.width.equalToSuperview()
+        }
+        logo2.snp.makeConstraints { (make) in
+            make.center.equalToSuperview()
+            make.height.equalTo(40)
+            make.width.equalToSuperview()
+        }
+//         mainStackview.addSubview(loginStack)
+//         loginStack.addSubview(usernameView)
+//         loginStack.addSubview(passwordView)
 //        usernameView.snp.makeConstraints { (make) in
 //            make.height.equalTo(50)
 //        }
@@ -100,6 +118,7 @@ class LoginViewController: UIViewController {
             make.top.equalTo(100)
             make.width.equalTo(300)
             make.bottom.equalTo(-20)
+            
         }
 //        loginStack.snp.makeConstraints { (make) in
 //            make.width.height.equalTo(300)
