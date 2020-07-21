@@ -8,7 +8,23 @@
 
 import UIKit
 import SnapKit
+import FBSDKLoginKit
 
+
+/*
+ Check if logged in
+ 
+ https://developers.facebook.com/apps/310379816777022/fb-login/quickstart/?sdk=cocoapods
+ Your app can only have one person logged in at a time. We represent each person logged into your app with the [FBSDKAccessToken currentAccessToken].
+ The FBSDKLoginManager sets this token for you and when it sets currentAccessToken it also automatically writes it to a keychain cache.
+ The FBSDKAccessToken contains userID which you can use to identify the user.
+ You should update your view controller to check for an existing token at load. This avoids unnecessary showing the login flow again if someone already granted permissions to your app:
+ if let token = AccessToken.current,
+     !token.isExpired {
+     // User is logged in, do work such as go to next view controller.
+ }
+ 
+ */
 class Colors {
     var gl : CAGradientLayer
 
@@ -25,48 +41,15 @@ class Colors {
 class LoginViewController: UIViewController {
 
     let colors = Colors()
-    let mainStackview: UIStackView = {
-        let view = UIStackView()
-        view.backgroundColor = UIColor(white: 0.6, alpha: 0.4)
-        view.layer.cornerRadius = 20
-        return view
-    }()
     let logo: UILabel = {
-        let view = UILabel()
-        view.text = "Pinned"
-        view.textColor = .black
-        return view
+        let curr = UILabel()
+        curr.text = "Tumble"
+        // curr.font = UIFont(name: label.font.fontName, size: 20)
+        curr.font = UIFont(name: "Barcelony", size: 70)
+        curr.textColor = .white
+        return curr
     }()
-    let logo2: UILabel = {
-        let view = UILabel()
-        view.text = "Pinned2"
-        view.textColor = .black
-        return view
-    }()
-    let usernameView: UIView = {
-        let view = UIView()
-        view.backgroundColor = UIColor.red
-        view.layer.cornerRadius = 10
-        return view
-    }()
-    let passwordView: UIView = {
-        let view = UIView()
-        view.backgroundColor = UIColor.blue
-        view.layer.cornerRadius = 10
-        return view
-    }()
-    let loginButton: UIView = {
-        let view = UIView()
-        view.backgroundColor = UIColor.green
-        view.layer.cornerRadius = 10
-        return view
-    }()
-    var loginStack: UIStackView = {
-        let stackView = UIStackView()
-        stackView.axis = .vertical
-        stackView.distribution = .equalCentering
-        return stackView
-    }()
+    let loginButton = FBLoginButton()
     func constructBackground() {
         let backgroundLayer = colors.gl
         backgroundLayer.frame = view.frame
@@ -74,7 +57,14 @@ class LoginViewController: UIViewController {
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-         constructBackground()
+        // check to see whether or not user is logged in
+        if let token = AccessToken.current,
+            !token.isExpired {
+            // User is logged in, do work such as go to next view controller.
+            let newViewController = MainTabBarController()
+            self.navigationController?.pushViewController(newViewController, animated: true)
+        }
+        constructBackground()
         makeUI()
     }
     override func viewWillAppear(_ animated: Bool) {
@@ -87,47 +77,55 @@ class LoginViewController: UIViewController {
         self.navigationController?.setNavigationBarHidden(false, animated: animated)
     }
     func makeUI() {
-        view.addSubview(mainStackview)
-        mainStackview.axis = .vertical
-        mainStackview.alignment = .center
-        mainStackview.distribution = .equalSpacing
-        mainStackview.spacing = 0.2
-        mainStackview.addArrangedSubview(logo)
-        mainStackview.addArrangedSubview(logo2)
+        
+        view.addSubview(logo)
+        view.addSubview(loginButton)
+        
         logo.snp.makeConstraints { (make) in
-            make.center.equalToSuperview()
-            make.height.equalTo(40)
-            make.width.equalToSuperview()
+            make.top.equalTo(self.view.snp_bottom).multipliedBy(0.1)
+            make.centerX.equalTo(self.view)
         }
-        logo2.snp.makeConstraints { (make) in
-            make.center.equalToSuperview()
-            make.height.equalTo(40)
-            make.width.equalToSuperview()
+        
+        loginButton.snp.makeConstraints { (make) in
+            make.bottom.equalTo(self.view.snp_bottomMargin).multipliedBy(0.9)
+            //make.center.equalToSuperview()
+            make.centerX.equalTo(self.view)
         }
-//         mainStackview.addSubview(loginStack)
-//         loginStack.addSubview(usernameView)
-//         loginStack.addSubview(passwordView)
-//        usernameView.snp.makeConstraints { (make) in
-//            make.height.equalTo(50)
-//        }
-//        passwordView.snp.makeConstraints { (make) in
-//            make.height.equalTo(50)
-//        }
-        mainStackview.snp.makeConstraints { (make) in
-            make.center.equalToSuperview()
-            make.top.equalTo(100)
-            make.width.equalTo(300)
-            make.bottom.equalTo(-20)
-            
-        }
-//        loginStack.snp.makeConstraints { (make) in
-//            make.width.height.equalTo(300)
-//            make.center.equalTo(self.mainStackview)
-//        }
+        loginButton.center = view.center
+        loginButton.permissions = ["public_profile", "email"]
+        loginButton.addTarget(self, action: #selector(self.login), for: .touchUpInside)
     }
-//    @objc func login(sender: UIButton!) {
-//       let newViewController = MainTabBarController()
-//       self.navigationController?.pushViewController(newViewController, animated: true)
-//    }
+    
+    @objc func login(sender: UIButton!) {
+       let newViewController = MainTabBarController()
+       self.navigationController?.pushViewController(newViewController, animated: false)
+    }
+    /*
+     --- Code for a UIStackView, don't mind this ---
+     mainStackview.axis          = .vertical
+     mainStackview.alignment     = .center
+     mainStackview.distribution  = .equalSpacing
+     
+     
+     usernameView.backgroundColor = .red
+     passwordView.backgroundColor = .blue
+     
+     usernameView.snp.makeConstraints { (make) in
+         make.width.equalTo(100)
+         make.height.equalTo(50)
+     }
+     passwordView.snp.makeConstraints { (make) in
+         make.width.equalTo(100)
+         make.height.equalTo(50)
+     }
+     
+      mainStackview.addArrangedSubview(usernameView)
+      mainStackview.addArrangedSubview(passwordView)
 
+     mainStackview.snp.makeConstraints { (make) in
+         make.center.equalToSuperview()
+         make.width.equalTo(100)
+         
+     }
+     */
 }

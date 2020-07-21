@@ -13,7 +13,7 @@ target 'Excite' do
   pod 'NotificationBannerSwift', '~> 3.0.0'
   pod 'AlamofireImage'
   pod 'Kingfisher', '~> 5.0'
-
+  pod 'FBSDKLoginKit'
 
 
   target 'ExciteTests' do
