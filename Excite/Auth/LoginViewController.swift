@@ -62,7 +62,7 @@ class LoginViewController: UIViewController {
             !token.isExpired {
             // User is logged in, do work such as go to next view controller.
             let newViewController = MainTabBarController()
-            self.navigationController?.pushViewController(newViewController, animated: true)
+            self.navigationController?.pushViewController(newViewController, animated: false)
         }
         constructBackground()
         makeUI()
@@ -88,7 +88,6 @@ class LoginViewController: UIViewController {
         
         loginButton.snp.makeConstraints { (make) in
             make.bottom.equalTo(self.view.snp_bottomMargin).multipliedBy(0.9)
-            //make.center.equalToSuperview()
             make.centerX.equalTo(self.view)
         }
         loginButton.center = view.center
