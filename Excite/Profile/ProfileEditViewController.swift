@@ -17,11 +17,11 @@ class ProfileEditViewController: UIViewController {
     }
      override func viewDidLoad() {
         self.viewModel = ProfileViewModel()
-        tableView.backgroundColor = .clear
-        tableView.separatorStyle = .none
+        //tableView.backgroundColor = .clear
+        //tableView.separatorStyle = .none
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.contentInset.top = 28
+        //tableView.contentInset.top = 28
         super.viewDidLoad()
         view.backgroundColor = .white
         print("SETUP")
@@ -83,14 +83,14 @@ extension ProfileEditViewController: UITableViewDelegate, UITableViewDataSource 
             return cell ?? UITableViewCell()
         case .userPhotos:
             let cell = tableView.dequeueReusableCell(withIdentifier: ProfilePhotosCell.reuseIdentifier, for: indexPath) as? ProfilePhotosCell
-           //cell?.backgroundColor = UIColor.cyan
-            cell?.selectionStyle = .none
+            cell?.viewController = self
             if let photos = viewModel?.profile?.photos {
               //  print("size is \(photos.count)")
                  cell?.configure(photos: photos)
             }
             return cell ?? UITableViewCell()
         }
+        return UITableViewCell()
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
            switch ProfileSections.allCases[indexPath.section] {

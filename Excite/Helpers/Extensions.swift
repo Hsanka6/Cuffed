@@ -130,7 +130,7 @@ class ImagePickerManager: NSObject, UIImagePickerControllerDelegate, UINavigatio
 
 }
 
-extension UIImageView {
+class CustomImageView: UIImageView {
 
     fileprivate struct AssociatedObjectKeys {
         static var tapGestureRecognizer = "MediaViewerAssociatedObjectKey_mediaViewer"
@@ -154,7 +154,6 @@ extension UIImageView {
 
 
     public func addTapGestureRecognizer(action: (() -> Void)?) {
-        self.isUserInteractionEnabled = true
         self.tapGestureRecognizerAction = action
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleTapGesture))
         self.addGestureRecognizer(tapGestureRecognizer)
