@@ -191,7 +191,6 @@ class DatingAudioVideoViewController: UIViewController {
            self.remoteParticipant = nil
        }
     }
-        
     @objc func flipCamera() {
            var newDevice: AVCaptureDevice?
 
@@ -254,12 +253,11 @@ class DatingAudioVideoViewController: UIViewController {
        // Show / hide the automatic home indicator on modern iPhones.
        self.setNeedsUpdateOfHomeIndicatorAutoHidden()
     }
-        
     func startPreview() {
            let frontCamera = CameraSource.captureDevice(position: .front)
            let backCamera = CameraSource.captureDevice(position: .back)
 
-           if (frontCamera != nil || backCamera != nil) {
+           if frontCamera != nil || backCamera != nil {
 
                let options = CameraSourceOptions { (builder) in
                    // To support building with Xcode 10.x.
@@ -279,7 +277,7 @@ class DatingAudioVideoViewController: UIViewController {
                localVideoTrack!.addRenderer(self.previewView)
                logMessage(messageText: "Video track created")
 
-               if (frontCamera != nil && backCamera != nil) {
+               if frontCamera != nil && backCamera != nil {
                    // We will flip camera on tap.
                    let tap = UITapGestureRecognizer(target: self, action: #selector(self.flipCamera))
                    self.previewView.addGestureRecognizer(tap)
@@ -292,9 +290,8 @@ class DatingAudioVideoViewController: UIViewController {
                        self.previewView.shouldMirror = (captureDevice.position == .front)
                    }
                }
-           }
-           else {
-               self.logMessage(messageText:"No front or back capture device found!")
+           } else {
+               self.logMessage(messageText: "No front or back capture device found!")
            }
        }
     func makeUI() {
@@ -387,7 +384,7 @@ class DatingAudioVideoViewController: UIViewController {
 }
 
 struct TokenUtils {
-    static func fetchToken(url : String) throws -> String {
+    static func fetchToken(url: String) throws -> String {
         var token: String = "TWILIO_ACCESS_TOKEN"
         let requestURL: URL = URL(string: url)!
         do {
@@ -396,7 +393,7 @@ struct TokenUtils {
                 token = tokenReponse
             }
         } catch let error as NSError {
-            print ("Invalid token url, error = \(error)")
+            print("Invalid token url, error = \(error)")
             throw error
         }
         return token

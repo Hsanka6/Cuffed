@@ -11,6 +11,9 @@ target 'Excite' do
   pod 'TwilioVideo', '~> 3.2'
   pod 'SwiftLint'
   pod 'NotificationBannerSwift', '~> 3.0.0'
+  pod 'AlamofireImage'
+  pod 'Kingfisher', '~> 5.0'
+  pod 'FBSDKLoginKit'
 
 
   target 'ExciteTests' do
