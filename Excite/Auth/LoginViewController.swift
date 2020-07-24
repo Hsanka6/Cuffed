@@ -38,7 +38,29 @@ class Colors {
     }
 }
 
-class LoginViewController: UIViewController {
+class LoginViewController: UIViewController, LoginButtonDelegate {
+    func loginButtonDidLogOut(_ loginButton: FBLoginButton) {
+        return
+    }
+    
+    func loginButton(_ loginButton: FBLoginButton, didCompleteWith result: LoginManagerLoginResult?, error: Error?) {
+        if ((error) != nil) {
+            let alert = UIAlertController(title: "Login failed!", message: "Message", preferredStyle: UIAlertController.Style.alert)
+            alert.addAction(UIAlertAction(title: "Try again!", style: UIAlertAction.Style.default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+        }
+        else if result!.isCancelled {
+            let alert = UIAlertController(title: "Oh?", message: "You cancelled?", preferredStyle: UIAlertController.Style.alert)
+            alert.addAction(UIAlertAction(title: "Yeah lemme try again", style: UIAlertAction.Style.default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+        }
+        else {
+            let newViewController = MainTabBarController()
+            self.navigationController?.pushViewController(newViewController, animated: true)
+        }
+        
+    }
+    
 
     let colors = Colors()
     let logo: UILabel = {
@@ -92,13 +114,19 @@ class LoginViewController: UIViewController {
         }
         loginButton.center = view.center
         loginButton.permissions = ["public_profile", "email"]
-        loginButton.addTarget(self, action: #selector(self.login), for: .touchUpInside)
+        self.loginButton.delegate = self
+        // loginButton.addTarget(self, action: #selector(self.login), for: .touchUpInside)
     }
     
-    @objc func login(sender: UIButton!) {
-       let newViewController = MainTabBarController()
-       self.navigationController?.pushViewController(newViewController, animated: false)
-    }
+    
+    // work on taking out showing the page
+    // upon login - if it's the first time logging in
+    // disclosure agreement
+    //      if they don't accept then do the UIAlertController
+    // configure a profile page
+    
+    // filters page
+    
     /*
      --- Code for a UIStackView, don't mind this ---
      mainStackview.axis          = .vertical
