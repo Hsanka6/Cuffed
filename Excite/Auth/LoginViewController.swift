@@ -55,6 +55,19 @@ class LoginViewController: UIViewController, LoginButtonDelegate {
             self.present(alert, animated: true, completion: nil)
         }
         else {
+            // if it's successful and they do not have an account registered in our DB then register them
+            // otherwise, we route them to where they started before
+            var id: String
+            GraphRequest(graphPath:"me", parameters: ["fields" : "email,name,picture"]).start(completionHandler: { (connection, result, error) in
+                if error == nil {
+                    // 3776489612377405
+                    print("User Info : \(result)")
+                    id = result["id"]
+                    print(id)
+                } else {
+                    print("Error Getting Info \(error)");
+                }
+            })
             let newViewController = MainTabBarController()
             self.navigationController?.pushViewController(newViewController, animated: true)
         }
@@ -104,18 +117,25 @@ class LoginViewController: UIViewController, LoginButtonDelegate {
         view.addSubview(loginButton)
         
         logo.snp.makeConstraints { (make) in
-            make.top.equalTo(self.view.snp_bottom).multipliedBy(0.1)
+            make.top.equalTo(self.view.snp.bottom).multipliedBy(0.1)
             make.centerX.equalTo(self.view)
         }
         
+        
+        if let constraint = loginButton.constraints.first(where: { (constraint) -> Bool in
+            return constraint.firstAttribute == .height
+        }) {
+            constraint.constant = 40.0
+        }
         loginButton.snp.makeConstraints { (make) in
             make.bottom.equalTo(self.view.snp_bottomMargin).multipliedBy(0.9)
             make.centerX.equalTo(self.view)
+            make.width.equalTo(250)
+            make.height.equalTo(50)
         }
         loginButton.center = view.center
         loginButton.permissions = ["public_profile", "email"]
         self.loginButton.delegate = self
-        // loginButton.addTarget(self, action: #selector(self.login), for: .touchUpInside)
     }
     
     
