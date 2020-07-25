@@ -8,6 +8,7 @@ target 'Excite' do
   # Pods for Excite
   pod 'SnapKit', '~> 5.0.0'
   pod 'Firebase/Analytics'
+  pod 'Firebase/Auth'
   pod 'TwilioVideo', '~> 3.2'
   pod 'SwiftLint'
   pod 'NotificationBannerSwift', '~> 3.0.0'

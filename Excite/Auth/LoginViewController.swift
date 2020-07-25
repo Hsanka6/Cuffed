@@ -9,6 +9,8 @@
 import UIKit
 import SnapKit
 import FBSDKLoginKit
+import Firebase
+import FirebaseAuth
 
 
 /*
@@ -44,6 +46,7 @@ class LoginViewController: UIViewController, LoginButtonDelegate {
     }
     
     func loginButton(_ loginButton: FBLoginButton, didCompleteWith result: LoginManagerLoginResult?, error: Error?) {
+        
         if ((error) != nil) {
             let alert = UIAlertController(title: "Login failed!", message: "Message", preferredStyle: UIAlertController.Style.alert)
             alert.addAction(UIAlertAction(title: "Try again!", style: UIAlertAction.Style.default, handler: nil))
@@ -61,9 +64,21 @@ class LoginViewController: UIViewController, LoginButtonDelegate {
             GraphRequest(graphPath:"me", parameters: ["fields" : "email,name,picture"]).start(completionHandler: { (connection, result, error) in
                 if error == nil {
                     // 3776489612377405
+                    if let result = result as? [String:String],
+                        let email: String = result["email"],
+                        let fbId: String = result["id"] {
+                        print(email)
+                        print(fbId)
+                    }
                     print("User Info : \(result)")
-                    id = result["id"]
-                    print(id)
+                    let credential = FacebookAuthProvider.credential(withAccessToken: AccessToken.current!.tokenString)
+                    Auth.auth().signIn(with: credential) { (authResult, error) in
+                        if error != nil {
+                            print("JAN DEBUG: Something went wrong...")
+                            return
+                        }
+                        print("JAN DEBUG: Successfully logged in with our user.")
+                    }
                 } else {
                     print("Error Getting Info \(error)");
                 }
@@ -112,7 +127,7 @@ class LoginViewController: UIViewController, LoginButtonDelegate {
         self.navigationController?.setNavigationBarHidden(false, animated: animated)
     }
     func makeUI() {
-        
+        // https://excitedate-d3518.firebaseapp.com/__/auth/handler
         view.addSubview(logo)
         view.addSubview(loginButton)
         
@@ -130,15 +145,14 @@ class LoginViewController: UIViewController, LoginButtonDelegate {
         loginButton.snp.makeConstraints { (make) in
             make.bottom.equalTo(self.view.snp_bottomMargin).multipliedBy(0.9)
             make.centerX.equalTo(self.view)
-            make.width.equalTo(250)
+            make.width.equalTo(view.frame.width - 100   )
             make.height.equalTo(50)
         }
         loginButton.center = view.center
         loginButton.permissions = ["public_profile", "email"]
         self.loginButton.delegate = self
     }
-    
-    
+
     // work on taking out showing the page
     // upon login - if it's the first time logging in
     // disclosure agreement
@@ -175,4 +189,56 @@ class LoginViewController: UIViewController, LoginButtonDelegate {
          
      }
      */
+    
+    /*
+     Auth.auth().signIn(with: credential) { (authResult, error) in
+       if let error = error {
+         let authError = error as NSError
+         //if (isMFAEnabled && authError.code == AuthErrorCode.secondFactorRequired.rawValue) {
+         if (authError.code == AuthErrorCode.secondFactorRequired.rawValue) {
+           // The user is a multi-factor user. Second factor challenge is required.
+           let resolver = authError.userInfo[AuthErrorUserInfoMultiFactorResolverKey] as! MultiFactorResolver
+           var displayNameString = ""
+           for tmpFactorInfo in (resolver.hints) {
+             displayNameString += tmpFactorInfo.displayName ?? ""
+             displayNameString += " "
+           }
+             self.showTextInputPrompt(withMessage: "Select factor to sign in\n\(displayNameString)", completionBlock: { userPressedOK,
+             displayName in
+             var selectedHint: PhoneMultiFactorInfo?
+             for tmpFactorInfo in resolver.hints {
+               if (displayName == tmpFactorInfo.displayName) {
+                 selectedHint = tmpFactorInfo as? PhoneMultiFactorInfo
+               }
+             }
+             PhoneAuthProvider.provider().verifyPhoneNumber(with: selectedHint!, uiDelegate: nil, multiFactorSession: resolver.session) { verificationID, error in
+               if error != nil {
+                 print("Multi factor start sign in failed. Error: \(error.debugDescription)")
+               } else {
+                 self.showTextInputPrompt(withMessage: "Verification code for \(selectedHint?.displayName ?? "")", completionBlock: { userPressedOK, verificationCode in
+                   let credential: PhoneAuthCredential? = PhoneAuthProvider.provider().credential(withVerificationID: verificationID!, verificationCode: verificationCode!)
+                   let assertion: MultiFactorAssertion? = PhoneMultiFactorGenerator.assertion(with: credential!)
+                   resolver.resolveSignIn(with: assertion!) { authResult, error in
+                     if error != nil {
+                       print("Multi factor finanlize sign in failed. Error: \(error.debugDescription)")
+                     } else {
+                       self.navigationController?.popViewController(animated: true)
+                     }
+                   }
+                 })
+               }
+             }
+           })
+         } else {
+           // self.showMessagePrompt(error.localizedDescription)
+           return
+         }
+         // ...
+         return
+       }
+       // User is signed in
+       // ...
+     }
+     */
+    
 }
