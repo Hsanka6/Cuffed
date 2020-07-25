@@ -21,10 +21,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let navController = UINavigationController(rootViewController: LoginViewController())
         window?.rootViewController = navController
         FirebaseApp.configure()
+        
         ApplicationDelegate.shared.application(
             application,
             didFinishLaunchingWithOptions: launchOptions
         )
+        
         return true
     }
     func application(
