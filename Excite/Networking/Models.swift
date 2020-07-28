@@ -9,64 +9,70 @@
 import Foundation
 import UIKit
 
-struct User: Decodable {
+struct User: Codable {
     let userId: String
-    let fullName: String
-    let age: Int
     let email: String
     let profile: Profile
-    let currentMoments: [Moment]
+   // let currentMoments: [Moment]
 }
 
-enum GenderType: String, Decodable {
+enum GenderType: String, Codable {
     case MALE
     case FEMALE
     case OTHER
 }
 
-enum Availability: Int, Decodable {
+enum Availability: Int, Codable {
     case NOW = 15 // 0 - 15
     case SOON = 30 // 16 - 30
     case LATER = 60 // 31 - 60
 }
 
-struct Moment: Decodable {
+//Potential Date
+struct Moment: Codable {
+    let id: String
     let match: Match
     let time: Date
 }
 
 struct Profile: Codable {
-    let photos: [String]!
+    let photos: [String]
+    let matches: [Match]
+    let socials: [SocialProfile]
+    let questions: [Question]
+    let lat: Double
+    let lon: Double
+    let personalDetails: PersonalDetails
+    //let filter: Filter
 }
-//    let matches: [Match]
-//    let socials: [SocialProfile]
-//    let questions: [Question]
-//    let location: String
-//    let lat: Double
-//    let lon: Double
-//    let height: Int //inches
-//    let ethnicity: String
-//    let jobTitle: String
-//    let company: String
-//    let gender: GenderType
-//    let filter: Filter
 
-struct Question: Decodable {
+struct PersonalDetails: Codable {
+    let fullName: String
+    let age: Int
+    let height: Int //inches
+    let gender: GenderType
+    let ethnicity: String
+    let location: String
+    let jobTitle: String
+    let company: String
+}
+
+struct Question: Codable {
     let question: String
     let answer: String
 }
-struct Match: Decodable {
-    let matchId: String
-    let userId1: String
-    let userId2: User
+struct Match: Codable {
+    let id: String
+    let user1Id: String
+    let user2Id: String
 }
 
-struct SocialProfile: Decodable {
+struct SocialProfile: Codable {
     let platform: String
-    let profileLink: String
+    let link: String
 }
 
-struct Filter: Decodable {
+struct Filter: Codable {
     let interest: [GenderType]
     let distance: Int
     let time: Availability
