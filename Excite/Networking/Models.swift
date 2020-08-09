@@ -11,9 +11,8 @@ import UIKit
 
 struct User: Codable {
     let userId: String
-    let email: String
     let profile: Profile
-   // let currentMoments: [Moment]
+    let matches: [Match]
 }
 
 enum GenderType: String, Codable {
@@ -22,34 +21,30 @@ enum GenderType: String, Codable {
     case OTHER
 }
 
-enum Availability: Int, Codable {
-    case NOW = 15 // 0 - 15
-    case SOON = 30 // 16 - 30
-    case LATER = 60 // 31 - 60
+
+//Po Date
+struct Dates: Match {
+    let id: String
+    let userId1: String
+    let userId2: String
 }
 
-//Potential Date
-struct Moment: Codable {
-    let id: String
-    let match: Match
-    let time: Date
-}
 
 struct Profile: Codable {
     let photos: [String]
-    let matches: [Match]
     let socials: [SocialProfile]
     let questions: [Question]
     let lat: Double
     let lon: Double
     let personalDetails: PersonalDetails
-    //let filter: Filter
+    let details: [Detail] // ""
 }
+
 
 struct PersonalDetails: Codable {
     let fullName: String
     let age: Int
-    let height: Int //inches
+    let height: String 
     let gender: GenderType
     let ethnicity: String
     let location: String
@@ -60,6 +55,7 @@ struct PersonalDetails: Codable {
 struct Question: Codable {
     let question: String
     let answer: String
+    let image: String
 }
 struct Match: Codable {
     let id: String
