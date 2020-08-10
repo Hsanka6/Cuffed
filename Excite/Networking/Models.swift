@@ -28,12 +28,12 @@ enum GenderType: String, Codable {
     case OTHER
 }
 
-struct tenQuestions: Codable {
-    Let question:String
-   }
+struct tenQuestions: Game {
+   let question:[String]
+}
 
 struct Game: Codable {
-    let id: String
+   let id: String
 }
 
 
@@ -59,7 +59,7 @@ struct Profile: Codable {
     let lon: Double
     let personalDetails: PersonalDetails
     let answers: [MultipleChoiceAnswer]
-    let personalityAnswers:  [MultipleChoiceAnswer]
+    let personalityAnswers:  [Personality]
 }
 
 Struct Personality: MultipleChoiceAnswer {
