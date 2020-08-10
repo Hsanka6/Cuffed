@@ -6,14 +6,21 @@
 //  Copyright © 2020 Haasith Sanka. All rights reserved.
 //
 
+
 import Foundation
 import UIKit
 
 struct User: Codable {
     let userId: String
     let profile: Profile
-    let matches: [Match]
+    let matches: [Date]
+    let liked: [String] //your likes
+    let likedYou: String //array of userIds that liked you
+    let seen: [String] //array of seen users
+    let blocked: [String] //array of blocked users
+    let isPremium: Bool
 }
+
 
 enum GenderType: String, Codable {
     case MALE
@@ -21,23 +28,62 @@ enum GenderType: String, Codable {
     case OTHER
 }
 
+struct tenQuestions: Codable {
+    Let question:String
+   }
 
-//Po Date
-struct Dates: Match {
+struct Game: Codable {
     let id: String
-    let userId1: String
-    let userId2: String
+}
+
+
+
+struct Date: Codable {
+    let id: String
+    let chatId: String
+    let user1Id: String
+    let user2Id: String
+    let games: [String]
+}
+
+struct Match: Date {
+   let isMatch: bool
 }
 
 
 struct Profile: Codable {
     let photos: [String]
     let socials: [SocialProfile]
-    let questions: [Question]
+    let freeResponse: [FreeResponse]
     let lat: Double
     let lon: Double
     let personalDetails: PersonalDetails
-    let details: [Detail] // ""
+    let answers: [MultipleChoiceAnswer]
+    let personalityAnswers:  [MultipleChoiceAnswer]
+}
+
+Struct Personality: MultipleChoiceAnswer {
+    let topValue: String //extroverted
+    let bottomValue: String //introverted
+}
+
+// “Your most embarrassing memory?” 
+// Open Ended questions and answers
+struct FreeResponse: Codable {
+    let question: String
+    let answer: String
+    let image: String
+}
+
+struct MultipleChoiceAnswer: MultipleChoice, Codable {
+    let answer: String
+}
+
+//  Question with limited answers
+struct MultipleChoice: Codable {
+    let id: String //maybe
+    let question: String
+    let answerChoices: [String]
 }
 
 
@@ -52,16 +98,6 @@ struct PersonalDetails: Codable {
     let company: String
 }
 
-struct Question: Codable {
-    let question: String
-    let answer: String
-    let image: String
-}
-struct Match: Codable {
-    let id: String
-    let user1Id: String
-    let user2Id: String
-}
 
 struct SocialProfile: Codable {
     let platform: String
@@ -73,4 +109,5 @@ struct Filter: Codable {
     let distance: Int
     let time: Availability
     let age: Int
+    Let moreFilters: [MultipleChoice]
 }
