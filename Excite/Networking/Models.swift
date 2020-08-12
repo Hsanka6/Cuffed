@@ -10,35 +10,47 @@
 import Foundation
 import UIKit
 
-struct User: Codable {
+class User {
+    init(userId, ) {
+        self.userId = userId
+    }
     let userId: String
     let profile: Profile
-    let matches: [Date]
+    let matches: [Moment]
     let liked: [String] //your likes
     let likedYou: String //array of userIds that liked you
     let seen: [String] //array of seen users
     let blocked: [String] //array of blocked users
     let isPremium: Bool
+    let filter: Filter
 }
 
 
-enum GenderType: String, Codable {
+enum GenderType: String {
     case MALE
     case FEMALE
     case OTHER
 }
 
-struct tenQuestions: Game {
+class tenQuestions: Game {
+    override init() {
+        super.init()
+    }
    let question:[String]
+   let currentQuestion: Int
 }
 
-struct Game: Codable {
+class Game {
+    init() {
+        
+    }
    let id: String
 }
 
-
-
-struct Date: Codable {
+class Moment {
+    init() {
+        
+    }
     let id: String
     let chatId: String
     let user1Id: String
@@ -46,12 +58,18 @@ struct Date: Codable {
     let games: [String]
 }
 
-struct Match: Date {
-   let isMatch: bool
+class Match: Moment {
+    override init() {
+        
+    }
+   let isMatch: Bool
 }
 
 
-struct Profile: Codable {
+class Profile {
+    init() {
+        // ...
+    }
     let photos: [String]
     let socials: [SocialProfile]
     let freeResponse: [FreeResponse]
@@ -62,32 +80,54 @@ struct Profile: Codable {
     let personalityAnswers:  [Personality]
 }
 
-Struct Personality: MultipleChoiceAnswer {
+class Personality: MultipleChoiceAnswer {
+    override init() {
+        super.init()
+    }
     let topValue: String //extroverted
     let bottomValue: String //introverted
 }
 
+class Question {
+    init(question: String, isHidden: String, isMandatory: String) {
+        self.question = question
+    }
+    let question: String
+    
+    let isHidden: Bool
+    let isMandatory: Bool
+}
+
 // “Your most embarrassing memory?” 
 // Open Ended questions and answers
-struct FreeResponse: Codable {
-    let question: String
+class FreeResponse: Question {
+    override init() {
+        super.init()
+    }
     let answer: String
     let image: String
 }
 
-struct MultipleChoiceAnswer: MultipleChoice, Codable {
+class MultipleChoiceAnswer: MultipleChoice {
+    override init() {
+        super.init()
+    }
     let answer: String
 }
 
 //  Question with limited answers
-struct MultipleChoice: Codable {
+class MultipleChoice: Question {
+    override init() {
+        super.init()
+    }
     let id: String //maybe
-    let question: String
     let answerChoices: [String]
 }
 
-
-struct PersonalDetails: Codable {
+class PersonalDetails {
+    init() {
+        // ...
+    }
     let fullName: String
     let age: Int
     let height: String 
@@ -99,15 +139,22 @@ struct PersonalDetails: Codable {
 }
 
 
-struct SocialProfile: Codable {
+class SocialProfile {
+    init() {
+        
+    }
     let platform: String
     let link: String
 }
 
-struct Filter: Codable {
+class Filter {
+    init() {
+        
+    }
     let interest: [GenderType]
     let distance: Int
-    let time: Availability
     let age: Int
-    Let moreFilters: [MultipleChoice]
+    let moreFilters: [MultipleChoice]
 }
+
+
