@@ -27,50 +27,53 @@ import FirebaseAuth
  }
  
  */
-class Colors {
-    var gl : CAGradientLayer
-
-    init() {
-        let colorTop = UIColor(hexString: "6CA0FF").cgColor
-        let colorBottom = UIColor(hexString: "FF6299").cgColor
-
-        self.gl = CAGradientLayer()
-        self.gl.colors = [colorTop, colorBottom]
-        self.gl.locations = [0.0, 1.0]
-    }
-}
-
 class LoginViewController: UIViewController, LoginButtonDelegate {
+    
+    let backgroundLayer: CAGradientLayer = {
+        let gradientLayer = CAGradientLayer()
+        gradientLayer.colors=[UIColor(hexString: "6CA0FF").cgColor, UIColor(hexString: "FF6299").cgColor]
+        gradientLayer.locations = [0.0, 1.0]
+        return gradientLayer
+    }()
+    
     func loginButtonDidLogOut(_ loginButton: FBLoginButton) {
         return
     }
     
     func loginButton(_ loginButton: FBLoginButton, didCompleteWith result: LoginManagerLoginResult?, error: Error?) {
         
-        if ((error) != nil) {
+        if (error) != nil {
             let alert = UIAlertController(title: "Login failed!", message: "Message", preferredStyle: UIAlertController.Style.alert)
             alert.addAction(UIAlertAction(title: "Try again!", style: UIAlertAction.Style.default, handler: nil))
             self.present(alert, animated: true, completion: nil)
         }
+            
         else if result!.isCancelled {
             let alert = UIAlertController(title: "Oh?", message: "You cancelled?", preferredStyle: UIAlertController.Style.alert)
             alert.addAction(UIAlertAction(title: "Yeah lemme try again", style: UIAlertAction.Style.default, handler: nil))
             self.present(alert, animated: true, completion: nil)
         }
+            
         else {
             // if it's successful and they do not have an account registered in our DB then register them
             // otherwise, we route them to where they started before
-            var id: String
-            GraphRequest(graphPath:"me", parameters: ["fields" : "email,name,picture"]).start(completionHandler: { (connection, result, error) in
+            GraphRequest(graphPath: "me", parameters: ["fields": "email,name,picture"]).start(completionHandler: { (connection, result, error) in
                 if error == nil {
                     // 3776489612377405
-                    if let result = result as? [String:String],
-                        let email: String = result["email"],
-                        let fbId: String = result["id"] {
-                        print(email)
-                        print(fbId)
+                    
+                    guard let info = result as? [String : AnyObject] else {
+                        return
                     }
-                    print("User Info : \(result)")
+                    let id      = info["id"] as? String ?? ""
+                    let email   = info["email"] as? String ?? ""
+                    var network = NetworkRequesterMock()
+                    network.getUser(id: id)
+                    
+                    // From here, get their information and pull Firestore DB to see if they have a profile configured
+                    // If they do, then get them to their matches screen directly
+                    // Otherwise, they're going to need to fill up the sign up part.
+                    
+                    
                     let credential = FacebookAuthProvider.credential(withAccessToken: AccessToken.current!.tokenString)
                     Auth.auth().signIn(with: credential) { (authResult, error) in
                         if error != nil {
@@ -100,23 +103,15 @@ class LoginViewController: UIViewController, LoginButtonDelegate {
         }
         
     }
-    
-
-    let colors = Colors()
     let logo: UILabel = {
         let curr = UILabel()
-        curr.text = "Tumble"
+        curr.text = "Cuffed"
         // curr.font = UIFont(name: label.font.fontName, size: 20)
         curr.font = UIFont(name: "Barcelony", size: 70)
         curr.textColor = .white
         return curr
     }()
-    let loginButton = FBLoginButton()
-    func constructBackground() {
-        let backgroundLayer = colors.gl
-        backgroundLayer.frame = view.frame
-        view.layer.insertSublayer(backgroundLayer, at: 0)
-    }
+    let facebookLoginButton = FBLoginButton()
     override func viewDidLoad() {
         super.viewDidLoad()
         // check to see whether or not user is logged in
@@ -138,29 +133,33 @@ class LoginViewController: UIViewController, LoginButtonDelegate {
         // Show the navigation bar on other view controllers
         self.navigationController?.setNavigationBarHidden(false, animated: animated)
     }
+    func constructBackground() {
+        self.backgroundLayer.frame = view.frame
+        view.layer.insertSublayer(backgroundLayer, at: 0)
+    }
     func makeUI() {
         view.addSubview(logo)
-        view.addSubview(loginButton)
+        view.addSubview(facebookLoginButton)
         
         logo.snp.makeConstraints { (make) in
             make.top.equalTo(self.view.snp.bottom).multipliedBy(0.1)
             make.centerX.equalTo(self.view)
         }
-//        // go through constraints and pick the first constraint that sets attribute as height, make that constraint 40
-        if let constraint = loginButton.constraints.first(where: { (constraint) -> Bool in
+        
+        if let constraint = facebookLoginButton.constraints.first(where: { (constraint) -> Bool in
             return constraint.firstAttribute == .height
         }) {
             constraint.constant = 40.0
         }
-        loginButton.snp.makeConstraints { (make) in
+        facebookLoginButton.snp.makeConstraints { (make) in
             make.bottom.equalTo(self.view.snp_bottomMargin).multipliedBy(0.9)
             make.centerX.equalTo(self.view)
             make.width.equalTo(view.frame.width - 100   )
             make.height.equalTo(50)
         }
-        loginButton.center = view.center
-        loginButton.permissions = ["public_profile", "email"]
-        self.loginButton.delegate = self
+        facebookLoginButton.center = view.center
+        facebookLoginButton.permissions = ["public_profile", "email"]
+        self.facebookLoginButton.delegate = self
     }
 
     // work on taking out showing the page

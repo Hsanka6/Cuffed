@@ -37,6 +37,7 @@
 		AC3EDBA5ECEA5D50F29BA520 /* Pods_ExciteTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 14F3440FD214E137E869D5F5 /* Pods_ExciteTests.framework */; };
 		D8EE311ED3256FAB5A1073CE /* Pods_Excite.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B3112B2EAD0500421CCA693 /* Pods_Excite.framework */; };
 		EC4F636F24C6BCFD00477779 /* Barcelony.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EC4F636E24C6BCFD00477779 /* Barcelony.ttf */; };
+		ECA3D4C424E9EB36009844D7 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECA3D4C324E9EB36009844D7 /* LoginViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -98,6 +99,7 @@
 		B73279018DF84D55D148AB48 /* Pods-ExciteTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ExciteTests.release.xcconfig"; path = "Target Support Files/Pods-ExciteTests/Pods-ExciteTests.release.xcconfig"; sourceTree = "<group>"; };
 		CA6B3FD5E385BCEC34B609B4 /* Pods-Excite-ExciteUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Excite-ExciteUITests.debug.xcconfig"; path = "Target Support Files/Pods-Excite-ExciteUITests/Pods-Excite-ExciteUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		EC4F636E24C6BCFD00477779 /* Barcelony.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = Barcelony.ttf; path = Excite/Assets.xcassets/fonts/Barcelony/Barcelony.ttf; sourceTree = SOURCE_ROOT; };
+		ECA3D4C324E9EB36009844D7 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		F60BBCA043E7AD0A43D6B4FD /* Pods-Excite.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Excite.release.xcconfig"; path = "Target Support Files/Pods-Excite/Pods-Excite.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -173,6 +175,7 @@
 			children = (
 				7054D59B245F7507007DA9BA /* LoginViewController.swift */,
 				EC4F636E24C6BCFD00477779 /* Barcelony.ttf */,
+				ECA3D4C324E9EB36009844D7 /* LoginViewModel.swift */,
 			);
 			path = Auth;
 			sourceTree = "<group>";
@@ -549,6 +552,7 @@
 				7054D598245F7507007DA9BA /* AppDelegate.swift in Sources */,
 				70AA64CB247F6C2600F56CB3 /* MainTabBarController.swift in Sources */,
 				70FB575E2481D8F900CB24C4 /* Extensions.swift in Sources */,
+				ECA3D4C424E9EB36009844D7 /* LoginViewModel.swift in Sources */,
 				70AA64CD247F6D0300F56CB3 /* FindDateViewController.swift in Sources */,
 				70AA64D52481D5C100F56CB3 /* ProfileViewController.swift in Sources */,
 				703FBBD62481E5C400438F94 /* Models.swift in Sources */,
