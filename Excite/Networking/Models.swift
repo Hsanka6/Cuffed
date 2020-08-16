@@ -12,11 +12,11 @@ import UIKit
 struct User: Codable {
     let userId: String
     let profile: Profile
-    let matches: [Date]
-    let liked: [String] //your likes
-    let likedYou: String //array of userIds that liked you
-    let seen: [String] //array of seen users
-    let blocked: [String] //array of blocked users
+    let matches: [DateInstance]
+//    let liked: [String] //your likes
+//    let likedYou: String //array of userIds that liked you
+//    let seen: [String] //array of seen users
+//    let blocked: [String] //array of blocked users
     let isPremium: Bool
 }
 
@@ -37,7 +37,7 @@ class Game: Codable {
 
 
 
-class Dates: Codable {
+class DateInstance: Codable {
     let id: String
     let chatId: String
     let user1Id: String
@@ -53,7 +53,7 @@ class Dates: Codable {
     }
 }
 
-class Match: Dates {
+class Match: DateInstance {
    let isMatch: Bool
     
     init(isMatch: Bool, id: String, chatId: String, user1Id: String, user2Id: String, games: [String]) {
@@ -91,8 +91,11 @@ class Profile: Codable {
     let freeResponse: [FreeResponse]
     let lat: Double
     let lon: Double
+    // your metadata
     let personalDetails: PersonalDetails
+    // the answers to the questions that you display on your profile
     let answers: [MultipleChoiceAnswer]
+    // traits that you describe yourself as upon sign-up
     let personalityAnswers:  [Personality]
     
     private enum CodingKeys: String, CodingKey {
@@ -308,5 +311,3 @@ class Test: Codable {
     }
       
 }
-
-

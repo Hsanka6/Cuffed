@@ -44,6 +44,27 @@ class NetworkRequesterMock: NetworkRequesterProtocol {
 //        }
 //    }
 
+    
+    func getUser(id: String) {
+        let database = Firestore.firestore()
+        database.collection("Users").document(id).getDocument { (document, error) in
+            let result = Result {
+                try document?.data(as: User.self)
+            }
+            switch result {
+            case .success(let test):
+                if let test = test {
+                    print(test)
+                }
+                else {
+                    print("Document doesn't exist")
+                }
+            case .failure(let error):
+                print("Error decoding something here")
+            }
+        }
+    }
+    
     func getFood(name: String) {
         let db = Firestore.firestore()
         
