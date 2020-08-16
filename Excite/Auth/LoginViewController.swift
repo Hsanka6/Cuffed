@@ -77,7 +77,19 @@ class LoginViewController: UIViewController, LoginButtonDelegate {
                             print("JAN DEBUG: Something went wrong...")
                             return
                         }
+//                        guard let authResult = authResult else { return }
+//                        let firUser = authResult.user
+//                        // edit this
+//                        let newUser = User(uid: firUser.uid, username: username, fullName: fullName, bio: "", website: "", follows: [], followedBy: [], profileImage: self.profileImage)
+//                        newUser.save(completion: { (error) in
+//                          if let error = error {
+//                            // report
+//                          } else {
+//                            // not sure what you need to do here anymore since the user is already signed in
+//                          }
+//                        })
                         print("JAN DEBUG: Successfully logged in with our user.")
+                        print(authResult)
                     }
                 } else {
                     print("Error Getting Info \(error)");
@@ -127,7 +139,6 @@ class LoginViewController: UIViewController, LoginButtonDelegate {
         self.navigationController?.setNavigationBarHidden(false, animated: animated)
     }
     func makeUI() {
-        // https://excitedate-d3518.firebaseapp.com/__/auth/handler
         view.addSubview(logo)
         view.addSubview(loginButton)
         
@@ -135,8 +146,7 @@ class LoginViewController: UIViewController, LoginButtonDelegate {
             make.top.equalTo(self.view.snp.bottom).multipliedBy(0.1)
             make.centerX.equalTo(self.view)
         }
-        
-        
+//        // go through constraints and pick the first constraint that sets attribute as height, make that constraint 40
         if let constraint = loginButton.constraints.first(where: { (constraint) -> Bool in
             return constraint.firstAttribute == .height
         }) {
