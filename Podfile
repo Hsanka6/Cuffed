@@ -15,6 +15,10 @@ target 'Excite' do
   pod 'AlamofireImage'
   pod 'Kingfisher', '~> 5.0'
   pod 'FBSDKLoginKit'
+  pod 'Firebase/Firestore'
+
+  # Optionally, include the Swift extensions if you're using Swift.
+  pod 'FirebaseFirestoreSwift'
 
 
   target 'ExciteTests' do

@@ -27,6 +27,9 @@ class MainTabBarController: UITabBarController {
         let tabBarList = [dateController, chatController, profileController]
 
         viewControllers = tabBarList
+        
+        NetworkRequesterMock().getFood(name: "test")
+        NetworkRequesterMock().getUser(id: "test")
     }
 
     /*
