@@ -115,60 +115,39 @@
 
 //struct
 
-enum Keys: String, CodingKey {
-    case name
-    case size
-}
-protocol Edible: Codable {
-    var name: String { get }
-    var size: Int { get }
-//    init(name: String, size: Int) {
-//        self.name = name
-//        self.size = size
-//    }
+
+class Edible: Codable {
+    var name: String
+    var size: Int
     
-//
-//    required init(from decoder: Decoder) throws {
-//        print("INSIDE BASE INIT")
-//        let container = try decoder.container(keyedBy: Keys.self)
-//        name = try container.decode(String.self, forKey: .name)
-//        size = try container.decode(Int.self, forKey: .size)
-//        print("ABOUT TO LEAVE BASE INIT")
-//    }
+    init(name: String, size: Int) {
+        self.name = name
+        self.size = size
+    }
 }
 
-// https://stackoverflow.com/questions/44553934/using-decodable-in-swift-4-with-inheritance
 class Food: Edible {
-
     var taste: String
-
+    
     init(name: String, size: Int, taste: String) {
         self.taste = taste
         super.init(name: name, size: size)
     }
-    private enum CodingKeys: String, CodingKey { case taste
+    
+    enum Key: CodingKey {
         case name
         case size
+        case taste
     }
     
-    //https://stackoverflow.com/questions/46595246/how-can-i-implement-polymorphic-decoding-of-json-data-in-swift-4
-
     required init(from decoder: Decoder) throws {
-        // Get our container for this subclass' coding keys
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        taste = try container.decode(String.self, forKey: .taste)
-        
-        // otherVar = ...
-
-        // Get superDecoder for superclass and call super.init(from:) with it
-        let superDecoder = try container.superDecoder()
-        print("BEFORE SUPER.INIT")
-        try super.init(from: superDecoder)
-        print("AFTER SUPER.INIT")
-        fatalError("init(from:) has not been implemented")
+        let container = try decoder.container(keyedBy: Key.self)
+        let name = try container.decode(String.self, forKey: .name)
+        let size = try container.decode(Int.self, forKey: .size)
+        let taste = try container.decode(String.self, forKey: .taste)
+        self.taste = taste
+        super.init(name: name, size: size)
     }
-
-
 }
 
 class Test: Codable {
@@ -186,14 +165,12 @@ class Test: Codable {
     required init(from decoder: Decoder) throws {
         // Get our container for this subclass' coding keys
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        num = try container.decode(String.self, forKey: .num)
-        food = try container.decode(Food.self, forKey: .food )
-        // otherVar = ...
-
-        // Get superDecoder for superclass and call super.init(from:) with it
-//        let superDecoder = try container.superDecoder()
-//        try super.init(from: superDecoder)
-        fatalError("init(from:) has not been implemented")
+        let num = try container.decode(String.self, forKey: .num)
+        let food = try container.decode(Food.self, forKey: .food )
+        self.food = food
+        self.num = num
+        //super.init(num: num, food: food)
+        //fatalError("init(from:) has not been implemented")
     }
       
 }

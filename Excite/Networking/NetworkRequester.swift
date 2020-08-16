@@ -55,7 +55,7 @@ class NetworkRequesterMock: NetworkRequesterProtocol {
                case .success(let test):
                    if let test = test {
                        // A `City` value was successfully initialized from the DocumentSnapshot.
-                    print("City: \(test.food.taste)")
+                    print("City: \(test.num)")
                        //print(test)
                       // return test
                    } else {
