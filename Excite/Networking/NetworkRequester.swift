@@ -54,12 +54,15 @@ class NetworkRequesterMock: NetworkRequesterProtocol {
             switch result {
             case .success(let test):
                 if let test = test {
-                    print(test)
+                    print(test.profile.personalDetails.gender)
+                    print(test.profile.freeResponse[0].question)
+                    print(test.isPremium)
                 }
                 else {
                     print("Document doesn't exist")
                 }
             case .failure(let error):
+                print(error)
                 print("Error decoding something here")
             }
         }

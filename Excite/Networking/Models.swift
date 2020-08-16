@@ -156,8 +156,8 @@ class Personality: MultipleChoiceAnswer {
         case question
         case answerChoices
         case answer
-        case top
-        case bottom
+        case topValue
+        case bottomValue
      }
         
     required init(from decoder: Decoder) throws {
@@ -165,8 +165,8 @@ class Personality: MultipleChoiceAnswer {
         let question = try container.decode(String.self, forKey: .question)
         let answerChoices = try container.decode(Array<String>.self, forKey: .answerChoices)
         let answer = try container.decode(String.self, forKey: .answer)
-        let topValue = try container.decode(String.self, forKey: .top)
-        let bottomValue = try container.decode(String.self, forKey: .bottom)
+        let topValue = try container.decode(String.self, forKey: .topValue)
+        let bottomValue = try container.decode(String.self, forKey: .bottomValue)
         self.topValue = topValue
         self.bottomValue = bottomValue
         super.init(answer: answer, question: question, answerChoices: answerChoices)
