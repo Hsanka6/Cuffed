@@ -64,6 +64,7 @@ class LoginViewController: UIViewController, LoginButtonDelegate {
                     guard let info = result as? [String : AnyObject] else {
                         return
                     }
+                    print(info)
                     let id      = info["id"] as? String ?? ""
                     let email   = info["email"] as? String ?? ""
                     var network = NetworkRequesterMock()
@@ -75,6 +76,7 @@ class LoginViewController: UIViewController, LoginButtonDelegate {
                     
                     
                     let credential = FacebookAuthProvider.credential(withAccessToken: AccessToken.current!.tokenString)
+                    
                     Auth.auth().signIn(with: credential) { (authResult, error) in
                         if error != nil {
                             print("JAN DEBUG: Something went wrong...")

@@ -16,6 +16,10 @@ target 'Excite' do
   pod 'Kingfisher', '~> 5.0'
   pod 'FBSDKLoginKit'
   pod 'Firebase/Firestore'
+  pod 'Firebase/Core'
+  pod 'Firebase/Storage'
+  pod 'SDWebImage','~4.4.2'
+  pod 'JGProgressHUD','~2.0.3'
 
   # Optionally, include the Swift extensions if you're using Swift.
   pod 'FirebaseFirestoreSwift'
