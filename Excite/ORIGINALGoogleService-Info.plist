@@ -3,21 +3,21 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>74979786249-i6tn116l62qr0g07fu7e9atl798laj5e.apps.googleusercontent.com</string>
+	<string>790521326943-i8i45n868dco1f0hgi4odoi3uvvmb8ls.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.74979786249-i6tn116l62qr0g07fu7e9atl798laj5e</string>
+	<string>com.googleusercontent.apps.790521326943-i8i45n868dco1f0hgi4odoi3uvvmb8ls</string>
 	<key>API_KEY</key>
-	<string>AIzaSyCvMW6roQpM3uIq3hQs_RfMA2lLeY_Q5XA</string>
+	<string>AIzaSyAJiId3jzKQc1pYBoZlswshzm1--kv69wQ</string>
 	<key>GCM_SENDER_ID</key>
-	<string>74979786249</string>
+	<string>790521326943</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.maxhe.CuffedChat</string>
+	<string>com.date.Excite</string>
 	<key>PROJECT_ID</key>
-	<string>firechat-219e4</string>
+	<string>excitedate-d3518</string>
 	<key>STORAGE_BUCKET</key>
-	<string>firechat-219e4.appspot.com</string>
+	<string>excitedate-d3518.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -29,8 +29,8 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:74979786249:ios:d7bbbe25e6ffdd71b742d8</string>
+	<string>1:790521326943:ios:a2fb3d707d6723f1ef1aea</string>
 	<key>DATABASE_URL</key>
-	<string>https://firechat-219e4.firebaseio.com</string>
+	<string>https://excitedate-d3518.firebaseio.com</string>
 </dict>
 </plist>
