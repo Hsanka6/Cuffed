@@ -68,7 +68,7 @@ class LoginViewController: UIViewController, LoginButtonDelegate {
                     let id      = info["id"] as? String ?? ""
                     let email   = info["email"] as? String ?? ""
                     var network = NetworkRequesterMock()
-                    network.getUser(id: id)
+//                    network.getUser(id: id)
                     
                     // From here, get their information and pull Firestore DB to see if they have a profile configured
                     // If they do, then get them to their matches screen directly

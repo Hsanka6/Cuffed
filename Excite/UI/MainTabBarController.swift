@@ -29,7 +29,7 @@ class MainTabBarController: UITabBarController {
         viewControllers = tabBarList
         
         NetworkRequesterMock().getFood(name: "test")
-        NetworkRequesterMock().getUser(id: "test")
+        // NetworkRequesterMock().getUser(id: "test")
     }
 
     /*

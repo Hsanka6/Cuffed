@@ -36,8 +36,25 @@
 		70FB575E2481D8F900CB24C4 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70FB575D2481D8F900CB24C4 /* Extensions.swift */; };
 		AC3EDBA5ECEA5D50F29BA520 /* Pods_ExciteTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 14F3440FD214E137E869D5F5 /* Pods_ExciteTests.framework */; };
 		D8EE311ED3256FAB5A1073CE /* Pods_Excite.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B3112B2EAD0500421CCA693 /* Pods_Excite.framework */; };
+		EC3416A424F33B69002206A4 /* ConversationsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC34168B24F33B68002206A4 /* ConversationsController.swift */; };
+		EC3416A524F33B69002206A4 /* NewMessageController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC34168C24F33B68002206A4 /* NewMessageController.swift */; };
+		EC3416A624F33B69002206A4 /* ChatController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC34168D24F33B68002206A4 /* ChatController.swift */; };
+		EC3416A724F33B69002206A4 /* RegistrationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC34168F24F33B68002206A4 /* RegistrationController.swift */; };
+		EC3416A824F33B69002206A4 /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC34169024F33B68002206A4 /* LoginController.swift */; };
+		EC3416A924F33B69002206A4 /* Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC34169224F33B68002206A4 /* Service.swift */; };
+		EC3416AA24F33B69002206A4 /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC34169324F33B68002206A4 /* AuthService.swift */; };
+		EC3416AB24F33B69002206A4 /* ExtensionsFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC34169524F33B68002206A4 /* ExtensionsFile.swift */; };
+		EC3416AC24F33B69002206A4 /* MessageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC34169724F33B69002206A4 /* MessageViewModel.swift */; };
+		EC3416AD24F33B69002206A4 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC34169924F33B69002206A4 /* LoginViewModel.swift */; };
+		EC3416AE24F33B69002206A4 /* RegistrationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC34169A24F33B69002206A4 /* RegistrationViewModel.swift */; };
+		EC3416AF24F33B69002206A4 /* InputContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC34169C24F33B69002206A4 /* InputContainerView.swift */; };
+		EC3416B024F33B69002206A4 /* CustomInputAccessoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC34169D24F33B69002206A4 /* CustomInputAccessoryView.swift */; };
+		EC3416B124F33B69002206A4 /* UserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC34169E24F33B69002206A4 /* UserCell.swift */; };
+		EC3416B224F33B69002206A4 /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC34169F24F33B69002206A4 /* CustomTextField.swift */; };
+		EC3416B324F33B69002206A4 /* MessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC3416A024F33B69002206A4 /* MessageCell.swift */; };
+		EC3416B424F33B69002206A4 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC3416A224F33B69002206A4 /* Message.swift */; };
+		EC3416B524F33B69002206A4 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC3416A324F33B69002206A4 /* User.swift */; };
 		EC4F636F24C6BCFD00477779 /* Barcelony.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EC4F636E24C6BCFD00477779 /* Barcelony.ttf */; };
-		ECA3D4C424E9EB36009844D7 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECA3D4C324E9EB36009844D7 /* LoginViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -98,8 +115,25 @@
 		AD0C498F7288D75FF03593DB /* Pods_Excite_ExciteUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Excite_ExciteUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B73279018DF84D55D148AB48 /* Pods-ExciteTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ExciteTests.release.xcconfig"; path = "Target Support Files/Pods-ExciteTests/Pods-ExciteTests.release.xcconfig"; sourceTree = "<group>"; };
 		CA6B3FD5E385BCEC34B609B4 /* Pods-Excite-ExciteUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Excite-ExciteUITests.debug.xcconfig"; path = "Target Support Files/Pods-Excite-ExciteUITests/Pods-Excite-ExciteUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		EC34168B24F33B68002206A4 /* ConversationsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConversationsController.swift; sourceTree = "<group>"; };
+		EC34168C24F33B68002206A4 /* NewMessageController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewMessageController.swift; sourceTree = "<group>"; };
+		EC34168D24F33B68002206A4 /* ChatController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatController.swift; sourceTree = "<group>"; };
+		EC34168F24F33B68002206A4 /* RegistrationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegistrationController.swift; sourceTree = "<group>"; };
+		EC34169024F33B68002206A4 /* LoginController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginController.swift; sourceTree = "<group>"; };
+		EC34169224F33B68002206A4 /* Service.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Service.swift; sourceTree = "<group>"; };
+		EC34169324F33B68002206A4 /* AuthService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
+		EC34169524F33B68002206A4 /* ExtensionsFile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExtensionsFile.swift; sourceTree = "<group>"; };
+		EC34169724F33B69002206A4 /* MessageViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageViewModel.swift; sourceTree = "<group>"; };
+		EC34169924F33B69002206A4 /* LoginViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
+		EC34169A24F33B69002206A4 /* RegistrationViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegistrationViewModel.swift; sourceTree = "<group>"; };
+		EC34169C24F33B69002206A4 /* InputContainerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputContainerView.swift; sourceTree = "<group>"; };
+		EC34169D24F33B69002206A4 /* CustomInputAccessoryView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomInputAccessoryView.swift; sourceTree = "<group>"; };
+		EC34169E24F33B69002206A4 /* UserCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserCell.swift; sourceTree = "<group>"; };
+		EC34169F24F33B69002206A4 /* CustomTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
+		EC3416A024F33B69002206A4 /* MessageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageCell.swift; sourceTree = "<group>"; };
+		EC3416A224F33B69002206A4 /* Message.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
+		EC3416A324F33B69002206A4 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		EC4F636E24C6BCFD00477779 /* Barcelony.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = Barcelony.ttf; path = Excite/Assets.xcassets/fonts/Barcelony/Barcelony.ttf; sourceTree = SOURCE_ROOT; };
-		ECA3D4C324E9EB36009844D7 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		F60BBCA043E7AD0A43D6B4FD /* Pods-Excite.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Excite.release.xcconfig"; path = "Target Support Files/Pods-Excite/Pods-Excite.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -175,7 +209,6 @@
 			children = (
 				7054D59B245F7507007DA9BA /* LoginViewController.swift */,
 				EC4F636E24C6BCFD00477779 /* Barcelony.ttf */,
-				ECA3D4C324E9EB36009844D7 /* LoginViewModel.swift */,
 			);
 			path = Auth;
 			sourceTree = "<group>";
@@ -205,6 +238,12 @@
 		7054D596245F7507007DA9BA /* Excite */ = {
 			isa = PBXGroup;
 			children = (
+				EC34169124F33B68002206A4 /* API */,
+				EC34168A24F33B68002206A4 /* Controllers */,
+				EC3416A124F33B69002206A4 /* Model */,
+				EC34169424F33B68002206A4 /* Utils */,
+				EC34169B24F33B69002206A4 /* View */,
+				EC34169624F33B69002206A4 /* ViewModel */,
 				70C52B7324BA4011002CFFEA /* Profile */,
 				701F1CDA249D7BD10096B564 /* Networking */,
 				703FBBD92481EBCF00438F94 /* Auth */,
@@ -282,6 +321,82 @@
 				B73279018DF84D55D148AB48 /* Pods-ExciteTests.release.xcconfig */,
 			);
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		EC34168A24F33B68002206A4 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				EC34168B24F33B68002206A4 /* ConversationsController.swift */,
+				EC34168C24F33B68002206A4 /* NewMessageController.swift */,
+				EC34168D24F33B68002206A4 /* ChatController.swift */,
+				EC34168E24F33B68002206A4 /* Authentication */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		EC34168E24F33B68002206A4 /* Authentication */ = {
+			isa = PBXGroup;
+			children = (
+				EC34168F24F33B68002206A4 /* RegistrationController.swift */,
+				EC34169024F33B68002206A4 /* LoginController.swift */,
+			);
+			path = Authentication;
+			sourceTree = "<group>";
+		};
+		EC34169124F33B68002206A4 /* API */ = {
+			isa = PBXGroup;
+			children = (
+				EC34169224F33B68002206A4 /* Service.swift */,
+				EC34169324F33B68002206A4 /* AuthService.swift */,
+			);
+			path = API;
+			sourceTree = "<group>";
+		};
+		EC34169424F33B68002206A4 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				EC34169524F33B68002206A4 /* ExtensionsFile.swift */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
+		EC34169624F33B69002206A4 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				EC34169724F33B69002206A4 /* MessageViewModel.swift */,
+				EC34169824F33B69002206A4 /* Authentication */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		EC34169824F33B69002206A4 /* Authentication */ = {
+			isa = PBXGroup;
+			children = (
+				EC34169924F33B69002206A4 /* LoginViewModel.swift */,
+				EC34169A24F33B69002206A4 /* RegistrationViewModel.swift */,
+			);
+			path = Authentication;
+			sourceTree = "<group>";
+		};
+		EC34169B24F33B69002206A4 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				EC34169C24F33B69002206A4 /* InputContainerView.swift */,
+				EC34169D24F33B69002206A4 /* CustomInputAccessoryView.swift */,
+				EC34169E24F33B69002206A4 /* UserCell.swift */,
+				EC34169F24F33B69002206A4 /* CustomTextField.swift */,
+				EC3416A024F33B69002206A4 /* MessageCell.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		EC3416A124F33B69002206A4 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				EC3416A224F33B69002206A4 /* Message.swift */,
+				EC3416A324F33B69002206A4 /* User.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -545,25 +660,42 @@
 			buildActionMask = 2147483647;
 			files = (
 				709B2C4124C2B737008BA374 /* ProfilePhotosCell.swift in Sources */,
+				EC3416AF24F33B69002206A4 /* InputContainerView.swift in Sources */,
+				EC3416AE24F33B69002206A4 /* RegistrationViewModel.swift in Sources */,
+				EC3416A924F33B69002206A4 /* Service.swift in Sources */,
+				EC3416B124F33B69002206A4 /* UserCell.swift in Sources */,
+				EC3416A424F33B69002206A4 /* ConversationsController.swift in Sources */,
 				70A3AC4D24C3A98A008BB1FF /* UserDetailTableViewCell.swift in Sources */,
 				70A3AC4B24C3A8E7008BB1FF /* UserTableTableViewCell.swift in Sources */,
 				7054D59C245F7507007DA9BA /* LoginViewController.swift in Sources */,
+				EC3416AC24F33B69002206A4 /* MessageViewModel.swift in Sources */,
 				7033774E24C6A78900834FB8 /* PhotoCollectionViewCell.swift in Sources */,
+				EC3416AD24F33B69002206A4 /* LoginViewModel.swift in Sources */,
 				7054D598245F7507007DA9BA /* AppDelegate.swift in Sources */,
 				70AA64CB247F6C2600F56CB3 /* MainTabBarController.swift in Sources */,
+				EC3416B224F33B69002206A4 /* CustomTextField.swift in Sources */,
 				70FB575E2481D8F900CB24C4 /* Extensions.swift in Sources */,
-				ECA3D4C424E9EB36009844D7 /* LoginViewModel.swift in Sources */,
+				EC3416B024F33B69002206A4 /* CustomInputAccessoryView.swift in Sources */,
+				EC3416B324F33B69002206A4 /* MessageCell.swift in Sources */,
+				EC3416B524F33B69002206A4 /* User.swift in Sources */,
+				EC3416A624F33B69002206A4 /* ChatController.swift in Sources */,
 				70AA64CD247F6D0300F56CB3 /* FindDateViewController.swift in Sources */,
 				70AA64D52481D5C100F56CB3 /* ProfileViewController.swift in Sources */,
 				703FBBD62481E5C400438F94 /* Models.swift in Sources */,
 				70AA64CF247F6D4E00F56CB3 /* ChatViewController.swift in Sources */,
+				EC3416A524F33B69002206A4 /* NewMessageController.swift in Sources */,
 				7010798324A6CC1F00E640B9 /* DatingAudioVideoViewControllerExtensions.swift in Sources */,
 				709B2C3D24C2B40E008BA374 /* ProfileViewModel.swift in Sources */,
 				701F1CD8249D70080096B564 /* DatingAudioVideoViewController.swift in Sources */,
+				EC3416B424F33B69002206A4 /* Message.swift in Sources */,
+				EC3416A824F33B69002206A4 /* LoginController.swift in Sources */,
+				EC3416AA24F33B69002206A4 /* AuthService.swift in Sources */,
 				7010798124A6C9C300E640B9 /* Settings.swift in Sources */,
 				700F6B8D24C04D3E008C891F /* ProfileEditViewController.swift in Sources */,
 				7054D59A245F7507007DA9BA /* SceneDelegate.swift in Sources */,
+				EC3416A724F33B69002206A4 /* RegistrationController.swift in Sources */,
 				70F5882324C15F8D007E4C83 /* NetworkRequester.swift in Sources */,
+				EC3416AB24F33B69002206A4 /* ExtensionsFile.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

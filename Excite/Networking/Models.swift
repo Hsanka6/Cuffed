@@ -8,17 +8,17 @@
 
 import Foundation
 import UIKit
-
-struct User: Codable {
-    let userId: String
-    let profile: Profile
-    let matches: [DateInstance]
-//    let liked: [String] //your likes
-//    let likedYou: String //array of userIds that liked you
-//    let seen: [String] //array of seen users
-//    let blocked: [String] //array of blocked users
-    let isPremium: Bool
-}
+//
+//struct User: Codable {
+//    let userId: String
+//    let profile: Profile
+//    let matches: [DateInstance]
+////    let liked: [String] //your likes
+////    let likedYou: String //array of userIds that liked you
+////    let seen: [String] //array of seen users
+////    let blocked: [String] //array of blocked users
+//    let isPremium: Bool
+//}
 
 
 enum GenderType: String, Codable {
