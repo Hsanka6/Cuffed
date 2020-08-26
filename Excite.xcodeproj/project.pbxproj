@@ -107,7 +107,7 @@
 		AD0C498F7288D75FF03593DB /* Pods_Excite_ExciteUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Excite_ExciteUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B73279018DF84D55D148AB48 /* Pods-ExciteTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ExciteTests.release.xcconfig"; path = "Target Support Files/Pods-ExciteTests/Pods-ExciteTests.release.xcconfig"; sourceTree = "<group>"; };
 		CA6B3FD5E385BCEC34B609B4 /* Pods-Excite-ExciteUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Excite-ExciteUITests.debug.xcconfig"; path = "Target Support Files/Pods-Excite-ExciteUITests/Pods-Excite-ExciteUITests.debug.xcconfig"; sourceTree = "<group>"; };
-		EC4F636E24C6BCFD00477779 /* Barcelony.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = Barcelony.ttf; path = Excite/Assets.xcassets/fonts/Barcelony/Barcelony.ttf; sourceTree = SOURCE_ROOT; };
+		EC4F636E24C6BCFD00477779 /* Barcelony.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = Barcelony.ttf; path = Excite/Utils/Barcelony.ttf; sourceTree = SOURCE_ROOT; };
 		F60BBCA043E7AD0A43D6B4FD /* Pods-Excite.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Excite.release.xcconfig"; path = "Target Support Files/Pods-Excite/Pods-Excite.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -148,43 +148,61 @@
 			path = DatingAudioVideoControllers;
 			sourceTree = "<group>";
 		};
-		701F1CDA249D7BD10096B564 /* Networking */ = {
+		701F1CDA249D7BD10096B564 /* API */ = {
 			isa = PBXGroup;
 			children = (
 				70F5882424C166C1007E4C83 /* Mock JSON */,
-				703FBBD52481E5C400438F94 /* Models.swift */,
 				70F5882224C15F8D007E4C83 /* NetworkRequester.swift */,
 			);
-			path = Networking;
+			path = API;
 			sourceTree = "<group>";
 		};
-		703FBBD72481EB9D00438F94 /* UI */ = {
-			isa = PBXGroup;
-			children = (
-				701F1CD6249D6FBB0096B564 /* DatingAudioVideoControllers */,
-				70AA64CA247F6C2600F56CB3 /* MainTabBarController.swift */,
-				70AA64CE247F6D4E00F56CB3 /* ChatViewController.swift */,
-				70AA64CC247F6D0300F56CB3 /* FindDateViewController.swift */,
-			);
-			path = UI;
-			sourceTree = "<group>";
-		};
-		703FBBD82481EBAF00438F94 /* Helpers */ = {
-			isa = PBXGroup;
-			children = (
-				70FB575D2481D8F900CB24C4 /* Extensions.swift */,
-				7010798024A6C9C300E640B9 /* Settings.swift */,
-			);
-			path = Helpers;
-			sourceTree = "<group>";
-		};
-		703FBBD92481EBCF00438F94 /* Auth */ = {
+		7032880A24F65833002228ED /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
 				7054D59B245F7507007DA9BA /* LoginViewController.swift */,
-				EC4F636E24C6BCFD00477779 /* Barcelony.ttf */,
+				70AA64D42481D5C100F56CB3 /* ProfileViewController.swift */,
+				700F6B8C24C04D3E008C891F /* ProfileEditViewController.swift */,
+				70AA64CA247F6C2600F56CB3 /* MainTabBarController.swift */,
+				70AA64CE247F6D4E00F56CB3 /* ChatViewController.swift */,
+				70AA64CC247F6D0300F56CB3 /* FindDateViewController.swift */,
+				701F1CD6249D6FBB0096B564 /* DatingAudioVideoControllers */,
 			);
-			path = Auth;
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		7032880B24F658A2002228ED /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				703FBBD52481E5C400438F94 /* Models.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		7032880C24F658CE002228ED /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				70C52B7324BA4011002CFFEA /* Profile */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		7032880D24F658E6002228ED /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				709B2C3C24C2B40E008BA374 /* ProfileViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		703FBBD82481EBAF00438F94 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				EC4F636E24C6BCFD00477779 /* Barcelony.ttf */,
+				70FB575D2481D8F900CB24C4 /* Extensions.swift */,
+				7010798024A6C9C300E640B9 /* Settings.swift */,
+			);
+			path = Utils;
 			sourceTree = "<group>";
 		};
 		7054D58B245F7507007DA9BA = {
@@ -212,11 +230,12 @@
 		7054D596245F7507007DA9BA /* Excite */ = {
 			isa = PBXGroup;
 			children = (
-				70C52B7324BA4011002CFFEA /* Profile */,
-				701F1CDA249D7BD10096B564 /* Networking */,
-				703FBBD92481EBCF00438F94 /* Auth */,
-				703FBBD82481EBAF00438F94 /* Helpers */,
-				703FBBD72481EB9D00438F94 /* UI */,
+				7032880D24F658E6002228ED /* ViewModels */,
+				7032880C24F658CE002228ED /* Views */,
+				7032880B24F658A2002228ED /* Models */,
+				7032880A24F65833002228ED /* Controllers */,
+				701F1CDA249D7BD10096B564 /* API */,
+				703FBBD82481EBAF00438F94 /* Utils */,
 				7054D5C7245F755F007DA9BA /* GoogleService-Info.plist */,
 				7054D597245F7507007DA9BA /* AppDelegate.swift */,
 				7054D599245F7507007DA9BA /* SceneDelegate.swift */,
@@ -248,9 +267,6 @@
 		70C52B7324BA4011002CFFEA /* Profile */ = {
 			isa = PBXGroup;
 			children = (
-				70AA64D42481D5C100F56CB3 /* ProfileViewController.swift */,
-				700F6B8C24C04D3E008C891F /* ProfileEditViewController.swift */,
-				709B2C3C24C2B40E008BA374 /* ProfileViewModel.swift */,
 				709B2C4024C2B737008BA374 /* ProfilePhotosCell.swift */,
 				70A3AC4A24C3A8E7008BB1FF /* UserTableTableViewCell.swift */,
 				70A3AC4C24C3A98A008BB1FF /* UserDetailTableViewCell.swift */,
