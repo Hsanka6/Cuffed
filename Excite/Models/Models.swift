@@ -93,10 +93,12 @@ class Profile: Codable {
     let lon: Double
     // your metadata
     let personalDetails: PersonalDetails
-    // the answers to the questions that you display on your profile
-    let answers: [MultipleChoiceAnswer]
+    // the answers to the family questions that you display on your profile
+    let familyPlans: [MultipleChoiceAnswer]
+    // vices: drugs/drinks
+    let vices: [MultipleChoiceAnswer]
     // traits that you describe yourself as upon sign-up
-    let personalityAnswers:  [Personality]
+    let personalityAnswers: [Personality]
     
     private enum CodingKeys: String, CodingKey {
         case photos
@@ -105,18 +107,20 @@ class Profile: Codable {
         case lat
         case lon
         case personalDetails
-        case answers
+        case familyPlans
+        case vices
         case personalityAnswers
     }
     
-    init(photos: [String], socials: [SocialProfile], freeResponse: [FreeResponse], lat: Double, lon: Double, personalDetails: PersonalDetails, answers: [MultipleChoiceAnswer], personalityAnswers: [Personality]) {
+    init(photos: [String], socials: [SocialProfile], freeResponse: [FreeResponse], lat: Double, lon: Double, personalDetails: PersonalDetails, familyPlans: [MultipleChoiceAnswer], vices: [MultipleChoiceAnswer], personalityAnswers: [Personality]) {
         self.photos = photos
         self.socials = socials
         self.freeResponse = freeResponse
         self.lat = lat
         self.lon = lon
         self.personalDetails = personalDetails
-        self.answers = answers
+        self.familyPlans = familyPlans
+        self.vices = vices
         self.personalityAnswers = personalityAnswers
     }
 
@@ -129,7 +133,8 @@ class Profile: Codable {
         let lat = try container.decode(Double.self, forKey: .lat)
         let lon = try container.decode(Double.self, forKey: .lon )
         let personalDetails = try container.decode(PersonalDetails.self, forKey: .personalDetails )
-        let answers = try container.decode(Array<MultipleChoiceAnswer>.self, forKey: .answers )
+        let familyPlans = try container.decode(Array<MultipleChoiceAnswer>.self, forKey: .familyPlans )
+        let vices = try container.decode(Array<MultipleChoiceAnswer>.self, forKey: .vices )
         let personalityAnswers = try container.decode(Array<Personality>.self, forKey: .personalityAnswers )
         
         self.photos = photos
@@ -138,11 +143,9 @@ class Profile: Codable {
         self.lat = lat
         self.lon = lon
         self.personalDetails = personalDetails
-        self.answers = answers
+        self.familyPlans = familyPlans
+        self.vices = vices
         self.personalityAnswers = personalityAnswers
-              
-        //super.init(num: num, food: food)
-        //fatalError("init(from:) has not been implemented")
     }
     
     
@@ -158,6 +161,7 @@ class Personality: MultipleChoiceAnswer {
         case answer
         case topValue
         case bottomValue
+        case short
      }
         
     required init(from decoder: Decoder) throws {
@@ -167,9 +171,10 @@ class Personality: MultipleChoiceAnswer {
         let answer = try container.decode(String.self, forKey: .answer)
         let topValue = try container.decode(String.self, forKey: .topValue)
         let bottomValue = try container.decode(String.self, forKey: .bottomValue)
+        let short = try container.decode(String.self, forKey: .short)
         self.topValue = topValue
         self.bottomValue = bottomValue
-        super.init(answer: answer, question: question, answerChoices: answerChoices)
+        super.init(answer: answer, question: question, answerChoices: answerChoices, short: short)
     }
 }
 
@@ -188,21 +193,23 @@ class MultipleChoiceAnswer: MultipleChoice {
        case question
        case answerChoices
        case answer
+       case short
     }
-    init(answer: String, question: String, answerChoices:[String]) {
+    init(answer: String, question: String, answerChoices:[String], short: String) {
         self.answer = answer
-        super.init(question: question, answerChoices: answerChoices)
+        super.init(question: question, answerChoices: answerChoices, short: short)
         
     }
        
     required init(from decoder: Decoder) throws {
-       let container = try decoder.container(keyedBy: Key.self)
-       let question = try container.decode(String.self, forKey: .question)
-       let answerChoices = try container.decode(Array<String>.self, forKey: .answerChoices)
-       let answer = try container.decode(String.self, forKey: .answer)
-       self.answer = answer
-     super.init(question: question, answerChoices: answerChoices)
-   }
+        let container = try decoder.container(keyedBy: Key.self)
+        let question = try container.decode(String.self, forKey: .question)
+        let answerChoices = try container.decode(Array<String>.self, forKey: .answerChoices)
+        let answer = try container.decode(String.self, forKey: .answer)
+        let short  = try container.decode(String.self, forKey: .short)
+        self.answer = answer
+        super.init(question: question, answerChoices: answerChoices, short: short)
+    }
 }
 
 //  Question with limited answers
@@ -210,10 +217,12 @@ class MultipleChoice: Codable {
     //let id: String //maybe
     let question: String
     let answerChoices: [String]
+    let short: String
     
-    init(question:String, answerChoices: [String]) {
+    init(question:String, answerChoices: [String], short: String) {
         self.question = question
         self.answerChoices = answerChoices
+        self.short = short
     }
 }
 
