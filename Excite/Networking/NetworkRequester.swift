@@ -6,7 +6,6 @@
 //  Copyright © 2020 Haasith Sanka. All rights reserved.
 //
 
-import Foundation
 import Alamofire
 import Firebase
 import FirebaseFirestoreSwift
@@ -45,54 +44,23 @@ class NetworkRequesterMock: NetworkRequesterProtocol {
 //    }
 
     
-    func getUser(id: String) {
+    func getUser(completion: @escaping(User) -> Void) {
         let database = Firestore.firestore()
-        database.collection("Users").document(id).getDocument { (document, error) in
+        database.collection("Users").document("test").getDocument { (document, error) in
             let result = Result {
                 try document?.data(as: User.self)
             }
             switch result {
-            case .success(let test):
-                if let test = test {
-                    print(test.profile.personalDetails.gender)
-                    print(test.profile.freeResponse[0].question)
-                    print(test.isPremium)
-                }
-                else {
+            case .success(let user):
+                if let user = user {
+                    completion(user)
+                } else {
                     print("Document doesn't exist")
                 }
             case .failure(let error):
-                print(error)
-                print("Error decoding something here")
+                print("Error decoding something here \(error)")
             }
         }
     }
     
-    func getFood(name: String) {
-        let db = Firestore.firestore()
-        
-        db.collection("test").document(name).getDocument { (document, error) in
-             let result = Result {
-                 try document?.data(as: Test.self)
-               }
-               switch result {
-               case .success(let test):
-                   if let test = test {
-                       // A `City` value was successfully initialized from the DocumentSnapshot.
-                    print("City: \(test.num)")
-                       //print(test)
-                      // return test
-                   } else {
-                       // A nil value was successfully initialized from the DocumentSnapshot,
-                       // or the DocumentSnapshot was nil.
-                       print("Document does not exist")
-                   }
-               case .failure(let error):
-                   // A `City` value could not be initialized from the DocumentSnapshot.
-                   print("Error decoding city: \(error)")
-                //return test()
-               }
-        }
-       // return test()
-    }
 }

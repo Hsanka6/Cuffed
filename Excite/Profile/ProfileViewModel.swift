@@ -8,7 +8,6 @@
 
 import Foundation
 
-//class ProfileViewModel {
-//    var profile: Profile?
-//    var questions: Question?
-//}
+class ProfileViewModel {
+    var profile: Profile?
+}

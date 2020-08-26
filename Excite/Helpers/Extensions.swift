@@ -132,9 +132,39 @@ class ImagePickerManager: NSObject, UIImagePickerControllerDelegate, UINavigatio
    
 class Helpers {
     func getHeightInInches(inches: Int) -> String {
-      let feet = inches / 12
-      let inch = inches % 12
-      let height = "\(feet)' \(inch)\""
-      return height
-  }
+        let feet = inches / 12
+        let inch = inches % 12
+        let height = "\(feet)' \(inch)\""
+        return height
+    }
+    
+    
+}
+
+class CustomSlider: UISlider {
+    func makeCircleWith(size: CGSize, backgroundColor: UIColor) -> UIImage? {
+        UIGraphicsBeginImageContextWithOptions(size, false, 0.0)
+        let context = UIGraphicsGetCurrentContext()
+        context?.setFillColor(backgroundColor.cgColor)
+        context?.setStrokeColor(UIColor.clear.cgColor)
+        let bounds = CGRect(origin: .zero, size: size)
+        context?.addEllipse(in: bounds)
+        context?.drawPath(using: .fill)
+        let image = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return image
+    }
+    
+    override func thumbRect(forBounds bounds: CGRect, trackRect rect: CGRect, value: Float) -> CGRect {
+        let defaultThumbSpace: Float = 5
+        let startingOffset: Float = 0 - defaultThumbSpace
+        let endingOffset: Float = 2 * defaultThumbSpace
+
+    let xTranslation =  startingOffset + (minimumValue + endingOffset) / maximumValue * value
+    return super.thumbRect(forBounds: bounds,
+                           trackRect: rect.applying(CGAffineTransform(translationX: CGFloat(xTranslation),
+                                                                      y: 0)),
+                           value: value)
+}
+    
 }
