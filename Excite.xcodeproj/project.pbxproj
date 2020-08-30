@@ -19,7 +19,7 @@
 		7048578424F36A6B00F47A31 /* UserPrioritiesTableTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7048578324F36A6B00F47A31 /* UserPrioritiesTableTableViewCell.swift */; };
 		7054D598245F7507007DA9BA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7054D597245F7507007DA9BA /* AppDelegate.swift */; };
 		7054D59A245F7507007DA9BA /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7054D599245F7507007DA9BA /* SceneDelegate.swift */; };
-		7054D59C245F7507007DA9BA /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7054D59B245F7507007DA9BA /* LoginViewController.swift */; };
+		7054D59C245F7507007DA9BA /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7054D59B245F7507007DA9BA /* LoginController.swift */; };
 		7054D5A1245F750B007DA9BA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7054D5A0245F750B007DA9BA /* Assets.xcassets */; };
 		7054D5A4245F750B007DA9BA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7054D5A2245F750B007DA9BA /* LaunchScreen.storyboard */; };
 		7054D5AF245F750B007DA9BA /* ExciteTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7054D5AE245F750B007DA9BA /* ExciteTests.swift */; };
@@ -42,6 +42,8 @@
 		AC3EDBA5ECEA5D50F29BA520 /* Pods_ExciteTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 14F3440FD214E137E869D5F5 /* Pods_ExciteTests.framework */; };
 		D8EE311ED3256FAB5A1073CE /* Pods_Excite.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B3112B2EAD0500421CCA693 /* Pods_Excite.framework */; };
 		EC4F636F24C6BCFD00477779 /* Barcelony.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EC4F636E24C6BCFD00477779 /* Barcelony.ttf */; };
+		ECBF6E7B24FA307500CD6CD9 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECBF6E7A24FA307500CD6CD9 /* LoginViewModel.swift */; };
+		ECBF6E7D24FAFF8C00CD6CD9 /* GradientBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECBF6E7C24FAFF8C00CD6CD9 /* GradientBackground.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -76,7 +78,7 @@
 		7054D594245F7507007DA9BA /* Excite.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Excite.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7054D597245F7507007DA9BA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7054D599245F7507007DA9BA /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		7054D59B245F7507007DA9BA /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		7054D59B245F7507007DA9BA /* LoginController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginController.swift; sourceTree = "<group>"; };
 		7054D5A0245F750B007DA9BA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		7054D5A3245F750B007DA9BA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		7054D5A5245F750B007DA9BA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -108,6 +110,8 @@
 		B73279018DF84D55D148AB48 /* Pods-ExciteTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ExciteTests.release.xcconfig"; path = "Target Support Files/Pods-ExciteTests/Pods-ExciteTests.release.xcconfig"; sourceTree = "<group>"; };
 		CA6B3FD5E385BCEC34B609B4 /* Pods-Excite-ExciteUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Excite-ExciteUITests.debug.xcconfig"; path = "Target Support Files/Pods-Excite-ExciteUITests/Pods-Excite-ExciteUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		EC4F636E24C6BCFD00477779 /* Barcelony.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = Barcelony.ttf; path = Excite/Utils/Barcelony.ttf; sourceTree = SOURCE_ROOT; };
+		ECBF6E7A24FA307500CD6CD9 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
+		ECBF6E7C24FAFF8C00CD6CD9 /* GradientBackground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientBackground.swift; sourceTree = "<group>"; };
 		F60BBCA043E7AD0A43D6B4FD /* Pods-Excite.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Excite.release.xcconfig"; path = "Target Support Files/Pods-Excite/Pods-Excite.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -160,7 +164,7 @@
 		7032880A24F65833002228ED /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				7054D59B245F7507007DA9BA /* LoginViewController.swift */,
+				ECBF6E7824FA2A7300CD6CD9 /* Authentication */,
 				70AA64D42481D5C100F56CB3 /* ProfileViewController.swift */,
 				700F6B8C24C04D3E008C891F /* ProfileEditViewController.swift */,
 				70AA64CA247F6C2600F56CB3 /* MainTabBarController.swift */,
@@ -183,6 +187,7 @@
 			isa = PBXGroup;
 			children = (
 				70C52B7324BA4011002CFFEA /* Profile */,
+				ECBF6E7C24FAFF8C00CD6CD9 /* GradientBackground.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -190,6 +195,7 @@
 		7032880D24F658E6002228ED /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				ECBF6E7924FA306600CD6CD9 /* Authentication */,
 				709B2C3C24C2B40E008BA374 /* ProfileViewModel.swift */,
 			);
 			path = ViewModels;
@@ -310,6 +316,22 @@
 				B73279018DF84D55D148AB48 /* Pods-ExciteTests.release.xcconfig */,
 			);
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		ECBF6E7824FA2A7300CD6CD9 /* Authentication */ = {
+			isa = PBXGroup;
+			children = (
+				7054D59B245F7507007DA9BA /* LoginController.swift */,
+			);
+			path = Authentication;
+			sourceTree = "<group>";
+		};
+		ECBF6E7924FA306600CD6CD9 /* Authentication */ = {
+			isa = PBXGroup;
+			children = (
+				ECBF6E7A24FA307500CD6CD9 /* LoginViewModel.swift */,
+			);
+			path = Authentication;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -577,14 +599,16 @@
 				709C394E24F398EA00D8F7E9 /* MultipleChoiceCellTableViewCell.swift in Sources */,
 				70A3AC4D24C3A98A008BB1FF /* UserDetailTableViewCell.swift in Sources */,
 				70A3AC4B24C3A8E7008BB1FF /* UserTableTableViewCell.swift in Sources */,
-				7054D59C245F7507007DA9BA /* LoginViewController.swift in Sources */,
+				7054D59C245F7507007DA9BA /* LoginController.swift in Sources */,
 				7033774E24C6A78900834FB8 /* PhotoCollectionViewCell.swift in Sources */,
 				7054D598245F7507007DA9BA /* AppDelegate.swift in Sources */,
 				709C394C24F3968100D8F7E9 /* MultipleChoiceTableViewCell.swift in Sources */,
 				70AA64CB247F6C2600F56CB3 /* MainTabBarController.swift in Sources */,
 				70FB575E2481D8F900CB24C4 /* Extensions.swift in Sources */,
+				ECBF6E7D24FAFF8C00CD6CD9 /* GradientBackground.swift in Sources */,
 				70AA64CD247F6D0300F56CB3 /* FindDateViewController.swift in Sources */,
 				70AA64D52481D5C100F56CB3 /* ProfileViewController.swift in Sources */,
+				ECBF6E7B24FA307500CD6CD9 /* LoginViewModel.swift in Sources */,
 				7048578424F36A6B00F47A31 /* UserPrioritiesTableTableViewCell.swift in Sources */,
 				703FBBD62481E5C400438F94 /* Models.swift in Sources */,
 				70AA64CF247F6D4E00F56CB3 /* ChatViewController.swift in Sources */,

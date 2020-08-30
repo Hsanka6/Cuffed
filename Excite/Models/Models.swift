@@ -18,6 +18,16 @@ struct User: Codable {
 //    let seen: [String] //array of seen users
 //    let blocked: [String] //array of blocked users
     let isPremium: Bool
+    
+//    init(_ id: String) {
+//        self.userId = id
+//        // Initialize the user and its fields here
+////        let user = NetworkRequester.getUser(id)
+////        user.
+////        self.profile = NetworkRequester.getProfile(id)
+////        self.matches = NetworkRequester.getMatches(id)
+//    }
+    
 }
 
 

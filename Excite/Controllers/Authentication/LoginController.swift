@@ -27,20 +27,49 @@ import FirebaseAuth
  }
  
  */
-class Colors {
-    var gl : CAGradientLayer
 
-    init() {
-        let colorTop = UIColor(hexString: "6CA0FF").cgColor
-        let colorBottom = UIColor(hexString: "FF6299").cgColor
-
-        self.gl = CAGradientLayer()
-        self.gl.colors = [colorTop, colorBottom]
-        self.gl.locations = [0.0, 1.0]
+class LoginController: UIViewController, LoginButtonDelegate {
+     
+    // MARK: - Properties
+    let colors = GradientBackground()
+    let logo: UILabel = {
+        let curr = UILabel()
+        curr.text = "Tumble"
+        curr.font = UIFont(name: "Barcelony", size: 70)
+        curr.textColor = .white
+        return curr
+    }()
+    let loginButton = FBLoginButton()
+    
+    var viewModel = LoginViewModel()
+    
+    // MARK: - Lifecycle
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        runOnBackgroundThread {
+            NetworkRequester().getUser("test", completion: { (user) in
+                self.viewModel.currentUser = user
+            })
+        }
+        print("WHY IS THIS NIL???")
+        print(self.viewModel.currentUser)
+        self.authenticateUser()
+        self.makeUI()
     }
-}
-
-class LoginViewController: UIViewController, LoginButtonDelegate {
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.setNavigationBarHidden(true, animated: animated)
+    }
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        // Show the navigation bar on other view controllers
+        self.navigationController?.setNavigationBarHidden(false, animated: animated)
+    }
+    
+    // MARK: - Selectors
+    
     func loginButtonDidLogOut(_ loginButton: FBLoginButton) {
         return
     }
@@ -58,19 +87,14 @@ class LoginViewController: UIViewController, LoginButtonDelegate {
             self.present(alert, animated: true, completion: nil)
         }
         else {
-            // if it's successful and they do not have an account registered in our DB then register them
-            // otherwise, we route them to where they started before
-            var id: String
             GraphRequest(graphPath:"me", parameters: ["fields" : "email,name,picture"]).start(completionHandler: { (connection, result, error) in
                 if error == nil {
                     // 3776489612377405
                     if let result = result as? [String:String],
                         let email: String = result["email"],
                         let fbId: String = result["id"] {
-                        print(email)
-                        print(fbId)
                     }
-                    print("User Info : \(result)")
+                    print("User Info : \(result)") // 3776489612377405
                     let credential = FacebookAuthProvider.credential(withAccessToken: AccessToken.current!.tokenString)
                     Auth.auth().signIn(with: credential) { (authResult, error) in
                         if error != nil {
@@ -101,52 +125,48 @@ class LoginViewController: UIViewController, LoginButtonDelegate {
         
     }
     
-
-    let colors = Colors()
-    let logo: UILabel = {
-        let curr = UILabel()
-        curr.text = "Tumble"
-        // curr.font = UIFont(name: label.font.fontName, size: 20)
-        curr.font = UIFont(name: "Barcelony", size: 70)
-        curr.textColor = .white
-        return curr
-    }()
-    let loginButton = FBLoginButton()
     func constructBackground() {
-        let backgroundLayer = colors.gl
+        let backgroundLayer = self.colors.gl
         backgroundLayer.frame = view.frame
         view.layer.insertSublayer(backgroundLayer, at: 0)
     }
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // check to see whether or not user is logged in
-        if let token = AccessToken.current,
-            !token.isExpired {
-            // User is logged in, do work such as go to next view controller.
-            let newViewController = MainTabBarController()
-            self.navigationController?.pushViewController(newViewController, animated: false)
+    
+    func authenticateUser() {
+        
+        // check to see if I can get the UserID from the AccessToken
+        // let's do a look up and check to see if they have a completed profile
+        // to check if they have a completed profile, we'll get their from authentication, check Firebase, and then do a lookup
+        // with that ID and check to see if certain fields have been completed already.
+        // if they do, then we'll display the MainTabBarController()
+        
+        if let token = AccessToken.current {
+            print("JAN DEBUG")
+            print(token.userID)
+            if !token.isExpired {
+                
+                let newViewController = MainTabBarController()
+                self.navigationController?.pushViewController(newViewController, animated: false)
+            }
         }
-        constructBackground()
-        makeUI()
+        
     }
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        navigationController?.setNavigationBarHidden(true, animated: animated)
-    }
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        // Show the navigation bar on other view controllers
-        self.navigationController?.setNavigationBarHidden(false, animated: animated)
-    }
+    
+    // MARK: - Helpers
+    
     func makeUI() {
+        self.constructBackground()
+        
+        // add views logo & loginButton
         view.addSubview(logo)
         view.addSubview(loginButton)
         
+        // set constraints for logo
         logo.snp.makeConstraints { (make) in
             make.top.equalTo(self.view.snp.bottom).multipliedBy(0.1)
             make.centerX.equalTo(self.view)
         }
-//        // go through constraints and pick the first constraint that sets attribute as height, make that constraint 40
+        
+        // set constraints for the loginButton
         if let constraint = loginButton.constraints.first(where: { (constraint) -> Bool in
             return constraint.firstAttribute == .height
         }) {
@@ -160,17 +180,11 @@ class LoginViewController: UIViewController, LoginButtonDelegate {
         }
         loginButton.center = view.center
         loginButton.permissions = ["public_profile", "email"]
+        
         self.loginButton.delegate = self
+        
     }
 
-    // work on taking out showing the page
-    // upon login - if it's the first time logging in
-    // disclosure agreement
-    //      if they don't accept then do the UIAlertController
-    // configure a profile page
-    
-    // filters page
-    
     /*
      --- Code for a UIStackView, don't mind this ---
      mainStackview.axis          = .vertical

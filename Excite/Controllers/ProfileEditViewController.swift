@@ -45,7 +45,7 @@ class ProfileEditViewController: UIViewController {
             //make.centerX.equalToSuperview()
         }
         runOnBackgroundThread {
-            NetworkRequesterMock().getUser { user in
+            NetworkRequester().getUser("test") { user in
                 self.viewModel?.profile = user.profile
                 self.tableView.reloadData()
             }
