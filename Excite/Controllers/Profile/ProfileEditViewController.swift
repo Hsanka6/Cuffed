@@ -12,9 +12,14 @@ import FirebaseFirestoreSwift
 
 class ProfileEditViewController: UIViewController {
     var viewModel: ProfileViewModel?
+    var profile: Profile?
+    var gotProfile: Bool = false
+    
+    var user: User?
     var tableView = UITableView()
     enum ProfileSections: String, CaseIterable {
         case userPhotos = "My Photos"
+        case userQuestions = "My Responses"
         case userTable  = "Personal Details"
         case userPersonality = "My Personality"
         case userPriorities = "My Priorities"
@@ -22,14 +27,31 @@ class ProfileEditViewController: UIViewController {
         case userFamilyPlans = "My Family Plans"
                     
     }
-     override func viewDidLoad() {
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        tableViewSetup()
+        navBarSetup()
+    }
+    
+    func navBarSetup() {
+        let saveButton = UIBarButtonItem(title: "Save", style: .plain, target: self, action: #selector(saveProfile))
+        self.navigationItem.rightBarButtonItem  = saveButton
+    }
+    
+    @objc func saveProfile() {
+        let db = Firestore.firestore()
+        guard let profile = profile else { return }
+        //let food = Food(name: "dumb", size: 3, taste: "ffvddv")
+        db.collection("Users").document("test").setData([ "profile": profile.makeFromDict() ], merge: true)
+    }
+    
+    func tableViewSetup() {
         self.viewModel = ProfileViewModel()
         tableView.backgroundColor = .clear
         tableView.separatorStyle = .none
         tableView.delegate = self
         tableView.dataSource = self
         tableView.contentInset.top = 10
-        super.viewDidLoad()
         view.backgroundColor = .white
         self.view.addSubview(tableView)
         tableView.register(ProfilePhotosCell.self, forCellReuseIdentifier: ProfilePhotosCell.reuseIdentifier)
@@ -37,20 +59,29 @@ class ProfileEditViewController: UIViewController {
         tableView.register(UserTablePersonalityTableViewCell.self, forCellReuseIdentifier: UserTablePersonalityTableViewCell.reuseIdentifier)
         tableView.register(UserPrioritiesTableTableViewCell.self, forCellReuseIdentifier: UserPrioritiesTableTableViewCell.reuseIdentifier)
         tableView.register(MultipleChoiceTableViewCell.self, forCellReuseIdentifier: MultipleChoiceTableViewCell.reuseIdentifier)
+        tableView.register(QuestionsTableViewCell.self, forCellReuseIdentifier: QuestionsTableViewCell.reuseIdentifier)
+        
         
         tableView.snp.makeConstraints { (make) in
             make.top.equalTo(self.view.safeAreaLayoutGuide.snp.top)
             make.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom)
             make.left.right.equalToSuperview()
-            //make.centerX.equalToSuperview()
         }
-        runOnBackgroundThread {
-            NetworkRequesterMock().getUser { user in
-                self.viewModel?.profile = user.profile
-                self.tableView.reloadData()
-            }
-       }
+        if !gotProfile {
+            runOnBackgroundThread {
+                NetworkRequesterMock().getUser { user in
+                    self.viewModel?.profile = user.profile
+                    self.user? = user
+                    self.viewModel?.user = user
+                    self.tableView.reloadData()
+                }
+           }
+        } else {
+            self.viewModel?.profile = profile
+            self.tableView.reloadData()
+        }
     }
+    
 }
 
 extension ProfileEditViewController: UITableViewDelegate, UITableViewDataSource {
@@ -68,6 +99,8 @@ extension ProfileEditViewController: UITableViewDelegate, UITableViewDataSource 
             return 1
         case .userFamilyPlans:
             return 1
+        case .userQuestions:
+            return 1
         }
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -77,6 +110,7 @@ extension ProfileEditViewController: UITableViewDelegate, UITableViewDataSource 
             cell?.selectionStyle = .none
             if let details = viewModel?.profile?.personalDetails {
                 cell?.initialize(personalDetails: details)
+                cell?.viewController = self
             }
             return cell ?? UITableViewCell()
         case .userPhotos:
@@ -108,44 +142,54 @@ extension ProfileEditViewController: UITableViewDelegate, UITableViewDataSource 
                 cell?.initialize(questions: vices)
             }
             return cell ?? UITableViewCell()
+        case .userQuestions:
+            let cell = tableView.dequeueReusableCell(withIdentifier: QuestionsTableViewCell.reuseIdentifier, for: indexPath) as? QuestionsTableViewCell
+            cell?.viewController = self
+            cell?.profile = viewModel?.profile
+            if let vices = viewModel?.profile?.freeResponse {
+                cell?.initialize(freeResponse: vices)
+            }
+            return cell ?? UITableViewCell()
         }
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-           switch ProfileSections.allCases[indexPath.section] {
-           case .userTable:
-               return 400
-           case .userPhotos:
-               return 225
-           case .userPersonality:
-               return 320
-           case .userPriorities:
-               return 195
-           case .userVice:
-               return 160
-           case .userFamilyPlans:
-               return 120
+        switch ProfileSections.allCases[indexPath.section] {
+        case .userTable:
+           return 400
+        case .userPhotos:
+           return 225
+        case .userPersonality:
+           return 320
+        case .userPriorities:
+           return 195
+        case .userVice:
+           return 160
+        case .userFamilyPlans:
+           return 120
+        case .userQuestions:
+           return 250
         }
-       }
+    }
     func numberOfSections(in tableView: UITableView) -> Int {
        return ProfileSections.allCases.count
-   }
+    }
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
            switch ProfileSections.allCases[section] {
-           case .userTable, .userPhotos, .userPersonality, .userPriorities, .userVice, .userFamilyPlans:
+           case .userTable, .userPhotos, .userPersonality, .userPriorities, .userVice, .userFamilyPlans, .userQuestions:
                return 25
            }
     }
-       func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-           switch ProfileSections.allCases[section] {
-           default:
-               return ProfileSections.allCases[section].rawValue
-           }
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+       switch ProfileSections.allCases[section] {
+       default:
+           return ProfileSections.allCases[section].rawValue
        }
-       func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
-            let header = view as? UITableViewHeaderFooterView
-            header?.textLabel?.clipsToBounds = true
-            header?.tintColor = .lightGray
-            header?.textLabel?.textColor = UIColor.black
-            header?.textLabel?.font = .systemFont(ofSize: 18, weight: .semibold)
-       }
+    }
+    func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+        let header = view as? UITableViewHeaderFooterView
+        header?.textLabel?.clipsToBounds = true
+        header?.tintColor = .lightGray
+        header?.textLabel?.textColor = UIColor.black
+        header?.textLabel?.font = .systemFont(ofSize: 18, weight: .semibold)
+    }
 }

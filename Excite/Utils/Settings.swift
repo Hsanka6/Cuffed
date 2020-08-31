@@ -35,7 +35,7 @@ class Settings: NSObject {
                                                "us2"]
 
 
-    let supportedSignalingRegionDisplayString: [String:String] = ["gll": "Global Low Latency",
+    let supportedSignalingRegionDisplayString: [String: String] = ["gll": "Global Low Latency",
                                                                     "au1": "Australia",
                                                                     "br1": "Brazil",
                                                                     "de1": "Germany",

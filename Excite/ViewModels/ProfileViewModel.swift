@@ -10,4 +10,5 @@ import Foundation
 
 class ProfileViewModel {
     var profile: Profile?
+    var user: User?
 }

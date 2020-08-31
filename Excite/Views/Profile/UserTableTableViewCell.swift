@@ -12,6 +12,7 @@ class UserTableTableViewCell: UITableViewCell {
     static var reuseIdentifier = "UserTableTableViewCell"
     var tableView = UITableView()
     var personal: PersonalDetails?
+    var viewController:UIViewController?
     override func awakeFromNib() {
         super.awakeFromNib()
 
@@ -44,5 +45,10 @@ extension UserTableTableViewCell: UITableViewDelegate, UITableViewDataSource {
             cell?.initialize(model: personal, index: indexPath.row)
         }
         return cell ?? UITableViewCell()
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let controller = EditChoiceViewController()
+        self.viewController?.navigationController?.pushViewController(controller, animated: true)
     }
 }

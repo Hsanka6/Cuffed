@@ -63,4 +63,26 @@ class NetworkRequesterMock: NetworkRequesterProtocol {
         }
     }
     
+    
+    
+    
+    func getQuestions(completion: @escaping(QuestionCards) -> Void) {
+        let database = Firestore.firestore()
+        database.collection("FreeResponse").document("ProfileQuestions").getDocument { (document, error) in
+            let result = Result {
+                try document?.data(as: QuestionCards.self)
+            }
+            switch result {
+            case .success(let questions):
+                if let questions = questions {
+                    completion(questions)
+                } else {
+                    print("Document doesn't exist")
+                }
+            case .failure(let error):
+                print("Error decoding something here \(error)")
+            }
+        }
+    }
+    
 }

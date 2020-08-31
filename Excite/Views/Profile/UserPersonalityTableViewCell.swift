@@ -28,8 +28,8 @@ class UserPersonalityTableViewCell: UITableViewCell {
 
         slider.maximumValue = 4
         slider.minimumValue = 0
-        if let ff = Float(model.answer) {
-        slider.setValue( ff, animated: false)
+        if let sliderVal = Float(model.answer) {
+            slider.setValue( sliderVal, animated: false)
         }
         slider.addTarget(self, action: #selector(self.changeValue(_:)), for: .valueChanged)
 

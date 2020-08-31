@@ -56,8 +56,7 @@ class LoginViewController: UIViewController, LoginButtonDelegate {
             let alert = UIAlertController(title: "Oh?", message: "You cancelled?", preferredStyle: UIAlertController.Style.alert)
             alert.addAction(UIAlertAction(title: "Yeah lemme try again", style: UIAlertAction.Style.default, handler: nil))
             self.present(alert, animated: true, completion: nil)
-        }
-        else {
+        } else {
             // if it's successful and they do not have an account registered in our DB then register them
             // otherwise, we route them to where they started before
             var id: String
@@ -88,7 +87,6 @@ class LoginViewController: UIViewController, LoginButtonDelegate {
 //                            // not sure what you need to do here anymore since the user is already signed in
 //                          }
 //                        })
-                        print("JAN DEBUG: Successfully logged in with our user.")
                         print(authResult)
                     }
                 } else {
