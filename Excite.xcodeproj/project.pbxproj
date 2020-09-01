@@ -43,7 +43,8 @@
 		D8EE311ED3256FAB5A1073CE /* Pods_Excite.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B3112B2EAD0500421CCA693 /* Pods_Excite.framework */; };
 		EC4F636F24C6BCFD00477779 /* Barcelony.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EC4F636E24C6BCFD00477779 /* Barcelony.ttf */; };
 		ECBF6E7B24FA307500CD6CD9 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECBF6E7A24FA307500CD6CD9 /* LoginViewModel.swift */; };
-		ECBF6E7D24FAFF8C00CD6CD9 /* GradientBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECBF6E7C24FAFF8C00CD6CD9 /* GradientBackground.swift */; };
+		ECBF6E8024FC25A700CD6CD9 /* SignupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECBF6E7F24FC25A700CD6CD9 /* SignupViewController.swift */; };
+		ECBF6E8324FC25BD00CD6CD9 /* SignupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECBF6E8224FC25BD00CD6CD9 /* SignupViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -111,7 +112,8 @@
 		CA6B3FD5E385BCEC34B609B4 /* Pods-Excite-ExciteUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Excite-ExciteUITests.debug.xcconfig"; path = "Target Support Files/Pods-Excite-ExciteUITests/Pods-Excite-ExciteUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		EC4F636E24C6BCFD00477779 /* Barcelony.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = Barcelony.ttf; path = Excite/Utils/Barcelony.ttf; sourceTree = SOURCE_ROOT; };
 		ECBF6E7A24FA307500CD6CD9 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
-		ECBF6E7C24FAFF8C00CD6CD9 /* GradientBackground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientBackground.swift; sourceTree = "<group>"; };
+		ECBF6E7F24FC25A700CD6CD9 /* SignupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupViewController.swift; sourceTree = "<group>"; };
+		ECBF6E8224FC25BD00CD6CD9 /* SignupViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupViewModel.swift; sourceTree = "<group>"; };
 		F60BBCA043E7AD0A43D6B4FD /* Pods-Excite.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Excite.release.xcconfig"; path = "Target Support Files/Pods-Excite/Pods-Excite.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -164,6 +166,7 @@
 		7032880A24F65833002228ED /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				ECBF6E7E24FC259400CD6CD9 /* Signup */,
 				ECBF6E7824FA2A7300CD6CD9 /* Authentication */,
 				70AA64D42481D5C100F56CB3 /* ProfileViewController.swift */,
 				700F6B8C24C04D3E008C891F /* ProfileEditViewController.swift */,
@@ -187,7 +190,6 @@
 			isa = PBXGroup;
 			children = (
 				70C52B7324BA4011002CFFEA /* Profile */,
-				ECBF6E7C24FAFF8C00CD6CD9 /* GradientBackground.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -195,6 +197,7 @@
 		7032880D24F658E6002228ED /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				ECBF6E8124FC25AC00CD6CD9 /* Signup */,
 				ECBF6E7924FA306600CD6CD9 /* Authentication */,
 				709B2C3C24C2B40E008BA374 /* ProfileViewModel.swift */,
 			);
@@ -332,6 +335,22 @@
 				ECBF6E7A24FA307500CD6CD9 /* LoginViewModel.swift */,
 			);
 			path = Authentication;
+			sourceTree = "<group>";
+		};
+		ECBF6E7E24FC259400CD6CD9 /* Signup */ = {
+			isa = PBXGroup;
+			children = (
+				ECBF6E7F24FC25A700CD6CD9 /* SignupViewController.swift */,
+			);
+			path = Signup;
+			sourceTree = "<group>";
+		};
+		ECBF6E8124FC25AC00CD6CD9 /* Signup */ = {
+			isa = PBXGroup;
+			children = (
+				ECBF6E8224FC25BD00CD6CD9 /* SignupViewModel.swift */,
+			);
+			path = Signup;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -600,12 +619,13 @@
 				70A3AC4D24C3A98A008BB1FF /* UserDetailTableViewCell.swift in Sources */,
 				70A3AC4B24C3A8E7008BB1FF /* UserTableTableViewCell.swift in Sources */,
 				7054D59C245F7507007DA9BA /* LoginController.swift in Sources */,
+				ECBF6E8024FC25A700CD6CD9 /* SignupViewController.swift in Sources */,
 				7033774E24C6A78900834FB8 /* PhotoCollectionViewCell.swift in Sources */,
 				7054D598245F7507007DA9BA /* AppDelegate.swift in Sources */,
 				709C394C24F3968100D8F7E9 /* MultipleChoiceTableViewCell.swift in Sources */,
+				ECBF6E8324FC25BD00CD6CD9 /* SignupViewModel.swift in Sources */,
 				70AA64CB247F6C2600F56CB3 /* MainTabBarController.swift in Sources */,
 				70FB575E2481D8F900CB24C4 /* Extensions.swift in Sources */,
-				ECBF6E7D24FAFF8C00CD6CD9 /* GradientBackground.swift in Sources */,
 				70AA64CD247F6D0300F56CB3 /* FindDateViewController.swift in Sources */,
 				70AA64D52481D5C100F56CB3 /* ProfileViewController.swift in Sources */,
 				ECBF6E7B24FA307500CD6CD9 /* LoginViewModel.swift in Sources */,

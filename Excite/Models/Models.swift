@@ -11,22 +11,16 @@ import UIKit
 
 struct User: Codable {
     let userId: String
-    let profile: Profile
-    let matches: [DateInstance]
+    var profile: Profile?
+    var matches: [DateInstance]?
 //    let liked: [String] //your likes
 //    let likedYou: String //array of userIds that liked you
 //    let seen: [String] //array of seen users
 //    let blocked: [String] //array of blocked users
-    let isPremium: Bool
-    
-//    init(_ id: String) {
-//        self.userId = id
-//        // Initialize the user and its fields here
-////        let user = NetworkRequester.getUser(id)
-////        user.
-////        self.profile = NetworkRequester.getProfile(id)
-////        self.matches = NetworkRequester.getMatches(id)
-//    }
+    var isPremium: Bool?
+    init(_ id: String) {
+        self.userId = id
+    }
     
 }
 

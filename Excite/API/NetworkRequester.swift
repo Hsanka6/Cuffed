@@ -26,14 +26,12 @@ class NetworkRequester: NetworkRequesterProtocol {
             switch result {
                 case .success(let user):
                     if let user = user {
-                        print("USER IS VALID")
-                        print(user.isPremium)
                         completion(user)
                     } else {
-                        print("Document doesn't exist")
+                        print("User \(id) was not found in the Firestore Database.")
                     }
                 case .failure(let error):
-                    print("Error decoding something here \(error)")
+                    print("Error decoding something here: \(error)")
             }
         }
     }

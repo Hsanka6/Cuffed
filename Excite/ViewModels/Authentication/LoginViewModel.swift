@@ -8,17 +8,21 @@
 
 import Foundation
 
-/**
- LoginViewModel object that correlates to Controllers/Authentication/LoginController.swift
- */
 struct LoginViewModel {
     var currentUser: User?
-//    mutating func setUser(_ id: String) {
-//        currentUser = User(id)
-//    }
-    func completeUser(_ id: String) -> Bool {
-        // check to see if profile is filled out at all
-        // define minimum properties for a user to be considered "complete" here
+    var userId: String
+    init() {
+        self.currentUser = nil
+        self.userId = "4"
+    }
+    
+    // for now, let's just do a lookup to check if they're in Firestore
+    // If they aren't, then we don't store their details -> their user is not complete
+    
+    // for the future, check if they have a User associated
+    // even if they do, check if the minimum fields are at least filled out
+    // otherwise, redirect them to the signup page
+    func completeUser() -> Bool {
         return false
     }
 }
