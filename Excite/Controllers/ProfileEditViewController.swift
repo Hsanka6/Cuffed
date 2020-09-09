@@ -46,7 +46,7 @@ class ProfileEditViewController: UIViewController {
         }
         runOnBackgroundThread {
             NetworkRequester().getUser("test") { user in
-                self.viewModel?.profile = user.profile
+                self.viewModel?.profile = user!.profile
                 self.tableView.reloadData()
             }
        }

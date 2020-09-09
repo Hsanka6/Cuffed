@@ -18,7 +18,7 @@ protocol NetworkRequesterProtocol {
 
 class NetworkRequester: NetworkRequesterProtocol {
     // specifies that the completion handler takes in a User-object here
-    func getUser(_ id: String, completion: @escaping(User) -> Void) {
+    func getUser(_ id: String, completion: @escaping(User?) -> Void) {
         Firestore.firestore().collection("Users").document(id).getDocument { (document, error) in
             let result = Result {
                 try document?.data(as: User.self)
@@ -29,7 +29,7 @@ class NetworkRequester: NetworkRequesterProtocol {
                         completion(user)
                     } else {
                         print("User \(id) was not found in the Firestore Database.")
-                        completion(User(id))
+                        completion(nil)
                     }
                 case .failure(let error):
                     print("Error decoding something here: \(error)")

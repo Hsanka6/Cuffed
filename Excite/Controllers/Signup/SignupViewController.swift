@@ -12,28 +12,59 @@ import FBSDKLoginKit
 import Firebase
 import FirebaseAuth
 
+extension UIStackView {
+    func addBackground(color: UIColor) {
+        let subView = UIView(frame: bounds)
+        subView.backgroundColor = color
+        subView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        insertSubview(subView, at: 0)
+    }
+}
+
+
+// TODO: look into UICollectionView
+
 class SignupViewController: UIViewController {
      
     // MARK: - Properties
     let colors = GradientBackground()
     let logo: UILabel = {
         let curr = UILabel()
-        curr.text = "Signup"
-        curr.font = UIFont(name: "Barcelony", size: 70)
+        curr.text = "Let's sign you up!"
+        curr.font = UIFont(name: "Barcelony", size: 50)
         curr.textColor = .white
+        curr.backgroundColor = .yellow
         return curr
     }()
     
     var currentUser: User?
+    
+    var mainStackview: UIStackView = {
+        let mainStackview = UIStackView()
+        mainStackview.axis          = .vertical
+        mainStackview.alignment     = .center
+        mainStackview.distribution  = .equalSpacing
+        mainStackview.translatesAutoresizingMaskIntoConstraints = false
+
+        return mainStackview
+    }()
+    
+    var nameBox: UITextField = {
+        let nameBox = UITextField()
+        nameBox.text = "Test Text"
+        nameBox.backgroundColor = .blue
+        nameBox.font = UIFont(name: "Barcelony", size: 25)
+        nameBox.textColor = .black
+        return nameBox
+    }()
     
     var viewModel: SignupViewModel?
     
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.viewModel = SignupViewModel(currentUser!)
+        self.viewModel = SignupViewModel(currentUser)
         self.makeUI()
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -58,43 +89,34 @@ class SignupViewController: UIViewController {
     func makeUI() {
         self.constructBackground()
         // add views logo & loginButton
-        view.addSubview(logo)
-        logo.text = self.viewModel?.user.userId
-        // set constraints for logo
+        view.addSubview(mainStackview)
+        
+        // logo.text = self.viewModel?.user.userId
+        mainStackview.addArrangedSubview(logo)
+        mainStackview.addArrangedSubview(nameBox)
+        
         logo.snp.makeConstraints { (make) in
-            make.top.equalTo(self.view.snp.bottom).multipliedBy(0.1)
-            make.centerX.equalTo(self.view)
+            make.width.equalToSuperview().multipliedBy(0.9)
+            make.center.equalToSuperview()
         }
+        
+        nameBox.snp.makeConstraints { (make) in
+            make.width.equalToSuperview().multipliedBy(0.9)
+        }
+        
+        mainStackview.snp.makeConstraints { (make) in
+            make.center.equalToSuperview()
+            make.width.equalToSuperview()
+            make.height.equalToSuperview().multipliedBy(0.8)
+        }
+        mainStackview.addBackground(color: .red)
     }
-
-    /*
-     --- Code for a UIStackView, don't mind this ---
-     mainStackview.axis          = .vertical
-     mainStackview.alignment     = .center
-     mainStackview.distribution  = .equalSpacing
-     
-     
-     usernameView.backgroundColor = .red
-     passwordView.backgroundColor = .blue
-     
-     usernameView.snp.makeConstraints { (make) in
-         make.width.equalTo(100)
-         make.height.equalTo(50)
-     }
-     passwordView.snp.makeConstraints { (make) in
-         make.width.equalTo(100)
-         make.height.equalTo(50)
-     }
-     
-      mainStackview.addArrangedSubview(usernameView)
-      mainStackview.addArrangedSubview(passwordView)
-
-     mainStackview.snp.makeConstraints { (make) in
-         make.center.equalToSuperview()
-         make.width.equalTo(100)
-         
-     }
-     */
     
+    // You can initialize Properties here
+    // reference https://www.hackingwithswift.com/example-code/language/fixing-class-viewcontroller-has-no-initializers
+//    required init?(coder aDecoder: NSCoder) {
+//        self.username = "Anonymous"
+//        super.init(coder: aDecoder)
+//    }
     
 }

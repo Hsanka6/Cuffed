@@ -23,7 +23,7 @@ struct LoginViewModel {
     // even if they do, check if the minimum fields are at least filled out
     // otherwise, redirect them to the signup page
     func completeUser() -> Bool {
-        return self.currentUser!.profile != nil
+        return self.currentUser != nil && self.currentUser!.profile != nil
     }
 }
 

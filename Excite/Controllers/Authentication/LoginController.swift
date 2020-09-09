@@ -87,18 +87,18 @@ class LoginController: UIViewController, LoginButtonDelegate {
     func redirect() {
         let credential = FacebookAuthProvider.credential(withAccessToken: AccessToken.current!.tokenString)
         
-        Auth.auth().signIn(with: credential) { (authResult, error) in
-            
+        Auth.auth().signIn(with: credential) { (authResult, error) in    
             guard let authResult = authResult else { print(error); return }
             let firUser = authResult.user
-            
-            
             NetworkRequester().getUser(firUser.uid) { (user) in
                 self.viewModel.currentUser = user
                 if self.viewModel.completeUser() {
                     let newViewController = MainTabBarController()
+                    // do something like:
+                    // newViewController.currentUser = self.viewModel.currentUser
                     self.navigationController?.pushViewController(newViewController, animated: false)
                 } else {
+                    self.viewModel.currentUser = User(firebaseUser: firUser)
                     let newViewController = SignupViewController()
                     newViewController.currentUser = self.viewModel.currentUser
                     self.navigationController?.pushViewController(newViewController, animated: false)
@@ -139,122 +139,5 @@ class LoginController: UIViewController, LoginButtonDelegate {
         loginButton.permissions = ["public_profile", "email"]
         
         self.loginButton.delegate = self
-        
     }
-
-    /*
-     --- Code for a UIStackView, don't mind this ---
-     mainStackview.axis          = .vertical
-     mainStackview.alignment     = .center
-     mainStackview.distribution  = .equalSpacing
-     
-     
-     usernameView.backgroundColor = .red
-     passwordView.backgroundColor = .blue
-     
-     usernameView.snp.makeConstraints { (make) in
-         make.width.equalTo(100)
-         make.height.equalTo(50)
-     }
-     passwordView.snp.makeConstraints { (make) in
-         make.width.equalTo(100)
-         make.height.equalTo(50)
-     }
-     
-      mainStackview.addArrangedSubview(usernameView)
-      mainStackview.addArrangedSubview(passwordView)
-
-     mainStackview.snp.makeConstraints { (make) in
-         make.center.equalToSuperview()
-         make.width.equalTo(100)
-         
-     }
-     */
-    
-    /*
-     Auth.auth().signIn(with: credential) { (authResult, error) in
-       if let error = error {
-         let authError = error as NSError
-         //if (isMFAEnabled && authError.code == AuthErrorCode.secondFactorRequired.rawValue) {
-         if (authError.code == AuthErrorCode.secondFactorRequired.rawValue) {
-           // The user is a multi-factor user. Second factor challenge is required.
-           let resolver = authError.userInfo[AuthErrorUserInfoMultiFactorResolverKey] as! MultiFactorResolver
-           var displayNameString = ""
-           for tmpFactorInfo in (resolver.hints) {
-             displayNameString += tmpFactorInfo.displayName ?? ""
-             displayNameString += " "
-           }
-             self.showTextInputPrompt(withMessage: "Select factor to sign in\n\(displayNameString)", completionBlock: { userPressedOK,
-             displayName in
-             var selectedHint: PhoneMultiFactorInfo?
-             for tmpFactorInfo in resolver.hints {
-               if (displayName == tmpFactorInfo.displayName) {
-                 selectedHint = tmpFactorInfo as? PhoneMultiFactorInfo
-               }
-             }
-             PhoneAuthProvider.provider().verifyPhoneNumber(with: selectedHint!, uiDelegate: nil, multiFactorSession: resolver.session) { verificationID, error in
-               if error != nil {
-                 print("Multi factor start sign in failed. Error: \(error.debugDescription)")
-               } else {
-                 self.showTextInputPrompt(withMessage: "Verification code for \(selectedHint?.displayName ?? "")", completionBlock: { userPressedOK, verificationCode in
-                   let credential: PhoneAuthCredential? = PhoneAuthProvider.provider().credential(withVerificationID: verificationID!, verificationCode: verificationCode!)
-                   let assertion: MultiFactorAssertion? = PhoneMultiFactorGenerator.assertion(with: credential!)
-                   resolver.resolveSignIn(with: assertion!) { authResult, error in
-                     if error != nil {
-                       print("Multi factor finanlize sign in failed. Error: \(error.debugDescription)")
-                     } else {
-                       self.navigationController?.popViewController(animated: true)
-                     }
-                   }
-                 })
-               }
-             }
-           })
-         } else {
-           // self.showMessagePrompt(error.localizedDescription)
-           return
-         }
-         // ...
-         return
-       }
-       // User is signed in
-       // ...
-     }
-     */
-    
 }
-
-
-//                        guard let authResult = authResult else { return }
-//                        let firUser = authResult.user
-//                        // edit this
-//                        let newUser = User(uid: firUser.uid, username: username, fullName: fullName, bio: "", website: "", follows: [], followedBy: [], profileImage: self.profileImage)
-//                        newUser.save(completion: { (error) in
-//                          if let error = error {
-//                            // report
-//                          } else {
-//                            // not sure what you need to do here anymore since the user is already signed in
-//                          }
-//                        })
-
-
-//            GraphRequest(graphPath:"me", parameters: ["fields" : "email,name,picture"]).start(completionHandler: { (connection, result, error) in
-//                if error == nil {
-//                    print("INSIDE OF AUTH SIGNIN")
-//                    let credential = FacebookAuthProvider.credential(withAccessToken: AccessToken.current!.tokenString)
-//                    Auth.auth().signIn(with: credential) { (_, error) in
-//                        NetworkRequester().getUser(AccessToken.current!.userID) { (user) in
-//                            self.viewModel.currentUser = user
-//                        }
-//                        // if we don't have an associated user
-//                        if self.viewModel.currentUser == nil {
-//                            self.viewModel.currentUser = User(AccessToken.current!.userID)
-//                        } else {
-//                            print("JAN DEBUG")
-//                            print(self.viewModel.currentUser)
-//                        }
-//                    }
-//                } else {
-//                    print("Error logging in: \(error)");
-//                }
-//            })

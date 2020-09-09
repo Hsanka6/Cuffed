@@ -8,9 +8,14 @@
 
 import Foundation
 import UIKit
+import FBSDKLoginKit
+import Firebase
+import FirebaseAuth
 
 struct User: Codable {
     let userId: String
+    let email: String
+    let name: String
     var profile: Profile?
     var matches: [DateInstance]?
 //    let liked: [String] //your likes
@@ -18,8 +23,15 @@ struct User: Codable {
 //    let seen: [String] //array of seen users
 //    let blocked: [String] //array of blocked users
     var isPremium: Bool?
-    init(_ id: String) {
-        self.userId = id
+    
+    init(firebaseUser: Firebase.User) {
+        self.name = firebaseUser.displayName ?? ""
+        self.userId = firebaseUser.uid
+        self.email = firebaseUser.email ?? ""
+        // fill out the profile as well
+        self.profile = nil
+        self.matches = nil
+        self.isPremium = false
     }
     
 }
