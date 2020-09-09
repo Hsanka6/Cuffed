@@ -92,16 +92,18 @@ class SignupViewController: UIViewController {
         view.addSubview(mainStackview)
         
         // logo.text = self.viewModel?.user.userId
-        mainStackview.addArrangedSubview(logo)
-        mainStackview.addArrangedSubview(nameBox)
+        mainStackview.addSubview(logo)
+        mainStackview.addSubview(nameBox)
         
         logo.snp.makeConstraints { (make) in
             make.width.equalToSuperview().multipliedBy(0.9)
-            make.center.equalToSuperview()
+            make.centerY.equalToSuperview().multipliedBy(0.3)
+            make.centerX.equalToSuperview()
         }
         
         nameBox.snp.makeConstraints { (make) in
             make.width.equalToSuperview().multipliedBy(0.9)
+            make.center.equalToSuperview()
         }
         
         mainStackview.snp.makeConstraints { (make) in
