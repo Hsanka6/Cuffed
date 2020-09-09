@@ -29,6 +29,7 @@ class NetworkRequester: NetworkRequesterProtocol {
                         completion(user)
                     } else {
                         print("User \(id) was not found in the Firestore Database.")
+                        completion(User(id))
                     }
                 case .failure(let error):
                     print("Error decoding something here: \(error)")

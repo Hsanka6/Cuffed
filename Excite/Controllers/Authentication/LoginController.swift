@@ -31,6 +31,7 @@ class LoginController: UIViewController, LoginButtonDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.viewModel = LoginViewModel()
+        // if we already have a FB Access token to use to log in
         self.authenticateUser()
         self.makeUI()
         
@@ -63,28 +64,7 @@ class LoginController: UIViewController, LoginButtonDelegate {
             alert.addAction(UIAlertAction(title: "Yeah lemme try again", style: UIAlertAction.Style.default, handler: nil))
             self.present(alert, animated: true, completion: nil)
         } else {
-            let credential = FacebookAuthProvider.credential(withAccessToken: AccessToken.current!.tokenString)
-            
-            // we're going to need to wait for this call
-            // TODO:
-            // Since this is an asynchronous call, we're going to need to wait for it until it completes
-            // otherwise when we pass in a user it may be nil going into authenticateUser->redirect->viewController
-            // because the call isn't done yet
-            Auth.auth().signIn(with: credential) { (_, error) in
-                NetworkRequester().getUser(AccessToken.current!.userID) { (user) in
-                    self.viewModel.currentUser = user
-                }
-                // if we don't have an associated user
-                if self.viewModel.currentUser == nil {
-                    self.viewModel.currentUser = User(AccessToken.current!.userID)
-                } else {
-                    print("JAN DEBUG")
-                    print(self.viewModel.currentUser)
-                }
-            }
-            print("Now we're about to authenticate after the Graph Request")
             authenticateUser()
-            
         }
         
     }
@@ -103,17 +83,26 @@ class LoginController: UIViewController, LoginButtonDelegate {
         }
     }
     
+    // sign in assigns the viewModel's currentUser object
     func redirect() {
-        if self.viewModel.completeUser() {
-            let newViewController = MainTabBarController()
-            self.navigationController?.pushViewController(newViewController, animated: false)
-        }
-        else {
+        let credential = FacebookAuthProvider.credential(withAccessToken: AccessToken.current!.tokenString)
+        
+        // ??
+        self.viewModel.currentUser = User(AccessToken.current!.userID)
+        Auth.auth().signIn(with: credential) { (_, error) in
+            NetworkRequester().getUser(AccessToken.current!.userID) { (user) in
+                self.viewModel.currentUser = user
+                if self.viewModel.completeUser() {
+                    let newViewController = MainTabBarController()
+                    self.navigationController?.pushViewController(newViewController, animated: false)
+                } else {
+                    let newViewController = SignupViewController()
+                    newViewController.currentUser = self.viewModel.currentUser
+                    self.navigationController?.pushViewController(newViewController, animated: false)
+                }
+            }
+        
             // pass the current userID in to create a new User Object and store it in Firebase
-            let newViewController = SignupViewController()
-            self.viewModel.currentUser = User(AccessToken.current!.userID)
-            newViewController.currentUser = self.viewModel.currentUser
-            self.navigationController?.pushViewController(newViewController, animated: false)
         }
     }
     
