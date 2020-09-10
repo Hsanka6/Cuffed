@@ -23,6 +23,7 @@ class LoginController: UIViewController, LoginButtonDelegate {
         curr.textColor = .white
         return curr
     }()
+    
     let loginButton = FBLoginButton()
     var viewModel = LoginViewModel()
     
@@ -87,7 +88,7 @@ class LoginController: UIViewController, LoginButtonDelegate {
     func redirect() {
         let credential = FacebookAuthProvider.credential(withAccessToken: AccessToken.current!.tokenString)
         
-        Auth.auth().signIn(with: credential) { (authResult, error) in    
+        Auth.auth().signIn(with: credential) { (authResult, error) in
             guard let authResult = authResult else { print(error); return }
             let firUser = authResult.user
             NetworkRequester().getUser(firUser.uid) { (user) in

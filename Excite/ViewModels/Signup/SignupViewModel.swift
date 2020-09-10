@@ -15,4 +15,5 @@ struct SignupViewModel {
     init(_ user: User?) {
         self.user = user
     }
+    
 }

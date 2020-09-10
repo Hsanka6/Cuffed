@@ -10,10 +10,10 @@ import Foundation
 
 struct LoginViewModel {
     var currentUser: User?
-    var userId: String
+    var userId: String?
     init() {
         self.currentUser = nil
-        self.userId = "4"
+        self.userId = nil
     }
     
     // for now, let's just do a lookup to check if they're in Firestore

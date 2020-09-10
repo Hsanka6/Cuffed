@@ -22,7 +22,7 @@ extension UIStackView {
 }
 
 
-// TODO: look into UICollectionView
+// TODO: look into UICollectionView to manage multiple
 
 class SignupViewController: UIViewController {
      
@@ -30,41 +30,43 @@ class SignupViewController: UIViewController {
     let colors = GradientBackground()
     let logo: UILabel = {
         let curr = UILabel()
-        curr.text = "Let's sign you up!"
+        curr.text = "Welcome!"
         curr.font = UIFont(name: "Barcelony", size: 50)
         curr.textColor = .white
-        curr.backgroundColor = .yellow
         return curr
     }()
     
     var currentUser: User?
     
-    var mainStackview: UIStackView = {
-        let mainStackview = UIStackView()
-        mainStackview.axis          = .vertical
-        mainStackview.alignment     = .center
-        mainStackview.distribution  = .equalSpacing
-        mainStackview.translatesAutoresizingMaskIntoConstraints = false
-
-        return mainStackview
-    }()
-    
-    var nameBox: UITextField = {
-        let nameBox = UITextField()
-        nameBox.text = "Test Text"
-        nameBox.backgroundColor = .blue
-        nameBox.font = UIFont(name: "Barcelony", size: 25)
-        nameBox.textColor = .black
-        return nameBox
-    }()
-    
+    // let nameBox = RoundedRectangleTextField(placeholder: "Your Name")
+    let nameField = UnderlinedTextField(placeholder: "Your Name")
     var viewModel: SignupViewModel?
+    let label: UILabel = {
+        let curr = UILabel()
+        curr.text = "What is your display name?"
+        curr.font = UIFont.systemFont(ofSize: 20)
+        curr.textAlignment = .right
+        curr.textColor = .white
+        return curr
+    }()
     
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         self.viewModel = SignupViewModel(currentUser)
+        
+        if let prefilledName = self.viewModel?.user!.name {
+            nameField.text = prefilledName
+        }
         self.makeUI()
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+
+        // we use this function to indentify the frame width and height here, these values are only available after viewDidLayoutSubviews starts to run.
+        nameField.underlined(frameWidth: CGFloat(nameField.frame.width),
+                             frameHeight: CGFloat(nameField.frame.height))
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -88,37 +90,25 @@ class SignupViewController: UIViewController {
     
     func makeUI() {
         self.constructBackground()
-        // add views logo & loginButton
-        view.addSubview(mainStackview)
+        view.addSubview(logo)
+        view.addSubview(nameField)
+        view.addSubview(label)
         
-        // logo.text = self.viewModel?.user.userId
-        mainStackview.addSubview(logo)
-        mainStackview.addSubview(nameBox)
-        
+        label.snp.makeConstraints { (make) in
+            make.width.equalToSuperview().multipliedBy(0.8)
+            make.height.equalTo(50)
+            make.centerX.equalToSuperview()
+            make.centerY.equalToSuperview().multipliedBy(0.6)
+        }
+        nameField.snp.makeConstraints { (make) in
+            make.width.equalToSuperview().multipliedBy(0.6)
+            make.height.equalTo(50)
+            make.center.equalToSuperview()
+        }
         logo.snp.makeConstraints { (make) in
-            make.width.equalToSuperview().multipliedBy(0.9)
+            make.width.equalToSuperview().multipliedBy(0.5)
             make.centerY.equalToSuperview().multipliedBy(0.3)
             make.centerX.equalToSuperview()
         }
-        
-        nameBox.snp.makeConstraints { (make) in
-            make.width.equalToSuperview().multipliedBy(0.9)
-            make.center.equalToSuperview()
-        }
-        
-        mainStackview.snp.makeConstraints { (make) in
-            make.center.equalToSuperview()
-            make.width.equalToSuperview()
-            make.height.equalToSuperview().multipliedBy(0.8)
-        }
-        mainStackview.addBackground(color: .red)
     }
-    
-    // You can initialize Properties here
-    // reference https://www.hackingwithswift.com/example-code/language/fixing-class-viewcontroller-has-no-initializers
-//    required init?(coder aDecoder: NSCoder) {
-//        self.username = "Anonymous"
-//        super.init(coder: aDecoder)
-//    }
-    
 }

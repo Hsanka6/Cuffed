@@ -28,6 +28,21 @@ extension UIColor {
     }
 }
 
+extension UITextField {
+    
+    func underlined(frameWidth: CGFloat, frameHeight: CGFloat) {
+        print(frameWidth)
+        print(frameHeight)
+        let border = CALayer()
+        let width = CGFloat(1.0)
+        border.borderColor = UIColor.white.cgColor
+        border.frame = CGRect(x: 0, y: frameHeight - width, width:  frameWidth, height: frameHeight)
+        border.borderWidth = width
+        self.layer.addSublayer(border)
+        self.layer.masksToBounds = true
+    }
+}
+
 func runOnBackgroundThread(work: @escaping () -> Void) {
     DispatchQueue.global(qos: .userInitiated).async {
         work()
