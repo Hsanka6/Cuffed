@@ -38,7 +38,7 @@ class MultipleChoiceCellTableViewCell: UITableViewCell {
         stackView.addArrangedSubview(userTextField)
         self.addSubview(stackView)
         stackView.snp.makeConstraints { (make) in
-            make.width.height.equalToSuperview()
+            make.height.equalToSuperview()
             make.left.equalTo(20)
             make.right.equalTo(-20)
         }

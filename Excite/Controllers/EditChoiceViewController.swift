@@ -11,43 +11,98 @@ import UIKit
 class EditChoiceViewController: UIViewController {
 
     let button = MultipleChoiceButton()
-          
+    var choices: [String]?
+    var selectedAnswer: String?
+    let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
+    var questions: [MultipleChoiceAnswer]?
+    var profile: Profile?
+    var index: Int?
+    
+    static let notificationName = Notification.Name("editChoice")
+    
+    
+    //var selectedString: String = ""
+      
     override func viewDidLoad() {
         super.viewDidLoad()
+             
         self.view.backgroundColor = .white
-        
-        button.setupButton()
-        self.view.addSubview(button)
-        button.setTitle("Button", for: .normal)
-        button.snp.makeConstraints { (make) in
-            make.top.equalTo(self.view.safeAreaLayoutGuide.snp.top).offset(15)
-            make.left.equalTo(10)
-            make.right.equalTo(-10)
-        }
-        
-        button.addTarget(self, action: #selector(selected), for: .touchUpInside)
-
+        setUpCollectionView()
         // Do any additional setup after loading the view.
     }
     
-    @objc func selected() {
-        button.select = !button.select
-        if button.select {
-            button.selectedStyling()
-        } else {
-            button.setupButton()
+    func setUpCollectionView() {
+        self.view.addSubview(collectionView)
+       collectionView.snp.makeConstraints { (make) in
+            make.top.bottom.equalTo(5)
+            make.height.equalToSuperview()
+            make.left.equalTo(20)
+            make.right.equalTo(-20)
         }
+        collectionView.dataSource = self
+        collectionView.delegate = self
+        collectionView.backgroundColor = UIColor.white
+        collectionView.clipsToBounds = false
+        collectionView.showsHorizontalScrollIndicator = true
+        collectionView.allowsSelection = true
+              //collectionView.clipsToBounds = false
+              //collectionView.showsHorizontalScrollIndicator = true
+        collectionView.register(MultipleChoiceCollectionViewCell.self, forCellWithReuseIdentifier: MultipleChoiceCollectionViewCell.reuseIdentifier)
+        
+        let editButton = UIBarButtonItem(title: "Save", style: .plain, target: self, action: #selector(action))
+             self.navigationItem.rightBarButtonItem  = editButton
+        
+    }
+    
+    @objc func action(sender: UIBarButtonItem) {
+        guard let questions = questions else {
+            return
+        }
+        self.profile?.familyPlans = questions
+        NotificationCenter.default.post(name: ProfileEditViewController.notificationName, object: nil, userInfo: ["profile": self.profile])
+        let controller = ProfileEditViewController()
+        controller.gotProfile = true
+        controller.profile = profile
+        self.navigationController?.pushViewController(controller, animated: true)
     }
     
 
-    /*
-    // MARK: - Navigation
+}
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+
+extension EditChoiceViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return choices?.count ?? 0
     }
-    */
-
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MultipleChoiceCollectionViewCell.reuseIdentifier, for: indexPath) as? MultipleChoiceCollectionViewCell, let choice = choices?[indexPath.row], let selectedAnswer = selectedAnswer {
+            cell.initialize(answerChoice: choice, selectedChoice: selectedAnswer)
+            if choice == selectedAnswer {
+                cell.button.selectedStyling()
+            } else {
+                cell.button.styleButton()
+            }
+            cell.layer.cornerRadius = 15
+            //cell.viewController = self
+            return cell
+        
+        }
+        return UICollectionViewCell()
+    }
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+           let width = UIScreen.main.bounds.width/2 - (25)
+           let height = CGFloat(50) // or what height you want to do
+           return CGSize(width: width, height: height)
+       }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let cell = collectionView.cellForItem(at: indexPath) as? MultipleChoiceCollectionViewCell
+        guard let index = index else { return }
+        cell?.button.selectedStyling()
+        self.selectedAnswer = (choices?[indexPath.row])!
+        questions?[index].answer = (choices?[indexPath.row])!
+        cell?.button.changeState()
+        collectionView.reloadData()
+    }
+    
 }

@@ -65,7 +65,6 @@ extension QuestionsTableViewCell: UITableViewDelegate, UITableViewDataSource {
        }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("selected")
         let newViewController = BrowseQuestionsViewController()
         newViewController.profile = profile
         newViewController.index = indexPath.row

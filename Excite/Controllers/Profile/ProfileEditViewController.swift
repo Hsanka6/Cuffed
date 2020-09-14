@@ -14,6 +14,7 @@ class ProfileEditViewController: UIViewController {
     var viewModel: ProfileViewModel?
     var profile: Profile?
     var gotProfile: Bool = false
+    static let notificationName = Notification.Name("myNotificationName")
     
     var user: User?
     var tableView = UITableView()
@@ -25,13 +26,29 @@ class ProfileEditViewController: UIViewController {
         case userPriorities = "My Priorities"
         case userVice = "My Vices"
         case userFamilyPlans = "My Family Plans"
-                    
+                              
     }
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.navigationItem.hidesBackButton = true
+        
+        self.viewModel = ProfileViewModel()
+        NotificationCenter.default.addObserver(self, selector: #selector(onNotification(notification:)), name: ProfileEditViewController.notificationName, object: nil)
         tableViewSetup()
         navBarSetup()
+            
     }
+    
+    @objc func onNotification(notification: Notification) {
+        guard let mcs =  notification.userInfo?["profile"] as? Profile else {
+            return
+        }
+        self.profile = mcs
+        print("laadsdst is \(self.profile?.lat)")
+    }
+    
     
     func navBarSetup() {
         let saveButton = UIBarButtonItem(title: "Save", style: .plain, target: self, action: #selector(saveProfile))
@@ -41,12 +58,10 @@ class ProfileEditViewController: UIViewController {
     @objc func saveProfile() {
         let db = Firestore.firestore()
         guard let profile = profile else { return }
-        //let food = Food(name: "dumb", size: 3, taste: "ffvddv")
         db.collection("Users").document("test").setData([ "profile": profile.makeFromDict() ], merge: true)
     }
     
     func tableViewSetup() {
-        self.viewModel = ProfileViewModel()
         tableView.backgroundColor = .clear
         tableView.separatorStyle = .none
         tableView.delegate = self
@@ -59,6 +74,7 @@ class ProfileEditViewController: UIViewController {
         tableView.register(UserTablePersonalityTableViewCell.self, forCellReuseIdentifier: UserTablePersonalityTableViewCell.reuseIdentifier)
         tableView.register(UserPrioritiesTableTableViewCell.self, forCellReuseIdentifier: UserPrioritiesTableTableViewCell.reuseIdentifier)
         tableView.register(MultipleChoiceTableViewCell.self, forCellReuseIdentifier: MultipleChoiceTableViewCell.reuseIdentifier)
+        tableView.register(MultipleChoiceTableViewCell.self, forCellReuseIdentifier: MultipleChoiceTableViewCell.newreuseIdentifier)
         tableView.register(QuestionsTableViewCell.self, forCellReuseIdentifier: QuestionsTableViewCell.reuseIdentifier)
         
         
@@ -78,8 +94,11 @@ class ProfileEditViewController: UIViewController {
            }
         } else {
             self.viewModel?.profile = profile
-            self.tableView.reloadData()
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
         }
+       
     }
     
 }
@@ -89,13 +108,13 @@ extension ProfileEditViewController: UITableViewDelegate, UITableViewDataSource 
         switch ProfileSections.allCases[section] {
         case .userPhotos:
             return 1
+        case .userVice:
+            return 1
         case .userTable:
             return 1
         case .userPersonality:
             return 1
         case .userPriorities:
-            return 1
-        case .userVice:
             return 1
         case .userFamilyPlans:
             return 1
@@ -131,17 +150,17 @@ extension ProfileEditViewController: UITableViewDelegate, UITableViewDataSource 
             cell?.initialize(priorities: ["Travel", "Starting a Family", "Parent Approval", "Serious Relationship", "Short Term Relationship"])
             return cell ?? UITableViewCell()
         case .userVice:
-            let cell = tableView.dequeueReusableCell(withIdentifier: MultipleChoiceTableViewCell.reuseIdentifier, for: indexPath) as? MultipleChoiceTableViewCell
-            if let familyPlans = viewModel?.profile?.familyPlans {
-                cell?.initialize(questions: familyPlans)
-            }
-            return cell ?? UITableViewCell()
+            guard let vices = viewModel?.profile?.vices, let cell = tableView.dequeueReusableCell(withIdentifier: MultipleChoiceTableViewCell.reuseIdentifier, for: indexPath) as? MultipleChoiceTableViewCell else { return UITableViewCell()}
+            cell.viewController = self
+            cell.profile = self.viewModel?.profile
+            cell.initialize(questions: vices)
+            return cell
         case .userFamilyPlans:
-            let cell = tableView.dequeueReusableCell(withIdentifier: MultipleChoiceTableViewCell.reuseIdentifier, for: indexPath) as? MultipleChoiceTableViewCell
-            if let vices = viewModel?.profile?.vices {
-                cell?.initialize(questions: vices)
-            }
-            return cell ?? UITableViewCell()
+            guard let familyPlans = viewModel?.profile?.familyPlans, let cell = tableView.dequeueReusableCell(withIdentifier: MultipleChoiceTableViewCell.newreuseIdentifier, for: indexPath) as? MultipleChoiceTableViewCell else { return UITableViewCell()}
+            cell.viewController = self
+            cell.profile = self.viewModel?.profile
+            cell.initialize(questions: familyPlans)
+            return cell
         case .userQuestions:
             let cell = tableView.dequeueReusableCell(withIdentifier: QuestionsTableViewCell.reuseIdentifier, for: indexPath) as? QuestionsTableViewCell
             cell?.viewController = self
@@ -156,16 +175,16 @@ extension ProfileEditViewController: UITableViewDelegate, UITableViewDataSource 
         switch ProfileSections.allCases[indexPath.section] {
         case .userTable:
            return 400
+        case .userVice:
+           return 160
         case .userPhotos:
            return 225
         case .userPersonality:
            return 320
         case .userPriorities:
            return 195
-        case .userVice:
-           return 160
         case .userFamilyPlans:
-           return 120
+            return 160
         case .userQuestions:
            return 250
         }
@@ -175,7 +194,7 @@ extension ProfileEditViewController: UITableViewDelegate, UITableViewDataSource 
     }
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
            switch ProfileSections.allCases[section] {
-           case .userTable, .userPhotos, .userPersonality, .userPriorities, .userVice, .userFamilyPlans, .userQuestions:
+           case .userTable, .userVice,.userPhotos, .userPersonality, .userPriorities, .userFamilyPlans, .userQuestions:
                return 25
            }
     }

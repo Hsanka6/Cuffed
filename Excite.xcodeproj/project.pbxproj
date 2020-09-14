@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		66073770D1998960A838C853 /* Pods_Excite_ExciteUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AD0C498F7288D75FF03593DB /* Pods_Excite_ExciteUITests.framework */; };
+		7001141D2502390E0023CA21 /* MultipleChoiceCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7001141C2502390E0023CA21 /* MultipleChoiceCollectionViewCell.swift */; };
 		700F6B8D24C04D3E008C891F /* ProfileEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 700F6B8C24C04D3E008C891F /* ProfileEditViewController.swift */; };
 		7010798124A6C9C300E640B9 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7010798024A6C9C300E640B9 /* Settings.swift */; };
 		7010798324A6CC1F00E640B9 /* DatingAudioVideoViewControllerExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7010798224A6CC1F00E640B9 /* DatingAudioVideoViewControllerExtensions.swift */; };
@@ -21,7 +22,6 @@
 		7043B30C24EE6A1B00F1FD89 /* UserTablePersonalityTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7043B30B24EE6A1B00F1FD89 /* UserTablePersonalityTableViewCell.swift */; };
 		7043B30E24EE6BD200F1FD89 /* UserPersonalityTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7043B30D24EE6BD200F1FD89 /* UserPersonalityTableViewCell.swift */; };
 		7048578424F36A6B00F47A31 /* UserPrioritiesTableTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7048578324F36A6B00F47A31 /* UserPrioritiesTableTableViewCell.swift */; };
-		70521E1424FB928100847629 /* QuestionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70521E1324FB928000847629 /* QuestionViewModel.swift */; };
 		70521E1724FB943900847629 /* AnswerQuestionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70521E1624FB943900847629 /* AnswerQuestionViewController.swift */; };
 		7054D598245F7507007DA9BA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7054D597245F7507007DA9BA /* AppDelegate.swift */; };
 		7054D59A245F7507007DA9BA /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7054D599245F7507007DA9BA /* SceneDelegate.swift */; };
@@ -72,6 +72,7 @@
 /* Begin PBXFileReference section */
 		14F3440FD214E137E869D5F5 /* Pods_ExciteTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ExciteTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4B3112B2EAD0500421CCA693 /* Pods_Excite.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Excite.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		7001141C2502390E0023CA21 /* MultipleChoiceCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultipleChoiceCollectionViewCell.swift; sourceTree = "<group>"; };
 		700F6B8C24C04D3E008C891F /* ProfileEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileEditViewController.swift; sourceTree = "<group>"; };
 		7010798024A6C9C300E640B9 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		7010798224A6CC1F00E640B9 /* DatingAudioVideoViewControllerExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatingAudioVideoViewControllerExtensions.swift; sourceTree = "<group>"; };
@@ -85,7 +86,6 @@
 		7043B30B24EE6A1B00F1FD89 /* UserTablePersonalityTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserTablePersonalityTableViewCell.swift; sourceTree = "<group>"; };
 		7043B30D24EE6BD200F1FD89 /* UserPersonalityTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPersonalityTableViewCell.swift; sourceTree = "<group>"; };
 		7048578324F36A6B00F47A31 /* UserPrioritiesTableTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPrioritiesTableTableViewCell.swift; sourceTree = "<group>"; };
-		70521E1324FB928000847629 /* QuestionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionViewModel.swift; sourceTree = "<group>"; };
 		70521E1624FB943900847629 /* AnswerQuestionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnswerQuestionViewController.swift; sourceTree = "<group>"; };
 		7054D594245F7507007DA9BA /* Excite.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Excite.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7054D597245F7507007DA9BA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -200,6 +200,7 @@
 			children = (
 				70C52B7324BA4011002CFFEA /* Profile */,
 				70CDFC4124FCC6680068CF37 /* MultipleChoiceButton.swift */,
+				7001141C2502390E0023CA21 /* MultipleChoiceCollectionViewCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -208,7 +209,6 @@
 			isa = PBXGroup;
 			children = (
 				709B2C3C24C2B40E008BA374 /* ProfileViewModel.swift */,
-				70521E1324FB928000847629 /* QuestionViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -613,6 +613,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7043B30E24EE6BD200F1FD89 /* UserPersonalityTableViewCell.swift in Sources */,
+				7001141D2502390E0023CA21 /* MultipleChoiceCollectionViewCell.swift in Sources */,
 				709B2C4124C2B737008BA374 /* ProfilePhotosCell.swift in Sources */,
 				709C394E24F398EA00D8F7E9 /* MultipleChoiceCellTableViewCell.swift in Sources */,
 				70A3AC4D24C3A98A008BB1FF /* UserDetailTableViewCell.swift in Sources */,
@@ -623,7 +624,6 @@
 				7054D598245F7507007DA9BA /* AppDelegate.swift in Sources */,
 				70CDFC4424FCEF380068CF37 /* EditChoiceViewController.swift in Sources */,
 				709C394C24F3968100D8F7E9 /* MultipleChoiceTableViewCell.swift in Sources */,
-				70521E1424FB928100847629 /* QuestionViewModel.swift in Sources */,
 				70AA64CB247F6C2600F56CB3 /* MainTabBarController.swift in Sources */,
 				70FB575E2481D8F900CB24C4 /* Extensions.swift in Sources */,
 				70AA64CD247F6D0300F56CB3 /* FindDateViewController.swift in Sources */,

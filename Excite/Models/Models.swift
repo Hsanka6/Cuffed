@@ -247,7 +247,7 @@ class FreeResponse: Codable {
 }
 
 class MultipleChoiceAnswer: MultipleChoice {
-    let answer: String
+    var answer: String
     
     private enum Key: CodingKey {
        case question

@@ -53,12 +53,11 @@ class QuestionsDetailTableViewCell: UITableViewCell {
         stackView.axis = .vertical
         stackView.distribution = .fillEqually
         stackView.addArrangedSubview(userTextField)
-        self.addSubview(stackView)
+        cardView.addSubview(stackView)
         stackView.snp.makeConstraints { (make) in
             make.top.equalTo(8)
             make.bottom.equalTo(-8)
-            make.left.equalTo(20)
-            make.right.equalTo(-20)
+            make.width.equalToSuperview()
         }
     }
 

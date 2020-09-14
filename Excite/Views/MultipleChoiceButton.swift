@@ -10,7 +10,7 @@ import UIKit
 
 class MultipleChoiceButton: UIButton {
     
-    public var select:Bool = false
+    public var select: Bool = false
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -20,11 +20,30 @@ class MultipleChoiceButton: UIButton {
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         setupButton()
+        
     }
     
     func setupButton() {
         setShadow()
         styleButton()
+    }
+    
+    func setState(isCurrentAnswer: String) {
+        if self.titleLabel?.text == isCurrentAnswer {
+            selectedStyling()
+            select = true
+        } else {
+            styleButton()
+        }
+    }
+    
+    func changeState() {
+        select = !select
+        if select {
+            selectedStyling()
+        } else {
+            setupButton()
+        }
     }
     
     public func selectedStyling() {
