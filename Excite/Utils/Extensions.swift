@@ -155,7 +155,6 @@ class Helpers {
     
     
 }
-
 class CustomSlider: UISlider {
     func makeCircleWith(size: CGSize, backgroundColor: UIColor) -> UIImage? {
         UIGraphicsBeginImageContextWithOptions(size, false, 0.0)

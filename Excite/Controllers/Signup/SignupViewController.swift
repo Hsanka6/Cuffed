@@ -12,7 +12,7 @@ import FBSDKLoginKit
 import Firebase
 import FirebaseAuth
 
-extension UIStackView {
+extension UICollectionView {
     func addBackground(color: UIColor) {
         let subView = UIView(frame: bounds)
         subView.backgroundColor = color
@@ -21,8 +21,10 @@ extension UIStackView {
     }
 }
 
-
-// TODO: look into UICollectionView to manage multiple
+// Signup will be a UICollectionView with custom cell for question
+// then options (which will be a uicollectionview too if multiple choice)
+// then a free response
+// then a next button and back button on the top
 
 class SignupViewController: UIViewController {
      
@@ -37,10 +39,11 @@ class SignupViewController: UIViewController {
     }()
     
     var currentUser: User?
-    
+    let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
     // let nameBox = RoundedRectangleTextField(placeholder: "Your Name")
     let nameField = UnderlinedTextField(placeholder: "Your Name")
     var viewModel: SignupViewModel?
+    
     let label: UILabel = {
         let curr = UILabel()
         curr.text = "What is your display name?"
@@ -54,11 +57,11 @@ class SignupViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.viewModel = SignupViewModel(currentUser)
-        
-        if let prefilledName = self.viewModel?.user!.name {
-            nameField.text = prefilledName
-        }
-        self.makeUI()
+//        if let prefilledName = self.viewModel?.user!.name {
+//            nameField.text = prefilledName
+//        }
+        self.constructBackground()
+        self.createCollectionView()
     }
     
     override func viewDidLayoutSubviews() {
@@ -88,27 +91,33 @@ class SignupViewController: UIViewController {
     
     // MARK: - Helpers
     
-    func makeUI() {
-        self.constructBackground()
-        view.addSubview(logo)
-        view.addSubview(nameField)
-        view.addSubview(label)
+    func createCollectionView() {
+        self.view.addSubview(collectionView)
         
-        label.snp.makeConstraints { (make) in
-            make.width.equalToSuperview().multipliedBy(0.8)
-            make.height.equalTo(50)
-            make.centerX.equalToSuperview()
-            make.centerY.equalToSuperview().multipliedBy(0.6)
+        collectionView.snp.makeConstraints { (make) in
+            make.top.bottom.equalToSuperview()
         }
-        nameField.snp.makeConstraints { (make) in
-            make.width.equalToSuperview().multipliedBy(0.6)
-            make.height.equalTo(50)
-            make.center.equalToSuperview()
-        }
-        logo.snp.makeConstraints { (make) in
-            make.width.equalToSuperview().multipliedBy(0.5)
-            make.centerY.equalToSuperview().multipliedBy(0.3)
-            make.centerX.equalToSuperview()
-        }
+        collectionView.dataSource = self
+        collectionView.delegate = self
+        collectionView.backgroundColor = UIColor.white
+        collectionView.clipsToBounds = false
+        collectionView.showsHorizontalScrollIndicator = true
+        collectionView.register(SignupCollectionViewCell.self, forCellWithReuseIdentifier: SignupCollectionViewCell.reuseIdentifier)
+    }
+}
+extension SignupViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        print("WJHAT ABOUT THIS")
+        return 2
+    }
+
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        print("IS THIS EVER CALLED")
+        if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SignupCollectionViewCell.reuseIdentifier, for: indexPath) as? SignupCollectionViewCell {
+         cell.initialize()
+//         cell.configure(photo: photos[indexPath.row])
+         return cell
+         }
+         return UICollectionViewCell()
     }
 }

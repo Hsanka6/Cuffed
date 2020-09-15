@@ -47,6 +47,7 @@
 		ECBF6E8324FC25BD00CD6CD9 /* SignupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECBF6E8224FC25BD00CD6CD9 /* SignupViewModel.swift */; };
 		ECBF879E250A00A3005ECE07 /* RoundedRectangleTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECBF879D250A00A3005ECE07 /* RoundedRectangleTextField.swift */; };
 		ECBF87A0250A079A005ECE07 /* UnderlinedTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECBF879F250A079A005ECE07 /* UnderlinedTextField.swift */; };
+		ECBF87A42510966B005ECE07 /* SignupCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECBF87A32510966B005ECE07 /* SignupCollectionViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -118,6 +119,7 @@
 		ECBF6E8224FC25BD00CD6CD9 /* SignupViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupViewModel.swift; sourceTree = "<group>"; };
 		ECBF879D250A00A3005ECE07 /* RoundedRectangleTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoundedRectangleTextField.swift; sourceTree = "<group>"; };
 		ECBF879F250A079A005ECE07 /* UnderlinedTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnderlinedTextField.swift; sourceTree = "<group>"; };
+		ECBF87A32510966B005ECE07 /* SignupCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupCollectionViewCell.swift; sourceTree = "<group>"; };
 		F60BBCA043E7AD0A43D6B4FD /* Pods-Excite.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Excite.release.xcconfig"; path = "Target Support Files/Pods-Excite/Pods-Excite.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -290,6 +292,7 @@
 				7048578324F36A6B00F47A31 /* UserPrioritiesTableTableViewCell.swift */,
 				709C394B24F3968000D8F7E9 /* MultipleChoiceTableViewCell.swift */,
 				709C394D24F398EA00D8F7E9 /* MultipleChoiceCellTableViewCell.swift */,
+				ECBF87A32510966B005ECE07 /* SignupCollectionViewCell.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -655,6 +658,7 @@
 				700F6B8D24C04D3E008C891F /* ProfileEditViewController.swift in Sources */,
 				7054D59A245F7507007DA9BA /* SceneDelegate.swift in Sources */,
 				7043B30C24EE6A1B00F1FD89 /* UserTablePersonalityTableViewCell.swift in Sources */,
+				ECBF87A42510966B005ECE07 /* SignupCollectionViewCell.swift in Sources */,
 				70F5882324C15F8D007E4C83 /* NetworkRequester.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
