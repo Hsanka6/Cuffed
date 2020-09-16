@@ -92,7 +92,6 @@ class AnswerQuestionViewController: UIViewController {
         let model = ProfileViewModel()
         
         model.profile = profile
-        newViewController.profile = profile
         newViewController.viewModel = model
         newViewController.gotProfile = true
         self.navigationController?.pushViewController(newViewController, animated: true)

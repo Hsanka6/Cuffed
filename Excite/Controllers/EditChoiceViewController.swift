@@ -7,6 +7,9 @@
 //
 
 import UIKit
+protocol EditChoiceViewControllerDelegate: class {
+    func familyPlanEdited( questions: [MultipleChoiceAnswer])
+}
 
 class EditChoiceViewController: UIViewController {
 
@@ -16,9 +19,8 @@ class EditChoiceViewController: UIViewController {
     let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
     var questions: [MultipleChoiceAnswer]?
     var profile: Profile?
-    var viewModel: ProfileViewModel?
     var index: Int?
-    var delegate: ProfileDelegate?
+    weak var delegate: EditChoiceViewControllerDelegate?
 
     
     static let notificationName = Notification.Name("editChoice")
@@ -58,19 +60,17 @@ class EditChoiceViewController: UIViewController {
     }
     
     @objc func action(sender: UIBarButtonItem) {
-        guard let vm = viewModel, let questions = questions else {
+        guard let questions = questions else {
             return
         }
         for ques in questions {
             print("answers in EDIT \(ques.answer)")
         }
         //vm.profile?.familyPlans = questions
-        delegate?.familyPlanEdited(vm, questions: questions, gotProfile: true)
+        delegate?.familyPlanEdited( questions: questions)
         //self.profile?.familyPlans = questions
-        let controller = ProfileEditViewController()
-        controller.gotProfile = true
-        //controller.profile = profile
-        self.navigationController?.pushViewController(controller, animated: true)
+
+        self.navigationController?.popViewController(animated: true)
     }
     
 

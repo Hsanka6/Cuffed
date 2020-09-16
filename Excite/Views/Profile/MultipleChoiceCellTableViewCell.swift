@@ -10,7 +10,7 @@ import UIKit
 
 class MultipleChoiceCellTableViewCell: UITableViewCell {
     static var reuseIdentifier = "MultipleChoiceCellTableViewCell"
-    var stackView = UIStackView()
+    var stackView: UIStackView?
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -23,6 +23,7 @@ class MultipleChoiceCellTableViewCell: UITableViewCell {
     }
     
     func initialize(question: MultipleChoiceAnswer) {
+        let stackView = UIStackView()
         let userLabel = UILabel()
         userLabel.textAlignment = .left
         userLabel.textColor = UIColor.black
@@ -42,6 +43,12 @@ class MultipleChoiceCellTableViewCell: UITableViewCell {
             make.left.equalTo(20)
             make.right.equalTo(-20)
         }
+        self.stackView = stackView
     }
-
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        stackView?.removeFromSuperview()
+        stackView = nil
+    }
 }

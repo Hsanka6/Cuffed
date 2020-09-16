@@ -10,14 +10,9 @@ import UIKit
 import Firebase
 import FirebaseFirestoreSwift
 
-protocol ProfileDelegate {
-    func familyPlanEdited(_ profileViewModel: ProfileViewModel, questions: [MultipleChoiceAnswer], gotProfile: Bool)
-}
 
-
-class ProfileEditViewController: UIViewController, ProfileDelegate {
+class ProfileEditViewController: UIViewController {
     var viewModel: ProfileViewModel?
-    var profile: Profile?
     var gotProfile: Bool = false
     static let notificationName = Notification.Name("myNotificationName")
     
@@ -34,18 +29,14 @@ class ProfileEditViewController: UIViewController, ProfileDelegate {
                               
     }
     
-    func familyPlanEdited(_ profileViewModel: ProfileViewModel, questions: [MultipleChoiceAnswer], gotProfile: Bool) {
-        viewModel?.delegate = self
-        self.viewModel = ProfileViewModel()
-        profileViewModel.profile?.familyPlans = questions
-        self.viewModel = profileViewModel
+    func familyPlanEdited( questions: [MultipleChoiceAnswer]) {
+        self.viewModel?.profile?.familyPlans = questions
         for ques in questions {
             print("answer is \(ques.answer) ")
         }
-        print(self.gotProfile)
-           DispatchQueue.main.async {
+//           DispatchQueue.main.async {
               self.tableView.reloadData()
-           }
+//           }
        }
      
     
@@ -69,7 +60,7 @@ class ProfileEditViewController: UIViewController, ProfileDelegate {
     
     @objc func saveProfile() {
         let db = Firestore.firestore()
-        guard let profile = profile else { return }
+        guard let profile = viewModel?.profile else { return }
         db.collection("Users").document("test").setData([ "profile": profile.makeFromDict() ], merge: true)
     }
     
@@ -138,7 +129,6 @@ extension ProfileEditViewController: UITableViewDelegate, UITableViewDataSource 
         }
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        print("lat in edit is \(self.viewModel?.profile?.lat)")
         switch ProfileSections.allCases[indexPath.section] {
         case .userTable:
             let cell = tableView.dequeueReusableCell(withIdentifier: UserTableTableViewCell.reuseIdentifier, for: indexPath) as? UserTableTableViewCell
@@ -167,17 +157,16 @@ extension ProfileEditViewController: UITableViewDelegate, UITableViewDataSource 
             return cell ?? UITableViewCell()
         case .userVice:
             guard let vices = viewModel?.profile?.vices, let cell = tableView.dequeueReusableCell(withIdentifier: MultipleChoiceTableViewCell.reuseIdentifier, for: indexPath) as? MultipleChoiceTableViewCell else { return UITableViewCell()}
-            cell.viewController = self
-            cell.profile = self.viewModel?.profile
+           // cell.profile = self.viewModel?.profile
             cell.initialize(questions: vices)
             return cell
         case .userFamilyPlans:
-            guard let familyPlans = viewModel?.profile?.familyPlans, let cell = tableView.dequeueReusableCell(withIdentifier: MultipleChoiceTableViewCell.newreuseIdentifier, for: indexPath) as? MultipleChoiceTableViewCell else { return UITableViewCell()}
-            cell.viewController = self
-            cell.profile = self.viewModel?.profile
-            cell.viewModel = self.viewModel
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: MultipleChoiceTableViewCell.newreuseIdentifier, for: indexPath) as? MultipleChoiceTableViewCell else { return UITableViewCell()}
+
             cell.delegate = self
-            cell.initialize(questions: familyPlans)
+            if let familyPlans = viewModel?.profile?.familyPlans {
+                cell.initialize(questions: familyPlans)
+            }
             return cell
         case .userQuestions:
             let cell = tableView.dequeueReusableCell(withIdentifier: QuestionsTableViewCell.reuseIdentifier, for: indexPath) as? QuestionsTableViewCell
@@ -229,4 +218,11 @@ extension ProfileEditViewController: UITableViewDelegate, UITableViewDataSource 
         header?.textLabel?.textColor = UIColor.black
         header?.textLabel?.font = .systemFont(ofSize: 18, weight: .semibold)
     }
+}
+
+extension ProfileEditViewController: MultipleChoiceTableViewCellDelegate {
+    func didRequestEditChoiceViewController(viewController: EditChoiceViewController) {
+        self.navigationController?.pushViewController(viewController, animated: true)
+    }
+    
 }

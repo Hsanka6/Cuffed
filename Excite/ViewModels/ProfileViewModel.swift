@@ -9,12 +9,6 @@
 import Foundation
 
 class ProfileViewModel {
-    var delegate: ProfileDelegate?
-      
     var profile: Profile?
     var user: User?
-    
-//    func didDownloadImage() {
-//        delegate?.familyPlanEdited(self)
-//    }
 }
