@@ -34,7 +34,6 @@ class FindDateViewController: UIViewController {
     }
 
     @objc func startDate(sender: UIButton!) {
-       print("startDate")
        let newViewController = DatingAudioVideoViewController()
        self.navigationController?.pushViewController(newViewController, animated: true)
     }

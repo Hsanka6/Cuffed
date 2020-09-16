@@ -48,7 +48,6 @@ class UserDetailTableViewCell: UITableViewCell {
     }
 
     func populate(model: PersonalDetails, index: Int) -> (String, String) {
-        print(index)
         let details = Details.allCases[index]
         switch details {
         case .fullName:

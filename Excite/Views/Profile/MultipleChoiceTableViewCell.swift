@@ -8,13 +8,17 @@
 
 import UIKit
 
-class MultipleChoiceTableViewCell: UITableViewCell {
+class MultipleChoiceTableViewCell: UITableViewCell, ProfileDelegate {
     static var reuseIdentifier = "MultipleChoiceTableViewCell"
     static var newreuseIdentifier = "MultipleChoiceTableViewCell2"
     var profile: Profile?
+    var viewModel:ProfileViewModel?
     var tableView = UITableView()
     public var questions: [MultipleChoiceAnswer]?
     var viewController: UIViewController?
+    
+    var delegate:ProfileDelegate?
+
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -38,8 +42,16 @@ class MultipleChoiceTableViewCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
-   
+    
+    func familyPlanEdited(_ profileViewModel: ProfileViewModel, questions: [MultipleChoiceAnswer], gotProfile: Bool) {
+        guard let vm = viewModel else { return }
+        
+        profileViewModel.profile?.familyPlans = questions
+        delegate?.familyPlanEdited(vm, questions: questions, gotProfile: gotProfile)
+              
     }
+   
+}
 
 extension MultipleChoiceTableViewCell: UITableViewDelegate, UITableViewDataSource {
       func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -60,6 +72,8 @@ extension MultipleChoiceTableViewCell: UITableViewDelegate, UITableViewDataSourc
         controller.questions = questions
         controller.profile = profile
         controller.index = indexPath.row
+        controller.viewModel = viewModel
+        controller.delegate = self
         self.viewController?.navigationController?.pushViewController(controller, animated: false)
     }
      

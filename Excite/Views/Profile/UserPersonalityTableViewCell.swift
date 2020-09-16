@@ -33,7 +33,6 @@ class UserPersonalityTableViewCell: UITableViewCell {
         }
         slider.addTarget(self, action: #selector(self.changeValue(_:)), for: .valueChanged)
 
-        print(self.frame.width)
         self.addSubview(slider)
         
         let width = UIScreen.main.bounds.width - 40

@@ -16,7 +16,10 @@ class EditChoiceViewController: UIViewController {
     let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
     var questions: [MultipleChoiceAnswer]?
     var profile: Profile?
+    var viewModel: ProfileViewModel?
     var index: Int?
+    var delegate: ProfileDelegate?
+
     
     static let notificationName = Notification.Name("editChoice")
     
@@ -55,14 +58,18 @@ class EditChoiceViewController: UIViewController {
     }
     
     @objc func action(sender: UIBarButtonItem) {
-        guard let questions = questions else {
+        guard let vm = viewModel, let questions = questions else {
             return
         }
-        self.profile?.familyPlans = questions
-        NotificationCenter.default.post(name: ProfileEditViewController.notificationName, object: nil, userInfo: ["profile": self.profile])
+        for ques in questions {
+            print("answers in EDIT \(ques.answer)")
+        }
+        //vm.profile?.familyPlans = questions
+        delegate?.familyPlanEdited(vm, questions: questions, gotProfile: true)
+        //self.profile?.familyPlans = questions
         let controller = ProfileEditViewController()
         controller.gotProfile = true
-        controller.profile = profile
+        //controller.profile = profile
         self.navigationController?.pushViewController(controller, animated: true)
     }
     
@@ -100,7 +107,7 @@ extension EditChoiceViewController: UICollectionViewDelegate, UICollectionViewDa
         guard let index = index else { return }
         cell?.button.selectedStyling()
         self.selectedAnswer = (choices?[indexPath.row])!
-        questions?[index].answer = (choices?[indexPath.row])!
+        questions?[index].answer = self.selectedAnswer ?? "blah blah"
         cell?.button.changeState()
         collectionView.reloadData()
     }

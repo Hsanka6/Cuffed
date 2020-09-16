@@ -10,7 +10,12 @@ import UIKit
 import Firebase
 import FirebaseFirestoreSwift
 
-class ProfileEditViewController: UIViewController {
+protocol ProfileDelegate {
+    func familyPlanEdited(_ profileViewModel: ProfileViewModel, questions: [MultipleChoiceAnswer], gotProfile: Bool)
+}
+
+
+class ProfileEditViewController: UIViewController, ProfileDelegate {
     var viewModel: ProfileViewModel?
     var profile: Profile?
     var gotProfile: Bool = false
@@ -29,26 +34,33 @@ class ProfileEditViewController: UIViewController {
                               
     }
     
+    func familyPlanEdited(_ profileViewModel: ProfileViewModel, questions: [MultipleChoiceAnswer], gotProfile: Bool) {
+        viewModel?.delegate = self
+        self.viewModel = ProfileViewModel()
+        profileViewModel.profile?.familyPlans = questions
+        self.viewModel = profileViewModel
+        for ques in questions {
+            print("answer is \(ques.answer) ")
+        }
+        print(self.gotProfile)
+           DispatchQueue.main.async {
+              self.tableView.reloadData()
+           }
+       }
+     
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationItem.hidesBackButton = true
         
-        self.viewModel = ProfileViewModel()
-        NotificationCenter.default.addObserver(self, selector: #selector(onNotification(notification:)), name: ProfileEditViewController.notificationName, object: nil)
+        //NotificationCenter.default.addObserver(self, selector: #selector(onNotification(notification:)), name: ProfileEditViewController.notificationName, object: nil)
         tableViewSetup()
         navBarSetup()
             
     }
     
-    @objc func onNotification(notification: Notification) {
-        guard let mcs =  notification.userInfo?["profile"] as? Profile else {
-            return
-        }
-        self.profile = mcs
-        print("laadsdst is \(self.profile?.lat)")
-    }
-    
+
     
     func navBarSetup() {
         let saveButton = UIBarButtonItem(title: "Save", style: .plain, target: self, action: #selector(saveProfile))
@@ -84,6 +96,7 @@ class ProfileEditViewController: UIViewController {
             make.left.right.equalToSuperview()
         }
         if !gotProfile {
+            self.viewModel = ProfileViewModel()
             runOnBackgroundThread {
                 NetworkRequesterMock().getUser { user in
                     self.viewModel?.profile = user.profile
@@ -92,12 +105,14 @@ class ProfileEditViewController: UIViewController {
                     self.tableView.reloadData()
                 }
            }
-        } else {
-            self.viewModel?.profile = profile
-            DispatchQueue.main.async {
-                self.tableView.reloadData()
-            }
         }
+//        else {
+//        print("lat in edit is \(self.viewModel?.profile?.lat)")
+//
+//            DispatchQueue.main.async {
+//                self.tableView.reloadData()
+//            }
+//        }
        
     }
     
@@ -123,6 +138,7 @@ extension ProfileEditViewController: UITableViewDelegate, UITableViewDataSource 
         }
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        print("lat in edit is \(self.viewModel?.profile?.lat)")
         switch ProfileSections.allCases[indexPath.section] {
         case .userTable:
             let cell = tableView.dequeueReusableCell(withIdentifier: UserTableTableViewCell.reuseIdentifier, for: indexPath) as? UserTableTableViewCell
@@ -159,6 +175,8 @@ extension ProfileEditViewController: UITableViewDelegate, UITableViewDataSource 
             guard let familyPlans = viewModel?.profile?.familyPlans, let cell = tableView.dequeueReusableCell(withIdentifier: MultipleChoiceTableViewCell.newreuseIdentifier, for: indexPath) as? MultipleChoiceTableViewCell else { return UITableViewCell()}
             cell.viewController = self
             cell.profile = self.viewModel?.profile
+            cell.viewModel = self.viewModel
+            cell.delegate = self
             cell.initialize(questions: familyPlans)
             return cell
         case .userQuestions:
