@@ -12,6 +12,12 @@ import FBSDKLoginKit
 import Firebase
 import FirebaseAuth
 
+extension UIView {
+    var safeArea : ConstraintLayoutGuideDSL {
+        return safeAreaLayoutGuide.snp
+    }
+}
+
 extension UICollectionView {
     func addBackground(color: UIColor) {
         let subView = UIView(frame: bounds)
@@ -49,7 +55,7 @@ class SignupViewController: UIViewController {
         curr.text = "What is your display name?"
         curr.font = UIFont.systemFont(ofSize: 20)
         curr.textAlignment = .right
-        curr.textColor = .white
+        curr.textColor = .black
         return curr
     }()
     
@@ -61,6 +67,11 @@ class SignupViewController: UIViewController {
 //            nameField.text = prefilledName
 //        }
         self.constructBackground()
+        self.view.addSubview(label)
+        label.snp.makeConstraints { (make) in
+            make.center.equalToSuperview()
+            make.height.width.equalTo(30)
+        }
         self.createCollectionView()
     }
     
@@ -95,23 +106,22 @@ class SignupViewController: UIViewController {
         self.view.addSubview(collectionView)
         
         collectionView.snp.makeConstraints { (make) in
-            make.top.bottom.equalToSuperview()
-            make.center.centerX.equalToSuperview()
-            make.left.equalTo(20)
-            make.right.equalTo(-20)
+            make.leading.trailing.equalToSuperview().inset(30)
+            make.top.equalTo(view.safeArea.top)
+            make.bottom.equalTo(view.safeArea.bottom)
         }
         collectionView.dataSource = self
         collectionView.delegate = self
         collectionView.backgroundColor = UIColor.white
         collectionView.clipsToBounds = false
+//        collectionView.center
         collectionView.showsHorizontalScrollIndicator = true
         collectionView.register(SignupCollectionViewCell.self, forCellWithReuseIdentifier: SignupCollectionViewCell.reuseIdentifier)
     }
 }
 extension SignupViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        print("WJHAT ABOUT THIS")
-        return 2
+        return 10
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -122,5 +132,23 @@ extension SignupViewController: UICollectionViewDelegate, UICollectionViewDataSo
          return cell
          }
          return UICollectionViewCell()
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+
+        let height = view.frame.size.height
+        let width = view.frame.size.width
+        // in case you you want the cell to be 40% of your controllers view
+        return CGSize(width: width * 0.4, height: height * 0.4)
+    }
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
+
+        let totalCellWidth = CellWidth * CellCount
+        let totalSpacingWidth = CellSpacing * (CellCount - 1)
+
+        let leftInset = (collectionViewWidth - CGFloat(totalCellWidth + totalSpacingWidth)) / 2
+        let rightInset = leftInset
+
+        return UIEdgeInsets(top: 0, left: leftInset, bottom: 0, right: rightInset)
     }
 }

@@ -18,13 +18,15 @@ class SignupCollectionViewCell: UICollectionViewCell {
         curr.font = UIFont.systemFont(ofSize: 20)
         curr.textAlignment = .right
         curr.textColor = .black
+        curr.backgroundColor = .yellow
         return curr
     }()
     func initialize() {
-        print("GOT INSIDE")
         self.addSubview(label)
+        self.layer.backgroundColor = UIColor.blue.cgColor
         label.snp.makeConstraints { (make) in
-            make.width.height.equalTo(30)
+            make.width.equalToSuperview()
+            make.center.equalToSuperview().inset(30)
         }
     }
     
