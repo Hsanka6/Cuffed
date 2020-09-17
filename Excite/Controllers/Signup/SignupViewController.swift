@@ -96,6 +96,9 @@ class SignupViewController: UIViewController {
         
         collectionView.snp.makeConstraints { (make) in
             make.top.bottom.equalToSuperview()
+            make.center.centerX.equalToSuperview()
+            make.left.equalTo(20)
+            make.right.equalTo(-20)
         }
         collectionView.dataSource = self
         collectionView.delegate = self

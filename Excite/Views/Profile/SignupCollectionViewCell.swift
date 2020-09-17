@@ -17,7 +17,7 @@ class SignupCollectionViewCell: UICollectionViewCell {
         curr.text = "Label"
         curr.font = UIFont.systemFont(ofSize: 20)
         curr.textAlignment = .right
-        curr.textColor = .white
+        curr.textColor = .black
         return curr
     }()
     func initialize() {
