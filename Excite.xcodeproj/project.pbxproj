@@ -292,7 +292,6 @@
 				7048578324F36A6B00F47A31 /* UserPrioritiesTableTableViewCell.swift */,
 				709C394B24F3968000D8F7E9 /* MultipleChoiceTableViewCell.swift */,
 				709C394D24F398EA00D8F7E9 /* MultipleChoiceCellTableViewCell.swift */,
-				ECBF87A32510966B005ECE07 /* SignupCollectionViewCell.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -364,6 +363,7 @@
 		ECBF87972509FCBA005ECE07 /* Signup */ = {
 			isa = PBXGroup;
 			children = (
+				ECBF87A32510966B005ECE07 /* SignupCollectionViewCell.swift */,
 				ECBF879D250A00A3005ECE07 /* RoundedRectangleTextField.swift */,
 				ECBF879F250A079A005ECE07 /* UnderlinedTextField.swift */,
 			);

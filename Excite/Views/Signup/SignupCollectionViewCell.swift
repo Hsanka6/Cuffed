@@ -12,6 +12,15 @@ import UIKit
 class SignupCollectionViewCell: UICollectionViewCell {
     static var reuseIdentifier = "photo"
 
+    
+    
+        // builder design pattern
+        // question
+        // answers
+            // selection of MC -> Edit questions View Controller
+            // textfield
+            // grid of pictures
+            // question and answer for the personalized questions
     let label: UILabel = {
         let curr = UILabel()
         curr.text = "Label"

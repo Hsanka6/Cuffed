@@ -27,11 +27,7 @@ extension UICollectionView {
     }
 }
 
-// Signup will be a UICollectionView with custom cell for question
-// then options (which will be a uicollectionview too if multiple choice)
-// then a free response
-// then a next button and back button on the top
-
+// Browse Collections View Controller
 class SignupViewController: UIViewController {
      
     // MARK: - Properties
