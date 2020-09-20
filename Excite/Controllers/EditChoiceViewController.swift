@@ -8,7 +8,7 @@
 
 import UIKit
 protocol EditChoiceViewControllerDelegate: class {
-    func familyPlanEdited( questions: [MultipleChoiceAnswer])
+    func mcEdited( questions: [MultipleChoiceAnswer], identifier: String)
 }
 
 class EditChoiceViewController: UIViewController {
@@ -21,13 +21,9 @@ class EditChoiceViewController: UIViewController {
     var profile: Profile?
     var index: Int?
     weak var delegate: EditChoiceViewControllerDelegate?
+    var identifier: String?
 
-    
-    static let notificationName = Notification.Name("editChoice")
-    
-    
-    //var selectedString: String = ""
-      
+
     override func viewDidLoad() {
         super.viewDidLoad()
              
@@ -53,23 +49,17 @@ class EditChoiceViewController: UIViewController {
               //collectionView.clipsToBounds = false
               //collectionView.showsHorizontalScrollIndicator = true
         collectionView.register(MultipleChoiceCollectionViewCell.self, forCellWithReuseIdentifier: MultipleChoiceCollectionViewCell.reuseIdentifier)
-        
+         
         let editButton = UIBarButtonItem(title: "Save", style: .plain, target: self, action: #selector(action))
              self.navigationItem.rightBarButtonItem  = editButton
         
     }
     
     @objc func action(sender: UIBarButtonItem) {
-        guard let questions = questions else {
+        guard let questions = questions, let identifier = identifier else {
             return
         }
-        for ques in questions {
-            print("answers in EDIT \(ques.answer)")
-        }
-        //vm.profile?.familyPlans = questions
-        delegate?.familyPlanEdited( questions: questions)
-        //self.profile?.familyPlans = questions
-
+        delegate?.mcEdited(questions: questions, identifier: identifier)
         self.navigationController?.popViewController(animated: true)
     }
     
@@ -107,7 +97,7 @@ extension EditChoiceViewController: UICollectionViewDelegate, UICollectionViewDa
         guard let index = index else { return }
         cell?.button.selectedStyling()
         self.selectedAnswer = (choices?[indexPath.row])!
-        questions?[index].answer = self.selectedAnswer ?? "blah blah"
+        questions?[index].answer = self.selectedAnswer ?? "default"
         cell?.button.changeState()
         collectionView.reloadData()
     }

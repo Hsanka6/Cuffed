@@ -29,16 +29,6 @@ class ProfileEditViewController: UIViewController {
                               
     }
     
-    func familyPlanEdited( questions: [MultipleChoiceAnswer]) {
-        self.viewModel?.profile?.familyPlans = questions
-        for ques in questions {
-            print("answer is \(ques.answer) ")
-        }
-//           DispatchQueue.main.async {
-              self.tableView.reloadData()
-//           }
-       }
-     
     
     
     override func viewDidLoad() {
@@ -157,12 +147,13 @@ extension ProfileEditViewController: UITableViewDelegate, UITableViewDataSource 
             return cell ?? UITableViewCell()
         case .userVice:
             guard let vices = viewModel?.profile?.vices, let cell = tableView.dequeueReusableCell(withIdentifier: MultipleChoiceTableViewCell.reuseIdentifier, for: indexPath) as? MultipleChoiceTableViewCell else { return UITableViewCell()}
-           // cell.profile = self.viewModel?.profile
+            cell.delegate = self
+            cell.identifier = "vices"
             cell.initialize(questions: vices)
             return cell
         case .userFamilyPlans:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: MultipleChoiceTableViewCell.newreuseIdentifier, for: indexPath) as? MultipleChoiceTableViewCell else { return UITableViewCell()}
-
+            cell.identifier = "familyPlans"
             cell.delegate = self
             if let familyPlans = viewModel?.profile?.familyPlans {
                 cell.initialize(questions: familyPlans)
@@ -225,4 +216,12 @@ extension ProfileEditViewController: MultipleChoiceTableViewCellDelegate {
         self.navigationController?.pushViewController(viewController, animated: true)
     }
     
+    func familyPlanEdited( questions: [MultipleChoiceAnswer]) {
+        self.viewModel?.profile?.familyPlans = questions
+        self.tableView.reloadData()
+    }
+    func vicesEdited( questions: [MultipleChoiceAnswer]) {
+        self.viewModel?.profile?.vices = questions
+        self.tableView.reloadData()
+    }
 }

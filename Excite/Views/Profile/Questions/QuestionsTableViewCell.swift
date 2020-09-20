@@ -8,6 +8,11 @@
 
 import UIKit
 
+protocol QuestionTableViewCellDelegate: class {
+    func questionsEdited(freeResponse: [FreeResponse])
+}
+
+
 class QuestionsTableViewCell: UITableViewCell {
     static var reuseIdentifier = "QuestionsTableViewCell"
     var tableView = UITableView()

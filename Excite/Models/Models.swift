@@ -321,6 +321,13 @@ struct PersonalDetails: Codable {
     }
 }
 
+//struct PersonalDetailItem: Codable {
+//    let title: String
+//    let isEditable: Bool
+//
+//}
+
+
 
 class SocialProfile: Codable {
     let platform: String

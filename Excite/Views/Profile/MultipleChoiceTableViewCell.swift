@@ -11,11 +11,13 @@ import UIKit
 protocol MultipleChoiceTableViewCellDelegate: class {
     func didRequestEditChoiceViewController(viewController: EditChoiceViewController)
     func familyPlanEdited( questions: [MultipleChoiceAnswer])
+    func vicesEdited( questions: [MultipleChoiceAnswer])
 }
 
 class MultipleChoiceTableViewCell: UITableViewCell {
     static var reuseIdentifier = "MultipleChoiceTableViewCell"
     static var newreuseIdentifier = "MultipleChoiceTableViewCell2"
+    var identifier: String?
     var tableView = UITableView()
     public var questions: [MultipleChoiceAnswer]?
     
@@ -69,13 +71,19 @@ extension MultipleChoiceTableViewCell: UITableViewDelegate, UITableViewDataSourc
         controller.questions = questions
         controller.index = indexPath.row
         controller.delegate = self
+        controller.identifier = identifier
         delegate?.didRequestEditChoiceViewController(viewController: controller)
     }
 
 }
 
 extension MultipleChoiceTableViewCell: EditChoiceViewControllerDelegate {
-    func familyPlanEdited( questions: [MultipleChoiceAnswer]) {
-        delegate?.familyPlanEdited( questions: questions)
+    func mcEdited( questions: [MultipleChoiceAnswer], identifier: String) {
+        if identifier == "vices" {
+            delegate?.vicesEdited( questions: questions)
+        } else {
+            delegate?.familyPlanEdited( questions: questions)
+        }
+        
     }
 }
