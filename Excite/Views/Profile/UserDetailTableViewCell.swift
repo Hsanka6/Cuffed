@@ -41,14 +41,13 @@ class UserDetailTableViewCell: UITableViewCell {
         stackView.addArrangedSubview(userTextField)
         self.addSubview(stackView)
         stackView.snp.makeConstraints { (make) in
-            make.width.height.equalToSuperview()
+            make.height.equalToSuperview()
             make.left.equalTo(20)
             make.right.equalTo(-20)
         }
     }
 
     func populate(model: PersonalDetails, index: Int) -> (String, String) {
-        print(index)
         let details = Details.allCases[index]
         switch details {
         case .fullName:

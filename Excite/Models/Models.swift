@@ -8,10 +8,12 @@
 
 import Foundation
 import UIKit
+import FirebaseFirestore
+import FirebaseFirestoreSwift
 
-struct User: Codable {
+class User: Codable {
     let userId: String
-    let profile: Profile
+    var profile: Profile
     let matches: [DateInstance]
 //    let liked: [String] //your likes
 //    let likedYou: String //array of userIds that liked you
@@ -34,8 +36,6 @@ enum GenderType: String, Codable {
 class Game: Codable {
    let id: String
 }
-
-
 
 class DateInstance: Codable {
     let id: String
@@ -88,17 +88,17 @@ class Match: DateInstance {
 class Profile: Codable {
     let photos: [String]
     let socials: [SocialProfile]
-    let freeResponse: [FreeResponse]
+    var freeResponse: [FreeResponse]
     let lat: Double
     let lon: Double
     // your metadata
     let personalDetails: PersonalDetails
     // the answers to the family questions that you display on your profile
-    let familyPlans: [MultipleChoiceAnswer]
+    var familyPlans: [MultipleChoiceAnswer]
     // vices: drugs/drinks
-    let vices: [MultipleChoiceAnswer]
+    var vices: [MultipleChoiceAnswer]
     // traits that you describe yourself as upon sign-up
-    let personalityAnswers: [Personality]
+    var personalityAnswers: [Personality]
     
     private enum CodingKeys: String, CodingKey {
         case photos
@@ -149,6 +149,44 @@ class Profile: Codable {
     }
     
     
+    public func makeFromDict() -> [String: Any] {
+        var socials: [[String: Any]] = []
+        for social in self.socials {
+            socials.append(social.makeFromDict())
+        }
+        
+        var freeResponses: [[String: Any]] = []
+        for fr in self.freeResponse {
+            freeResponses.append(fr.makeFromDict())
+        }
+        
+        var familyPlans: [[String:Any]] = []
+        for plans in self.familyPlans {
+            familyPlans.append(plans.makeFromDict())
+        }
+        
+        var vices: [[String:Any]] = []
+        for vice in self.vices {
+            vices.append(vice.makeFromDict())
+        }
+        
+        var personalities: [[String:Any]] = []
+        for personality in self.personalityAnswers {
+            personalities.append(personality.makeFromDict())
+        }
+        
+       return ["photos": self.photos,
+               "socials": socials,
+               "freeResponse": freeResponses,
+               "lat": self.lat,
+               "lon": self.lon,
+               "personalDetails": self.personalDetails.makeFromDict(),
+               "familyPlans": familyPlans,
+               "vices": vices,
+               "personalityAnswers": personalities]
+    }
+    
+    
 }
 
 class Personality: MultipleChoiceAnswer {
@@ -176,18 +214,40 @@ class Personality: MultipleChoiceAnswer {
         self.bottomValue = bottomValue
         super.init(answer: answer, question: question, answerChoices: answerChoices, short: short)
     }
+    
+    
+    public override func makeFromDict() -> [String: Any] {
+       return ["topValue": self.topValue,
+               "bottomValue": self.bottomValue,
+               "answer": self.answer,
+               "question": self.question,
+               "answerChoices": self.answerChoices,
+               "short": self.short]
+    }
 }
 
 // “Your most embarrassing memory?”
 // Open Ended questions and answers
-struct FreeResponse: Codable {
+class FreeResponse: Codable {
     let question: String
     let answer: String
     let image: String
+    
+    init(question: String, answer: String, image: String) {
+        self.question = question
+        self.answer = answer
+        self.image = image
+    }
+    
+    public func makeFromDict() -> [String: Any] {
+        return ["question": self.question,
+                "answer": self.answer,
+                "image": self.image]
+    }
 }
 
 class MultipleChoiceAnswer: MultipleChoice {
-    let answer: String
+    var answer: String
     
     private enum Key: CodingKey {
        case question
@@ -195,7 +255,7 @@ class MultipleChoiceAnswer: MultipleChoice {
        case answer
        case short
     }
-    init(answer: String, question: String, answerChoices:[String], short: String) {
+    init(answer: String, question: String, answerChoices: [String], short: String) {
         self.answer = answer
         super.init(question: question, answerChoices: answerChoices, short: short)
         
@@ -210,6 +270,12 @@ class MultipleChoiceAnswer: MultipleChoice {
         self.answer = answer
         super.init(question: question, answerChoices: answerChoices, short: short)
     }
+    public override func makeFromDict() -> [String: Any] {
+       return ["answer": self.answer,
+               "question": self.question,
+               "answerChoices": self.answerChoices,
+               "short": self.short]
+    }
 }
 
 //  Question with limited answers
@@ -219,10 +285,16 @@ class MultipleChoice: Codable {
     let answerChoices: [String]
     let short: String
     
-    init(question:String, answerChoices: [String], short: String) {
+    init(question: String, answerChoices: [String], short: String) {
         self.question = question
         self.answerChoices = answerChoices
         self.short = short
+    }
+    
+    public func makeFromDict() -> [String: Any] {
+       return ["question": self.question,
+               "answerChoices": self.answerChoices,
+               "short": self.short]
     }
 }
 
@@ -236,7 +308,25 @@ struct PersonalDetails: Codable {
     let location: String
     let jobTitle: String
     let company: String
+    
+    public func makeFromDict() -> [String: Any] {
+       return ["fullName": self.fullName,
+               "age": self.age,
+               "height": self.height,
+               "gender": self.gender.rawValue,
+               "ethnicity": self.ethnicity,
+               "location": self.location,
+               "jobTitle": self.jobTitle,
+               "company": self.company]
+    }
 }
+
+//struct PersonalDetailItem: Codable {
+//    let title: String
+//    let isEditable: Bool
+//
+//}
+
 
 
 class SocialProfile: Codable {
@@ -247,6 +337,11 @@ class SocialProfile: Codable {
         self.platform = platform
         self.link = link
     }
+    
+    public func makeFromDict() -> [String: Any] {
+          return ["platform": self.platform,
+                  "link": self.link]
+    }
 }
 
 class Filter: Codable {
@@ -254,13 +349,11 @@ class Filter: Codable {
     let distance: Int
     let age: Int
     let moreFilters: [MultipleChoice]
-    
-    
 }
 
-
-//struct
-
+struct QuestionCards: Codable {
+    let questions: [String]
+}
 
 class Edible: Codable {
     var name: String
@@ -294,6 +387,13 @@ class Food: Edible {
         self.taste = taste
         super.init(name: name, size: size)
     }
+    
+    public func makeFromDict() -> [String: Any] {
+        return ["name": self.name,
+                "size": self.size,
+                "taste": self.taste]
+    }
+    
 }
 
 class Test: Codable {

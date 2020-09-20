@@ -28,12 +28,11 @@ class UserPersonalityTableViewCell: UITableViewCell {
 
         slider.maximumValue = 4
         slider.minimumValue = 0
-        if let ff = Float(model.answer) {
-        slider.setValue( ff, animated: false)
+        if let sliderVal = Float(model.answer) {
+            slider.setValue( sliderVal, animated: false)
         }
         slider.addTarget(self, action: #selector(self.changeValue(_:)), for: .valueChanged)
 
-        print(self.frame.width)
         self.addSubview(slider)
         
         let width = UIScreen.main.bounds.width - 40
@@ -42,23 +41,14 @@ class UserPersonalityTableViewCell: UITableViewCell {
             make.width.equalTo(width)
             make.centerX.equalToSuperview()
         }
-        print("lkjn")
-        print(slider.frame.size.width)
         let xPos = CGFloat(0)
-        let increment = CGFloat((320-40) / 3)
-        
+
         for size in 0..<5 {
-            print("is \(xPos + self.frame.width * (0.2 * CGFloat(size)))")
             let tick = UIView(frame: CGRect(x: xPos + (UIScreen.main.bounds.width - 40) * (0.25 * CGFloat(size)), y: (slider.frame.size.height - 24) / 2, width: 2, height: 15))
             tick.backgroundColor = UIColor.init(white: 0.7, alpha: 1)
             tick.layer.shadowColor = UIColor.red.cgColor
-           // tick.layer.shadowOffset = CGSize(width: 0.0, height: 1.0)
-            //tick.layer.shadowOpacity = 1.0
-            //tick.layer.shadowRadius = 0.0
-            tick.tag = 1
+             tick.tag = 1
             slider.insertSubview(tick, belowSubview: slider)
-//
-            //xPos += increment
         }
         
         let leftValue = UILabel()

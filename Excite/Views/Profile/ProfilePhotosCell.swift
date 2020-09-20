@@ -33,7 +33,7 @@ class ProfilePhotosCell: UITableViewCell {
         collectionView.dataSource = self
         collectionView.delegate = self
         collectionView.backgroundColor = UIColor.white
-        contentView.clipsToBounds = false
+        contentView.clipsToBounds = true
         collectionView.clipsToBounds = false
         collectionView.showsHorizontalScrollIndicator = true
         collectionView.register(PhotoCollectionViewCell.self, forCellWithReuseIdentifier: PhotoCollectionViewCell.reuseIdentifier)
@@ -56,7 +56,7 @@ extension ProfilePhotosCell: UICollectionViewDelegate, UICollectionViewDataSourc
         return UICollectionViewCell()
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let width = UIScreen.main.bounds.width/3 - (40/2)
+        let width = UIScreen.main.bounds.width/3 - (20)
         let height = CGFloat(100) // or what height you want to do
         return CGSize(width: width, height: height)
     }
