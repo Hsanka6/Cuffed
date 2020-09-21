@@ -139,6 +139,8 @@ extension ProfileEditViewController: UITableViewDelegate, UITableViewDataSource 
             let cell = tableView.dequeueReusableCell(withIdentifier: UserTablePersonalityTableViewCell.reuseIdentifier, for: indexPath) as? UserTablePersonalityTableViewCell
             if let personalities = viewModel?.profile?.personalityAnswers {
                  cell?.initialize(personality: personalities)
+                 cell?.delegate = self
+                cell?.personal = personalities
             }
             return cell ?? UITableViewCell()
         case .userPriorities:
@@ -161,10 +163,12 @@ extension ProfileEditViewController: UITableViewDelegate, UITableViewDataSource 
             return cell
         case .userQuestions:
             let cell = tableView.dequeueReusableCell(withIdentifier: QuestionsTableViewCell.reuseIdentifier, for: indexPath) as? QuestionsTableViewCell
-            cell?.viewController = self
-            cell?.profile = viewModel?.profile
-            if let vices = viewModel?.profile?.freeResponse {
-                cell?.initialize(freeResponse: vices)
+//            cell?.viewController = self
+//            cell?.profile = viewModel?.profile
+            cell?.delegate = self
+            if let freeResponse = viewModel?.profile?.freeResponse {
+                cell?.initialize(freeResponse: freeResponse)
+                cell?.freeResponse = freeResponse
             }
             return cell ?? UITableViewCell()
         }
@@ -211,10 +215,20 @@ extension ProfileEditViewController: UITableViewDelegate, UITableViewDataSource 
     }
 }
 
-extension ProfileEditViewController: MultipleChoiceTableViewCellDelegate {
+extension ProfileEditViewController: MultipleChoiceTableViewCellDelegate, QuestionTableViewCellDelegate, UserTablePersonalityTableViewCellDelegate  {
+    func questionsEdited(freeResponse: [FreeResponse]) {
+        self.viewModel?.profile?.freeResponse = freeResponse
+        self.tableView.reloadData()
+    }
+    
     func didRequestEditChoiceViewController(viewController: EditChoiceViewController) {
         self.navigationController?.pushViewController(viewController, animated: true)
     }
+    
+    func didRequestBrowseQuestionsViewController(viewController: BrowseQuestionsViewController) {
+        self.navigationController?.pushViewController(viewController, animated: true)
+    }
+    
     
     func familyPlanEdited( questions: [MultipleChoiceAnswer]) {
         self.viewModel?.profile?.familyPlans = questions
@@ -224,4 +238,10 @@ extension ProfileEditViewController: MultipleChoiceTableViewCellDelegate {
         self.viewModel?.profile?.vices = questions
         self.tableView.reloadData()
     }
+    
+    func editPersonality(personalities: [Personality]) {
+        self.viewModel?.profile?.personalityAnswers = personalities
+        print("this is answer \(personalities[0].answer)")
+    }
+    
 }

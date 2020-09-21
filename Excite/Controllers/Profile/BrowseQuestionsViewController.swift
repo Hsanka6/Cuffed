@@ -8,10 +8,15 @@
 
 import UIKit
 
+protocol BrowseQuestionsViewControllerDelegate: class {
+    func questionsEdited(questions: [FreeResponse])
+}
+
 class BrowseQuestionsViewController: UIViewController {
-    public var profile: Profile?
     public var questions = [String]()
     public var index: Int?
+    var freeResponse: [FreeResponse]?
+    weak var delegate: BrowseQuestionsViewControllerDelegate?
     override func awakeFromNib() {
         super.awakeFromNib()
     }
@@ -66,8 +71,8 @@ extension BrowseQuestionsViewController: UICollectionViewDelegate, UICollectionV
        if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: QuestionCollectionViewCell.reuseIdentifier, for: indexPath) as? QuestionCollectionViewCell {
             cell.initialize(question: questions[indexPath.row])
             cell.layer.cornerRadius = 15
-            cell.viewController = self
-            cell.profile = profile
+            cell.delegate = self
+            cell.freeResponse = freeResponse
             cell.index = index
             return cell
         
@@ -78,5 +83,18 @@ extension BrowseQuestionsViewController: UICollectionViewDelegate, UICollectionV
         let width = UIScreen.main.bounds.width - 60
         let height = CGFloat(450)//(UIScreen.main.bounds.height - 100) // or what height you want to do
         return CGSize(width: width, height: height)
+    }
+}
+
+
+extension BrowseQuestionsViewController: QuestionCollectionViewCellDelegate {
+    func editFreeResponse(freeResponse: [FreeResponse]) {
+        delegate?.questionsEdited(questions: freeResponse)
+        self.navigationController?.popViewController(animated: true)
+    }
+    
+    
+    func didRequestAnswerQuestionViewController(controller: AnswerQuestionViewController) {
+        self.navigationController?.pushViewController(controller, animated: true)
     }
 }

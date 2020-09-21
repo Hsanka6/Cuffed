@@ -10,15 +10,14 @@ import UIKit
 
 protocol QuestionTableViewCellDelegate: class {
     func questionsEdited(freeResponse: [FreeResponse])
+    func didRequestBrowseQuestionsViewController(viewController: BrowseQuestionsViewController) 
 }
-
 
 class QuestionsTableViewCell: UITableViewCell {
     static var reuseIdentifier = "QuestionsTableViewCell"
     var tableView = UITableView()
     var freeResponse: [FreeResponse]?
-    public var profile: Profile?
-    
+    weak var delegate: QuestionTableViewCellDelegate?
     public var viewController: UIViewController?
       
 
@@ -44,11 +43,15 @@ class QuestionsTableViewCell: UITableViewCell {
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
-    super.setSelected(selected, animated: animated)
-        
-
-    // Configure the view for the selected state
+        super.setSelected(selected, animated: animated)
     }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        tableView.removeFromSuperview()
+        tableView.reloadData()
+    }
+   
 
 }
 
@@ -71,10 +74,22 @@ extension QuestionsTableViewCell: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let newViewController = BrowseQuestionsViewController()
-        newViewController.profile = profile
         newViewController.index = indexPath.row
-        self.viewController?.navigationController?.pushViewController(newViewController, animated: true)
+        newViewController.freeResponse = freeResponse
+        newViewController.delegate = self
+        delegate?.didRequestBrowseQuestionsViewController(viewController: newViewController)
     
     }
+    
+    
      
+}
+
+
+extension QuestionsTableViewCell: BrowseQuestionsViewControllerDelegate {
+    func questionsEdited(questions: [FreeResponse]) {
+        delegate?.questionsEdited(freeResponse: questions)
+    }
+    
+    
 }

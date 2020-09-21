@@ -12,7 +12,6 @@ protocol EditChoiceViewControllerDelegate: class {
 }
 
 class EditChoiceViewController: UIViewController {
-
     let button = MultipleChoiceButton()
     var choices: [String]?
     var selectedAnswer: String?

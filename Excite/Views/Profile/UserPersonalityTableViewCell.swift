@@ -8,15 +8,23 @@
 
 import UIKit
 
+protocol UserPersonalityTableViewCellDelegate: class {
+    func editPersonality(personalities: [Personality])
+}
+
+
 class UserPersonalityTableViewCell: UITableViewCell {
     static var reuseIdentifier = "personalityDetail"
-    
+    var personalities: [Personality]?
+    weak var delegate: UserPersonalityTableViewCellDelegate?
+    var index: Int?
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
     }
     
-    func initialize(model: Personality) {
+    func initialize(model: Personality, index: Int) {
+        self.index = index
         let slider = CustomSlider()
         //slider.center = self.center
         slider.minimumTrackTintColor = .gray
@@ -84,7 +92,10 @@ class UserPersonalityTableViewCell: UITableViewCell {
     }
     
     @objc func changeValue(_ sender: UISlider) {
+        guard var personalities = personalities, let index = index else { return }
+        personalities[index].answer = String(Float(Int(sender.value) * 1))
         sender.value = Float(Int(sender.value) * 1)
+        delegate?.editPersonality(personalities: personalities)
     }
 
 }

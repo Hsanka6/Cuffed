@@ -10,7 +10,7 @@ import UIKit
 
 class QuestionsDetailTableViewCell: UITableViewCell {
     static var reuseIdentifier = "QuestionsDetailTableViewCell"
-    var stackView = UIStackView()
+    var stackView: UIStackView?
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -23,6 +23,8 @@ class QuestionsDetailTableViewCell: UITableViewCell {
     }
     
     func initialize(freeResponse: FreeResponse) {
+        let stackView = UIStackView()
+              
         self.backgroundColor = .lightGray
         let cardView = UIView()
         cardView.backgroundColor = .white
@@ -47,6 +49,7 @@ class QuestionsDetailTableViewCell: UITableViewCell {
         let userTextField = UILabel()
         userTextField.textColor = UIColor.lightGray
         userTextField.text = freeResponse.answer
+        
         stackView.alignment = .leading
         stackView.addArrangedSubview(userLabel)
         stackView.spacing = 3
@@ -59,6 +62,14 @@ class QuestionsDetailTableViewCell: UITableViewCell {
             make.bottom.equalTo(-8)
             make.width.equalToSuperview()
         }
+        
+        self.stackView = stackView
     }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        stackView?.removeFromSuperview()
+        stackView = nil
+   }
 
 }

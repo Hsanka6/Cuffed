@@ -8,13 +8,18 @@
 
 import UIKit
 
+protocol AnswerQuestionViewControllerDelegate: class {
+    func didEditFreeResponse(freeResponse: [FreeResponse])
+}
+
 class AnswerQuestionViewController: UIViewController {
     var question: String?
     var imageView = UIImageView()
     var answerTF = UITextField()
     var index: Int?
-          
+    weak var delegate: AnswerQuestionViewControllerDelegate?
     public var profile: Profile?
+    var freeResponse: [FreeResponse]?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -85,16 +90,12 @@ class AnswerQuestionViewController: UIViewController {
     
     @objc func action(sender: UIBarButtonItem) {
         let newViewController = ProfileEditViewController()
-        guard let question = question, let profile = profile, let index = index else { return }
-        let freeResponse = FreeResponse(question: question, answer: answerTF.text ?? "", image: "")
+        guard let question = question, var freeResponse = freeResponse, let index = index else { return }
+        let current = FreeResponse(question: question, answer: answerTF.text ?? "", image: "")
         
-        profile.freeResponse[index] = freeResponse
-        let model = ProfileViewModel()
-        
-        model.profile = profile
-        newViewController.viewModel = model
-        newViewController.gotProfile = true
-        self.navigationController?.pushViewController(newViewController, animated: true)
+        freeResponse[index] = current
+        delegate?.didEditFreeResponse(freeResponse: freeResponse)
+        self.navigationController?.popViewController(animated: true)
     }
     
     @objc func selectImage() {

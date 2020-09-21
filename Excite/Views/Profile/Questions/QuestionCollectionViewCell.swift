@@ -8,12 +8,18 @@
 
 import UIKit
 
+protocol QuestionCollectionViewCellDelegate: class {
+    func didRequestAnswerQuestionViewController(controller: AnswerQuestionViewController)
+    func editFreeResponse(freeResponse: [FreeResponse])
+}
+
+
 class QuestionCollectionViewCell: UICollectionViewCell {
     static var reuseIdentifier = "question"
     var question: String?
-    var profile: Profile?
+    var freeResponse: [FreeResponse]?
     var index: Int?
-    var viewController: UIViewController?
+    weak var delegate: QuestionCollectionViewCellDelegate?
     func initialize(question: String) {
         self.question = question
         self.backgroundColor = .gray
@@ -64,11 +70,18 @@ class QuestionCollectionViewCell: UICollectionViewCell {
     @objc func answerQuestion() {
         let controller = AnswerQuestionViewController()
         controller.question = question
-        controller.profile = profile
         controller.index = index
-        self.viewController?.navigationController?.pushViewController(controller, animated: true)
+        controller.freeResponse = freeResponse
+        controller.delegate = self
+        delegate?.didRequestAnswerQuestionViewController(controller: controller)
         
     }
       
         
+}
+
+extension QuestionCollectionViewCell: AnswerQuestionViewControllerDelegate {
+    func didEditFreeResponse(freeResponse: [FreeResponse]) {
+        delegate?.editFreeResponse(freeResponse: freeResponse)
     }
+}
