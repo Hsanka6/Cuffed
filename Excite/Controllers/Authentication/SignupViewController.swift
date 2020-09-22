@@ -45,7 +45,7 @@ class SignupViewController: UIViewController {
     // let nameBox = RoundedRectangleTextField(placeholder: "Your Name")
 //    let nameField = UnderlinedTextField(placeholder: "Your Name")
     var viewModel: SignupViewModel?
-    
+    var numSlides: [SignupCollectionViewCell]?
     let label: UILabel = {
         let curr = UILabel()
         curr.text = "What is your display name?"
@@ -101,6 +101,11 @@ class SignupViewController: UIViewController {
     func createCollectionView() {
         self.view.addSubview(collectionView)
         
+        
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .horizontal
+        collectionView.collectionViewLayout = layout
+        
         collectionView.snp.makeConstraints { (make) in
             make.leading.trailing.equalToSuperview().inset(30)
             make.top.equalTo(view.safeArea.top)
@@ -108,10 +113,11 @@ class SignupViewController: UIViewController {
         }
         collectionView.dataSource = self
         collectionView.delegate = self
-        collectionView.backgroundColor = UIColor.white
+        collectionView.backgroundColor = .none
+//        collectionView.backgroundColor = UIColor.white
         collectionView.clipsToBounds = false
 //        collectionView.center
-        collectionView.showsHorizontalScrollIndicator = true
+        collectionView.showsHorizontalScrollIndicator = false
         collectionView.register(SignupCollectionViewCell.self, forCellWithReuseIdentifier: SignupCollectionViewCell.reuseIdentifier)
     }
 }
@@ -121,7 +127,6 @@ extension SignupViewController: UICollectionViewDelegate, UICollectionViewDataSo
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        print("IS THIS EVER CALLED")
         if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SignupCollectionViewCell.reuseIdentifier, for: indexPath) as? SignupCollectionViewCell {
          cell.initialize()
 //         cell.configure(photo: photos[indexPath.row])
@@ -132,10 +137,12 @@ extension SignupViewController: UICollectionViewDelegate, UICollectionViewDataSo
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
 
-        let height = view.frame.size.height
-        let width = view.frame.size.width
+//        let height = view.frame.size.height
+//        let width = view.frame.size.width
         // in case you you want the cell to be 40% of your controllers view
-        return CGSize(width: width * 0.4, height: height * 0.4)
+        let height = self.collectionView.frame.height
+        let width = self.collectionView.frame.width
+        return CGSize(width: width * 0.8, height: height * 0.9)
     }
 //    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
 //
