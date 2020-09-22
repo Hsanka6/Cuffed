@@ -8,6 +8,19 @@
 
 import UIKit
 
+class Colors {
+    var gl : CAGradientLayer
+
+    init() {
+        let colorTop = UIColor(hexString: "6CA0FF").cgColor
+        let colorBottom = UIColor(hexString: "FF6299").cgColor
+
+        self.gl = CAGradientLayer()
+        self.gl.colors = [colorTop, colorBottom]
+        self.gl.locations = [0.0, 1.0]
+    }
+}
+
 class AnswerQuestionViewController: UIViewController {
     var question: String?
     var imageView = UIImageView()

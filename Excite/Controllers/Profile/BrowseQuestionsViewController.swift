@@ -21,7 +21,7 @@ class BrowseQuestionsViewController: UIViewController {
         super.viewDidLoad()
         self.view.backgroundColor = .white
        
-        NetworkRequesterMock().getQuestions { cards in
+        NetworkRequester().getQuestions { cards in
             self.questions = cards.questions
             self.collectionView.reloadData()
         }
