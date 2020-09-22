@@ -107,16 +107,14 @@ class SignupViewController: UIViewController {
         collectionView.collectionViewLayout = layout
         
         collectionView.snp.makeConstraints { (make) in
-            make.leading.trailing.equalToSuperview().inset(30)
+            make.leading.trailing.equalToSuperview()
             make.top.equalTo(view.safeArea.top)
             make.bottom.equalTo(view.safeArea.bottom)
         }
         collectionView.dataSource = self
         collectionView.delegate = self
         collectionView.backgroundColor = .none
-//        collectionView.backgroundColor = UIColor.white
         collectionView.clipsToBounds = false
-//        collectionView.center
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.register(SignupCollectionViewCell.self, forCellWithReuseIdentifier: SignupCollectionViewCell.reuseIdentifier)
     }
@@ -128,7 +126,7 @@ extension SignupViewController: UICollectionViewDelegate, UICollectionViewDataSo
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SignupCollectionViewCell.reuseIdentifier, for: indexPath) as? SignupCollectionViewCell {
-         cell.initialize()
+            cell.initialize(question: "Test")
 //         cell.configure(photo: photos[indexPath.row])
          return cell
          }

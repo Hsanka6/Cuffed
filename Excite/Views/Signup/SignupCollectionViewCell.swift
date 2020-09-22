@@ -24,23 +24,64 @@ class SignupCollectionViewCell: UICollectionViewCell {
         // textfield
         // grid of pictures
         // question and answer for the personalized questions
-    let label: UILabel = {
-        let curr = UILabel()
-        curr.text = "Label"
-        curr.font = UIFont.systemFont(ofSize: 20)
-        curr.textAlignment = .right
-        curr.textColor = .black
-        curr.backgroundColor = .yellow
-        return curr
-    }()
-    func initialize() {
-        self.addSubview(label)
-        self.layer.backgroundColor = UIColor.blue.cgColor
-        label.snp.makeConstraints { (make) in
-            make.width.equalToSuperview()
-            make.center.equalToSuperview().inset(30)
+    
+    var question: String?
+    var profile: Profile?
+    var index: Int?
+    var viewController: UIViewController?
+    
+    func initialize(question: String) {
+        self.question = question
+        // self.backgroundColor = .gray
+        let cardView = UIView()
+        cardView.backgroundColor = .white
+        cardView.layer.cornerRadius = 15
+        
+        self.addSubview(cardView)
+        cardView.snp.makeConstraints { (make) in
+        make.height.equalTo(600)
+        make.width.equalTo(UIScreen.main.bounds.width - 60)
+        make.center.equalToSuperview()
         }
+        cardView.dropShadow()
+        let questionLabel = UILabel()
+        questionLabel.textAlignment = .left
+        questionLabel.numberOfLines = 3
+        questionLabel.textColor = UIColor.black
+        questionLabel.text = question
+        questionLabel.font = UIFont.systemFont(ofSize: 25)
+        cardView.addSubview(questionLabel)
+        questionLabel.snp.makeConstraints { (make) in
+            make.top.equalTo(15)
+            make.left.equalTo(15)
+            make.right.equalTo(-15)
+        }
+        
+        let answerButton = UIButton()
+        answerButton.setTitle("Answer", for: .normal)
+        answerButton.backgroundColor = .gray
+        answerButton.tintColor = .white
+        answerButton.layer.cornerRadius = 15
+        cardView.addSubview(answerButton)
+        answerButton.snp.makeConstraints { (make) in
+            make.width.equalTo(100)
+            make.height.equalTo(40)
+            make.centerX.equalToSuperview()
+            make.bottom.equalTo(-10)
+        }
+        answerButton.isUserInteractionEnabled = true
+        answerButton.addTarget(self, action: #selector(self.answerQuestion), for: .touchUpInside)
     }
+    
+    @objc func answerQuestion() {
+        let controller = AnswerQuestionViewController()
+        controller.question = question
+        controller.profile = profile
+        controller.index = index
+        self.viewController?.navigationController?.pushViewController(controller, animated: true)
+        
+    }
+
     
 }
 
