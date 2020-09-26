@@ -300,11 +300,15 @@ class MultipleChoice: Codable {
     let question: String
     let answerChoices: [String]
     let short: String
+    let isHidden: Bool
+    let isMandatory: Bool
     
-    init(question: String, answerChoices: [String], short: String) {
+    init(question: String, answerChoices: [String], short: String, isHidden: Bool, isMandatory: Bool) {
         self.question = question
         self.answerChoices = answerChoices
         self.short = short
+        self.isHidden = isHidden
+        self.isMandatory = isMandatory
     }
     
     public func makeFromDict() -> [String: Any] {

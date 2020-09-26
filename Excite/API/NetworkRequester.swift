@@ -62,6 +62,18 @@ class NetworkRequester: NetworkRequesterProtocol {
             }
         }
     }
+
+    static func getMultipleChoiceQuestions() {
+        let database = Firestore.firestore()
+        database.collection("Questions").getDocuments { (documents, error) in
+            if let error = error {
+                print("Error getting documents: \(error)")
+            }
+            for document in documents!.documents {
+                print("\(document.documentID) => \(document.data())")
+            }
+        }
+    }
     
     func getQuestions(completion: @escaping(QuestionCards) -> Void) {
         let database = Firestore.firestore()
