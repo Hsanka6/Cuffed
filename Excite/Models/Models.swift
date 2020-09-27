@@ -10,16 +10,32 @@ import Foundation
 import UIKit
 import FirebaseFirestore
 import FirebaseFirestoreSwift
+import FBSDKLoginKit
+import Firebase
+import FirebaseAuth
 
 class User: Codable {
     let userId: String
-    var profile: Profile
-    let matches: [DateInstance]
+    let email: String
+    let name: String
+    var profile: Profile?
+    var matches: [DateInstance]?
 //    let liked: [String] //your likes
 //    let likedYou: String //array of userIds that liked you
 //    let seen: [String] //array of seen users
 //    let blocked: [String] //array of blocked users
-    let isPremium: Bool
+    var isPremium: Bool?
+    
+    init(firebaseUser: Firebase.User) {
+        self.name = firebaseUser.displayName ?? ""
+        self.userId = firebaseUser.uid
+        self.email = firebaseUser.email ?? ""
+        // fill out the profile as well
+        self.profile = nil
+        self.matches = nil
+        self.isPremium = false
+    }
+    
 }
 
 
@@ -284,11 +300,15 @@ class MultipleChoice: Codable {
     let question: String
     let answerChoices: [String]
     let short: String
+    let isHidden: Bool
+    let isMandatory: Bool
     
-    init(question: String, answerChoices: [String], short: String) {
+    init(question: String, answerChoices: [String], short: String, isHidden: Bool, isMandatory: Bool) {
         self.question = question
         self.answerChoices = answerChoices
         self.short = short
+        self.isHidden = isHidden
+        self.isMandatory = isMandatory
     }
     
     public func makeFromDict() -> [String: Any] {

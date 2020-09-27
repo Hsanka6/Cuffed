@@ -15,7 +15,7 @@ protocol NetworkRequesterProtocol {
     //func getProfile(completion: @escaping (Swift.Result<Profile, Error>) -> Void)
 }
 
-class NetworkRequesterMock: NetworkRequesterProtocol {
+class NetworkRequester: NetworkRequesterProtocol {
 //    func getQuestion(completion: @escaping (Result<Question, Error>) -> Void) {
 //        let oneSecond = DispatchTime.now() + 1
 //        let mockResponsePath = Bundle.main.path(forResource: "Question", ofType: "json")
@@ -44,27 +44,36 @@ class NetworkRequesterMock: NetworkRequesterProtocol {
 //    }
 
     
-    func getUser(completion: @escaping(User) -> Void) {
-        let database = Firestore.firestore()
-        database.collection("Users").document("test").getDocument { (document, error) in
+    func getUser(_ id: String, completion: @escaping(User?) -> Void) {
+        Firestore.firestore().collection("Users").document(id).getDocument { (document, error) in
             let result = Result {
                 try document?.data(as: User.self)
             }
             switch result {
-            case .success(let user):
-                if let user = user {
-                    completion(user)
-                } else {
-                    print("Document doesn't exist")
-                }
-            case .failure(let error):
-                print("Error decoding something here \(error)")
+                case .success(let user):
+                    if let user = user {
+                        completion(user)
+                    } else {
+                        print("User \(id) was not found in the Firestore Database.")
+                        completion(nil)
+                    }
+                case .failure(let error):
+                    print("Error decoding something here: \(error)")
             }
         }
     }
-    
-    
-    
+
+    static func getMultipleChoiceQuestions() {
+        let database = Firestore.firestore()
+        database.collection("Questions").getDocuments { (documents, error) in
+            if let error = error {
+                print("Error getting documents: \(error)")
+            }
+            for document in documents!.documents {
+                print("\(document.documentID) => \(document.data())")
+            }
+        }
+    }
     
     func getQuestions(completion: @escaping(QuestionCards) -> Void) {
         let database = Firestore.firestore()
