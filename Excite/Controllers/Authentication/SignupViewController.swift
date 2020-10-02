@@ -13,7 +13,7 @@ import Firebase
 import FirebaseAuth
 
 extension UIView {
-    var safeArea : ConstraintLayoutGuideDSL {
+    var safeArea: ConstraintLayoutGuideDSL {
         return safeAreaLayoutGuide.snp
     }
 }
@@ -100,7 +100,7 @@ class SignupViewController: UIViewController {
     
     // MARK: - Selectors
     func constructBackground() {
-        let backgroundLayer = self.colors.gl
+        let backgroundLayer = self.colors.gradientLayer
         backgroundLayer.frame = view.frame
         view.layer.insertSublayer(backgroundLayer, at: 0)
     }

@@ -51,15 +51,15 @@ class NetworkRequester: NetworkRequesterProtocol {
                 try document?.data(as: User.self)
             }
             switch result {
-                case .success(let user):
-                    if let user = user {
-                        completion(user)
-                    } else {
-                        print("User \(id) was not found in the Firestore Database.")
-                        completion(nil)
-                    }
-                case .failure(let error):
-                    print("Error decoding something here: \(error)")
+            case .success(let user):
+                if let user = user {
+                    completion(user)
+                } else {
+                    print("User \(id) was not found in the Firestore Database.")
+                    completion(nil)
+                }
+            case .failure(let error):
+                print("Error decoding something here: \(error)")
             }
         }
     }
@@ -72,15 +72,12 @@ class NetworkRequester: NetworkRequesterProtocol {
                 do {
                     if let result = try document.data(as: SignupModels.FreeResponse.self) {
                         completion(result)
-                    }
-                    else if let result = try document.data(as: SignupModels.MultipleChoice.self) {
+                    } else if let result = try document.data(as: SignupModels.MultipleChoice.self) {
                         completion(result)
+                    } else {
+                        print("Type is neither Multiple Choice nor Free Response")
                     }
-                    else {
-                        "Type is neither Multiple Choice nor Free Response"
-                    }
-                }
-                catch {
+                } catch {
                     print("\(error)")
                     print(document.data())
                     print("Something weird happened...")
