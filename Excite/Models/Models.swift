@@ -300,15 +300,11 @@ class MultipleChoice: Codable {
     let question: String
     let answerChoices: [String]
     let short: String
-    let isHidden: Bool
-    let isMandatory: Bool
     
-    init(question: String, answerChoices: [String], short: String, isHidden: Bool, isMandatory: Bool) {
+    init(question: String, answerChoices: [String], short: String) {
         self.question = question
         self.answerChoices = answerChoices
         self.short = short
-        self.isHidden = isHidden
-        self.isMandatory = isMandatory
     }
     
     public func makeFromDict() -> [String: Any] {
@@ -318,6 +314,9 @@ class MultipleChoice: Codable {
     }
 }
 
+
+// Make the Sign Up specific questions here just to move on, instead of
+// making them originate from the other questions
 
 struct PersonalDetails: Codable {
     let fullName: String

@@ -46,6 +46,7 @@ class SignupViewController: UIViewController {
 //    let nameField = UnderlinedTextField(placeholder: "Your Name")
     var viewModel: SignupViewModel?
     var numSlides: [SignupCollectionViewCell]?
+    var questions = [SignupModels.Question]()
     let label: UILabel = {
         let curr = UILabel()
         curr.text = "What is your display name?"
@@ -68,6 +69,14 @@ class SignupViewController: UIViewController {
             make.center.equalToSuperview()
             make.height.width.equalTo(30)
         }
+        
+        // get questions here
+        NetworkRequester.getSignupQuestions { (question) in
+            // print(question.question)
+            self.questions.append(question)
+        }
+        print("JAN DEBUG")
+        print(self.questions.count)
         self.createCollectionView()
     }
     

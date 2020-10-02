@@ -25,6 +25,9 @@ class SignupCollectionViewCell: UICollectionViewCell {
         // grid of pictures
         // question and answer for the personalized questions
     
+    
+    // Use the Sign Up Specific Models for FR + MC questions here
+    
     var question: String?
     var profile: Profile?
     var index: Int?

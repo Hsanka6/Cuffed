@@ -9,6 +9,7 @@
 import Alamofire
 import Firebase
 import FirebaseFirestoreSwift
+import CodableFirebase
 
 protocol NetworkRequesterProtocol {
     //func getQuestion(completion: @escaping (Swift.Result<Question, Error>) -> Void)
@@ -63,14 +64,27 @@ class NetworkRequester: NetworkRequesterProtocol {
         }
     }
 
-    static func getMultipleChoiceQuestions() {
+    static func getSignupQuestions(completion: @escaping(SignupModels.Question) -> Void) {
         let database = Firestore.firestore()
         database.collection("Questions").getDocuments { (documents, error) in
-            if let error = error {
-                print("Error getting documents: \(error)")
-            }
             for document in documents!.documents {
-                print("\(document.documentID) => \(document.data())")
+                // print("\(document.documentID) => \(document.data())")
+                do {
+                    if let result = try document.data(as: SignupModels.FreeResponse.self) {
+                        completion(result)
+                    }
+                    else if let result = try document.data(as: SignupModels.MultipleChoice.self) {
+                        completion(result)
+                    }
+                    else {
+                        "Type is neither Multiple Choice nor Free Response"
+                    }
+                }
+                catch {
+                    print("\(error)")
+                    print(document.data())
+                    print("Something weird happened...")
+                }
             }
         }
     }
