@@ -71,13 +71,13 @@ class SignupViewController: UIViewController {
         }
         
         // get questions here
-        NetworkRequester.getSignupQuestions { (question) in
+        NetworkRequester.getSignupQuestions { (questions) in
             // print(question.question)
-            self.questions.append(question)
+            print("JAN DEBUG")
+            self.questions = questions
+            self.collectionView.reloadData()
+            self.createCollectionView()
         }
-        print("JAN DEBUG")
-        print(self.questions.count)
-        self.createCollectionView()
     }
     
     override func viewDidLayoutSubviews() {
@@ -130,12 +130,12 @@ class SignupViewController: UIViewController {
 }
 extension SignupViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 10
+        return questions.count
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SignupCollectionViewCell.reuseIdentifier, for: indexPath) as? SignupCollectionViewCell {
-            cell.initialize(question: "Test")
+            cell.initialize(question: questions[indexPath.row].question)
 //         cell.configure(photo: photos[indexPath.row])
          return cell
          }

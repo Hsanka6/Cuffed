@@ -64,16 +64,17 @@ class NetworkRequester: NetworkRequesterProtocol {
         }
     }
 
-    static func getSignupQuestions(completion: @escaping(SignupModels.Question) -> Void) {
+    static func getSignupQuestions(completion: @escaping([SignupModels.Question]) -> Void) {
         let database = Firestore.firestore()
+        var results = [SignupModels.Question]()
         database.collection("Questions").getDocuments { (documents, error) in
             for document in documents!.documents {
-                // print("\(document.documentID) => \(document.data())")
+                 print("\(document.documentID) => \(document.data())")
                 do {
                     if let result = try document.data(as: SignupModels.FreeResponse.self) {
-                        completion(result)
+                        results.append(result)
                     } else if let result = try document.data(as: SignupModels.MultipleChoice.self) {
-                        completion(result)
+                        results.append(result)
                     } else {
                         print("Type is neither Multiple Choice nor Free Response")
                     }
@@ -83,6 +84,7 @@ class NetworkRequester: NetworkRequesterProtocol {
                     print("Something weird happened...")
                 }
             }
+            completion(results)
         }
     }
     
