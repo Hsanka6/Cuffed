@@ -134,7 +134,6 @@ extension SignupViewController: UICollectionViewDelegate, UICollectionViewDataSo
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SignupCollectionViewCell.reuseIdentifier, for: indexPath) as? SignupCollectionViewCell {
             cell.initialize(question: questions[indexPath.row])
-//         cell.configure(photo: photos[indexPath.row])
          return cell
          }
          return UICollectionViewCell()
@@ -147,7 +146,7 @@ extension SignupViewController: UICollectionViewDelegate, UICollectionViewDataSo
         // in case you you want the cell to be 40% of your controllers view
         let height = self.collectionView.frame.height
         let width = self.collectionView.frame.width
-        return CGSize(width: width * 0.8, height: height * 0.9)
+        return CGSize(width: width, height: height)
     }
 //    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
 //

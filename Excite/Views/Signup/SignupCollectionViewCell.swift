@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 
 class SignupCollectionViewCell: UICollectionViewCell {
-    static var reuseIdentifier = "photo"
+    static var reuseIdentifier = "signup"
 
     // By valentines day we shoyld have the app finished
     // By mid oct we should have everything we are currently working on finished
@@ -48,7 +48,7 @@ class SignupCollectionViewCell: UICollectionViewCell {
         self.addSubview(cardView)
         cardView.snp.makeConstraints { (make) in
         make.height.equalTo(600)
-        make.width.equalTo(UIScreen.main.bounds.width - 60)
+        make.width.equalTo(UIScreen.main.bounds.width - 80)
         make.center.equalToSuperview()
         }
         cardView.dropShadow()
@@ -79,6 +79,22 @@ class SignupCollectionViewCell: UICollectionViewCell {
         }
         answerButton.isUserInteractionEnabled = true
         answerButton.addTarget(self, action: #selector(self.answerQuestion), for: .touchUpInside)
+        
+        let nextButton = UIButton()
+        nextButton.setTitle("Next", for: .normal)
+        nextButton.backgroundColor = .blue
+        nextButton.tintColor = .white
+        nextButton.layer.cornerRadius = 15
+        cardView.addSubview(nextButton)
+        nextButton.snp.makeConstraints { (make) in
+            make.width.equalTo(40)
+            make.height.equalTo(40)
+            make.centerX.equalToSuperview().inset(30)
+            make.bottom.equalTo(-100)
+        }
+        nextButton.isUserInteractionEnabled = true
+        nextButton.addTarget(self, action: #selector(self.nextButton), for: .touchUpInside)
+        
     }
     
     @objc func answerQuestion() {
@@ -89,7 +105,10 @@ class SignupCollectionViewCell: UICollectionViewCell {
         self.viewController?.navigationController?.pushViewController(controller, animated: true)
         
     }
-
+    @objc func nextButton() {
+        print("HEllo World from next button")
+        
+    }
     
 }
 
