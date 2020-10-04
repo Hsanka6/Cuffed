@@ -34,8 +34,11 @@ class SignupCollectionViewCell: UICollectionViewCell {
     var index: Int?
     var viewController: UIViewController?
     
-    func initialize(question: SignupModels.Question) {
+    var collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
+    
+    func initialize(question: SignupModels.Question, collectionView: UICollectionView) {
         self.question = question
+        self.collectionView = collectionView
         // self.backgroundColor = .gray
         
         // TODO: Oct 2nd, 2020
@@ -93,7 +96,7 @@ class SignupCollectionViewCell: UICollectionViewCell {
             make.bottom.equalTo(-100)
         }
         nextButton.isUserInteractionEnabled = true
-        nextButton.addTarget(self, action: #selector(self.nextButton), for: .touchUpInside)
+        nextButton.addTarget(self, action: #selector(self.nextPageButtonClicked), for: .touchUpInside)
         
     }
     
@@ -103,12 +106,23 @@ class SignupCollectionViewCell: UICollectionViewCell {
         controller.profile = profile
         controller.index = index
         self.viewController?.navigationController?.pushViewController(controller, animated: true)
-        
-    }
-    @objc func nextButton() {
-        print("HEllo World from next button")
-        
     }
     
+    @objc func nextPageButtonClicked() {
+        print("HEllo World from next button")
+  
+        let indexPath = self.collectionView.indexPathsForVisibleItems.first.flatMap({
+            IndexPath(item: $0.row + 1, section: $0.section)
+        })
+        self.collectionView.scrollToItem(at: indexPath!, at: .right, animated: true)
+        // self.collectionView.scrollToItem(at: indexPath, at: .left, animated: true)
+        
+        
+//        guard let indexPath = self.collectionView.indexPathsForVisibleItems.first.flatMap({
+//            IndexPath(item: $0.row + 1, section: $0.section)
+//        }), self.collectionView.cellForItem(at: indexPath) != nil else {
+//            return
+//        }
+//        self.collectionView.scrollToItem(at: indexPath, at: .left, animated: true)
+    }
 }
-

@@ -47,14 +47,6 @@ class SignupViewController: UIViewController {
     var viewModel: SignupViewModel?
     var numSlides: [SignupCollectionViewCell]?
     var questions = [SignupModels.Question]()
-    let label: UILabel = {
-        let curr = UILabel()
-        curr.text = "What is your display name?"
-        curr.font = UIFont.systemFont(ofSize: 20)
-        curr.textAlignment = .right
-        curr.textColor = .black
-        return curr
-    }()
     
     // MARK: - Lifecycle
     override func viewDidLoad() {
@@ -64,11 +56,6 @@ class SignupViewController: UIViewController {
 //            nameField.text = prefilledName
 //        }
         self.constructBackground()
-        self.view.addSubview(label)
-        label.snp.makeConstraints { (make) in
-            make.center.equalToSuperview()
-            make.height.width.equalTo(30)
-        }
         
         // get questions here
         NetworkRequester.getSignupQuestions { (questions) in
@@ -124,8 +111,12 @@ class SignupViewController: UIViewController {
         collectionView.clipsToBounds = false
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.register(SignupCollectionViewCell.self, forCellWithReuseIdentifier: SignupCollectionViewCell.reuseIdentifier)
+         self.collectionView.isScrollEnabled = false
+        
+//        self.collectionView.scrollToItem(at: IndexPath(item: 0, section: 0), at: .centeredHorizontally,  animated: true)
     }
 }
+
 extension SignupViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return questions.count
@@ -133,17 +124,13 @@ extension SignupViewController: UICollectionViewDelegate, UICollectionViewDataSo
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SignupCollectionViewCell.reuseIdentifier, for: indexPath) as? SignupCollectionViewCell {
-            cell.initialize(question: questions[indexPath.row])
+            cell.initialize(question: questions[indexPath.row], collectionView: self.collectionView)
          return cell
          }
          return UICollectionViewCell()
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-
-//        let height = view.frame.size.height
-//        let width = view.frame.size.width
-        // in case you you want the cell to be 40% of your controllers view
         let height = self.collectionView.frame.height
         let width = self.collectionView.frame.width
         return CGSize(width: width, height: height)
