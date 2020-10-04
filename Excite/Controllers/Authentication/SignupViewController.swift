@@ -72,8 +72,6 @@ class SignupViewController: UIViewController {
         
         // get questions here
         NetworkRequester.getSignupQuestions { (questions) in
-            // print(question.question)
-            print("JAN DEBUG")
             self.questions = questions
             self.collectionView.reloadData()
             self.createCollectionView()
@@ -135,7 +133,7 @@ extension SignupViewController: UICollectionViewDelegate, UICollectionViewDataSo
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SignupCollectionViewCell.reuseIdentifier, for: indexPath) as? SignupCollectionViewCell {
-            cell.initialize(question: questions[indexPath.row].question)
+            cell.initialize(question: questions[indexPath.row])
 //         cell.configure(photo: photos[indexPath.row])
          return cell
          }

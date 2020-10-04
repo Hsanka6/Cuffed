@@ -28,14 +28,19 @@ class SignupCollectionViewCell: UICollectionViewCell {
     
     // Use the Sign Up Specific Models for FR + MC questions here
     
-    var question: String?
+    var question: SignupModels.Question?
+    
     var profile: Profile?
     var index: Int?
     var viewController: UIViewController?
     
-    func initialize(question: String) {
+    func initialize(question: SignupModels.Question) {
         self.question = question
         // self.backgroundColor = .gray
+        
+        // TODO: Oct 2nd, 2020
+        // check what type it is, and render it appropriately
+        
         let cardView = UIView()
         cardView.backgroundColor = .white
         cardView.layer.cornerRadius = 15
@@ -51,7 +56,7 @@ class SignupCollectionViewCell: UICollectionViewCell {
         questionLabel.textAlignment = .left
         questionLabel.numberOfLines = 3
         questionLabel.textColor = UIColor.black
-        questionLabel.text = question
+        questionLabel.text = question.question
         questionLabel.font = UIFont.systemFont(ofSize: 25)
         cardView.addSubview(questionLabel)
         questionLabel.snp.makeConstraints { (make) in
@@ -78,7 +83,7 @@ class SignupCollectionViewCell: UICollectionViewCell {
     
     @objc func answerQuestion() {
         let controller = AnswerQuestionViewController()
-        controller.question = question
+//        controller.question = question
         controller.profile = profile
         controller.index = index
         self.viewController?.navigationController?.pushViewController(controller, animated: true)

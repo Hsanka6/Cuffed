@@ -69,19 +69,34 @@ class NetworkRequester: NetworkRequesterProtocol {
         var results = [SignupModels.Question]()
         database.collection("Questions").getDocuments { (documents, error) in
             for document in documents!.documents {
-                 print("\(document.documentID) => \(document.data())")
-                do {
-                    if let result = try document.data(as: SignupModels.FreeResponse.self) {
-                        results.append(result)
-                    } else if let result = try document.data(as: SignupModels.MultipleChoice.self) {
-                        results.append(result)
+                // print("\(document.documentID) => \(document.data())")
+                let MCResult = Result {
+                    try document.data(as: SignupModels.MultipleChoice.self)
+                }
+                switch MCResult {
+                case .success(let question):
+                    if let question = question {
+                        results.append(question)
+                        continue
                     } else {
-                        print("Type is neither Multiple Choice nor Free Response")
+                        print("Document doesn't exist")
                     }
-                } catch {
-                    print("\(error)")
-                    print(document.data())
-                    print("Something weird happened...")
+                default:
+                    break
+                }
+                
+                let FRresult = Result {
+                    try document.data(as: SignupModels.FreeResponse.self)
+                }
+                switch FRresult {
+                case .success(let question):
+                    if let question = question {
+                        results.append(question)
+                    } else {
+                        print("Document doesn't exist")
+                    }
+                case .failure(let error):
+                    print("Wasn't able to decode a FR or MC question \(error)")
                 }
             }
             completion(results)

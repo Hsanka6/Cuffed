@@ -99,16 +99,10 @@ class LoginViewController: UIViewController, LoginButtonDelegate {
                     // newViewController.currentUser = self.viewModel.currentUser
                     self.navigationController?.pushViewController(newViewController, animated: false)
                 } else {
-                    
-                    let newViewController = MainTabBarController()
-                    // do something like:
-                    // newViewController.currentUser = self.viewModel.currentUser
+                    self.viewModel.currentUser = User(firebaseUser: firUser)
+                    let newViewController = SignupViewController()
+                    newViewController.currentUser = self.viewModel.currentUser
                     self.navigationController?.pushViewController(newViewController, animated: false)
-                    
-//                    self.viewModel.currentUser = User(firebaseUser: firUser)
-//                    let newViewController = SignupViewController()
-//                    newViewController.currentUser = self.viewModel.currentUser
-//                    self.navigationController?.pushViewController(newViewController, animated: false)
                 }
             }
         

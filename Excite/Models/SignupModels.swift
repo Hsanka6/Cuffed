@@ -80,11 +80,13 @@ struct SignupModels {
             let container = try decoder.container(keyedBy: CodingKeys.self)
             let question = try container.decode(String.self, forKey: .question)
             let answer = try container.decode(Array<String>.self.self, forKey: .answer)
-            let answerChoice = try container.decode(String.self, forKey: .answerChoice)
+            // if key doesn't exist,
+            if let answerChoice = try container.decodeIfPresent(String.self, forKey: .answerChoice) {
+                self.answerChoice = answerChoice
+            }
             let isMandatory = try container.decode(Bool.self, forKey: .isMandatory)
             let isHidden = try container.decode(Bool.self, forKey: .isHidden)
             let short = try container.decode(String.self, forKey: .short)
-            self.answerChoice = answerChoice
             self.answer = answer
             super.init(question: question, isMandatory: isMandatory, isHidden: isHidden, short: short)
         }
