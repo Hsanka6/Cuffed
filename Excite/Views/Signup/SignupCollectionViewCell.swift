@@ -35,10 +35,12 @@ class SignupCollectionViewCell: UICollectionViewCell {
     var viewController: UIViewController?
     
     var collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
+    var numSize: Int?
     
-    func initialize(question: SignupModels.Question, collectionView: UICollectionView) {
+    func initialize(question: SignupModels.Question, collectionView: UICollectionView, numSize: Int) {
         self.question = question
         self.collectionView = collectionView
+        self.numSize = numSize
         // self.backgroundColor = .gray
         
         // TODO: Oct 2nd, 2020
@@ -92,37 +94,33 @@ class SignupCollectionViewCell: UICollectionViewCell {
         nextButton.snp.makeConstraints { (make) in
             make.width.equalTo(40)
             make.height.equalTo(40)
-            make.centerX.equalToSuperview().inset(30)
-            make.bottom.equalTo(-100)
+            make.trailing.equalToSuperview().multipliedBy(0.9)
+            make.bottom.equalTo(-10)
         }
         nextButton.isUserInteractionEnabled = true
         nextButton.addTarget(self, action: #selector(self.nextPageButtonClicked), for: .touchUpInside)
         
+        displayAnswer()
+    }
+    
+    func displayAnswer() {
+        // check which type of question it is
     }
     
     @objc func answerQuestion() {
         let controller = AnswerQuestionViewController()
-//        controller.question = question
         controller.profile = profile
         controller.index = index
         self.viewController?.navigationController?.pushViewController(controller, animated: true)
     }
-    
     @objc func nextPageButtonClicked() {
-        print("HEllo World from next button")
-  
         let indexPath = self.collectionView.indexPathsForVisibleItems.first.flatMap({
             IndexPath(item: $0.row + 1, section: $0.section)
         })
-        self.collectionView.scrollToItem(at: indexPath!, at: .right, animated: true)
-        // self.collectionView.scrollToItem(at: indexPath, at: .left, animated: true)
-        
-        
-//        guard let indexPath = self.collectionView.indexPathsForVisibleItems.first.flatMap({
-//            IndexPath(item: $0.row + 1, section: $0.section)
-//        }), self.collectionView.cellForItem(at: indexPath) != nil else {
-//            return
-//        }
-//        self.collectionView.scrollToItem(at: indexPath, at: .left, animated: true)
+        if indexPath!.row < numSize! {
+            self.collectionView.scrollToItem(at: indexPath!, at: .right, animated: true)
+        } else {
+            print("Can't scroll anymore")
+        }
     }
 }

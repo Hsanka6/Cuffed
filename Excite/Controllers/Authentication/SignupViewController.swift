@@ -124,7 +124,7 @@ extension SignupViewController: UICollectionViewDelegate, UICollectionViewDataSo
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SignupCollectionViewCell.reuseIdentifier, for: indexPath) as? SignupCollectionViewCell {
-            cell.initialize(question: questions[indexPath.row], collectionView: self.collectionView)
+            cell.initialize(question: questions[indexPath.row], collectionView: self.collectionView, numSize: questions.count)
          return cell
          }
          return UICollectionViewCell()
