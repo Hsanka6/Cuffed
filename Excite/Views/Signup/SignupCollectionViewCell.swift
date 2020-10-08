@@ -34,17 +34,20 @@ class SignupCollectionViewCell: UICollectionViewCell {
     var index: Int?
     var viewController: UIViewController?
     
+    // keep track of the background card view
+    var cardView: UIView?
+    
+    // this is here to switch the cells
     var collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
+    
+    // numSize is the amount of cells we're going to be rendering
     var numSize: Int?
     
     func initialize(question: SignupModels.Question, collectionView: UICollectionView, numSize: Int) {
         self.question = question
         self.collectionView = collectionView
         self.numSize = numSize
-        // self.backgroundColor = .gray
         
-        // TODO: Oct 2nd, 2020
-        // check what type it is, and render it appropriately
         
         let cardView = UIView()
         cardView.backgroundColor = .white
@@ -57,8 +60,9 @@ class SignupCollectionViewCell: UICollectionViewCell {
         make.center.equalToSuperview()
         }
         cardView.dropShadow()
+        self.cardView = cardView
         let questionLabel = UILabel()
-        questionLabel.textAlignment = .left
+        questionLabel.textAlignment = .center
         questionLabel.numberOfLines = 3
         questionLabel.textColor = UIColor.black
         questionLabel.text = question.question
@@ -100,12 +104,30 @@ class SignupCollectionViewCell: UICollectionViewCell {
         nextButton.isUserInteractionEnabled = true
         nextButton.addTarget(self, action: #selector(self.nextPageButtonClicked), for: .touchUpInside)
         
-        displayAnswer()
+        let answerBox = UITextView()
+        answerBox.backgroundColor = .lightGray
+        answerBox.tintColor = .white
+        answerBox.layer.cornerRadius = 5
+        cardView.addSubview(answerBox)
+        answerBox.snp.makeConstraints { (make) in
+            make.width.equalTo(200)
+            make.height.equalTo(80)
+            make.center.equalToSuperview()
+        }
+        renderQuestion()
     }
     
-    func displayAnswer() {
-        // check which type of question it is
+    func renderQuestion() {
+        if type(of: self.question!) == SignupModels.FreeResponse.self {
+        }
+        else if type(of: self.question!) == SignupModels.MultipleChoice.self {
+        }
+        else {
+            print("NOT SUPPOSED TO HAPPEN")
+        }
     }
+    
+    
     
     @objc func answerQuestion() {
         let controller = AnswerQuestionViewController()
@@ -114,6 +136,7 @@ class SignupCollectionViewCell: UICollectionViewCell {
         self.viewController?.navigationController?.pushViewController(controller, animated: true)
     }
     @objc func nextPageButtonClicked() {
+        print("IS THIS CLICKED")
         let indexPath = self.collectionView.indexPathsForVisibleItems.first.flatMap({
             IndexPath(item: $0.row + 1, section: $0.section)
         })

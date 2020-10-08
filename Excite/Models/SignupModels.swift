@@ -50,6 +50,7 @@ struct SignupModels {
         func setAnswer(answerChoice answer: String) {
             self.answer = answer
         }
+        
         // use compactMap here
 //        public func makeFromDict() -> [String: Any] {
 //            return ["question": self.question,
