@@ -78,6 +78,10 @@ extension MultipleChoiceTableViewCell: UITableViewDelegate, UITableViewDataSourc
 }
 
 extension MultipleChoiceTableViewCell: EditChoiceViewControllerDelegate {
+//    func companyEdited(company: PersonalDetailItem) {
+//        <#code#>
+//    }
+    
     func mcEdited( questions: [MultipleChoiceAnswer], identifier: String) {
         if identifier == "vices" {
             delegate?.vicesEdited( questions: questions)

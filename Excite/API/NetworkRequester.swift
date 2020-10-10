@@ -63,9 +63,6 @@ class NetworkRequesterMock: NetworkRequesterProtocol {
         }
     }
     
-    
-    
-    
     func getQuestions(completion: @escaping(QuestionCards) -> Void) {
         let database = Firestore.firestore()
         database.collection("FreeResponse").document("ProfileQuestions").getDocument { (document, error) in

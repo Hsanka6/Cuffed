@@ -9,20 +9,38 @@
 import UIKit
 import Kingfisher
 
+protocol ProfilePhotoCellDelegate: class {
+    func photosEdited(images: [UIImage], index: Int)
+    func didRequestProfileEditViewController(cell: PhotoCollectionViewCell)
+}
+
 class ProfilePhotosCell: UITableViewCell {
-     static var reuseIdentifier = "ProfilePhotosCell"
-     public var viewController: UIViewController?
-     public var photos = [String]()
+    static var reuseIdentifier = "ProfilePhotosCell"
+    public var photos = [String]()
+    public var images = [UIImage]()
+    weak var delegate: ProfilePhotoCellDelegate?
     let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
-     override func awakeFromNib() {
-         super.awakeFromNib()
-     }
-     func configure(photos: [String]) {
-        self.photos = photos
-        createCollectionView()
-     }
+    
+    override func awakeFromNib() {
+     super.awakeFromNib()
+    }
+    func configure(photos: [String]) {
+    self.photos = photos
+    createCollectionView()
+    }
+    
+    func initImages(){
+        images.append(UIImage(named: "user")!)
+        images.append(UIImage(named: "user")!)
+        images.append(UIImage(named: "user")!)
+        images.append(UIImage(named: "user")!)
+        images.append(UIImage(named: "user")!)
+        images.append(UIImage(named: "user")!)
+        
+    }
 
     func createCollectionView() {
+        initImages()
         addSubview(collectionView)
         collectionView.snp.makeConstraints { (make) in
             make.top.bottom.equalTo(5)
@@ -41,6 +59,12 @@ class ProfilePhotosCell: UITableViewCell {
     override func setSelected(_ selected: Bool, animated: Bool) {
      super.setSelected(selected, animated: animated)
     }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        collectionView.removeFromSuperview()
+        collectionView.reloadData()
+    }
 }
 
 extension ProfilePhotosCell: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
@@ -51,6 +75,9 @@ extension ProfilePhotosCell: UICollectionViewDelegate, UICollectionViewDataSourc
        if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PhotoCollectionViewCell.reuseIdentifier, for: indexPath) as? PhotoCollectionViewCell {
         cell.initialize()
         cell.configure(photo: photos[indexPath.row])
+        cell.delegate = self
+        cell.images = images
+        cell.index = indexPath.row
         return cell
         }
         return UICollectionViewCell()
@@ -62,9 +89,18 @@ extension ProfilePhotosCell: UICollectionViewDelegate, UICollectionViewDataSourc
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if let cell = collectionView.cellForItem(at: indexPath) as? PhotoCollectionViewCell {
-            ImagePickerManager().pickImage(self.viewController!) { image in
-                cell.configureWithImage(photo: image)
-            }
+//            ImagePickerManager().pickImage(self.viewController!) { image in
+//                cell.configureWithImage(photo: image)
+//            }
+            delegate?.didRequestProfileEditViewController(cell: cell)
         }
     }
+}
+
+extension ProfilePhotosCell: PhotoCollectionViewCellDelegate {
+    func selectedImage(images : [UIImage], index: Int) {
+        delegate?.photosEdited(images: images, index: index)
+    }
+    
+    
 }

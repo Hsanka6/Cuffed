@@ -8,10 +8,18 @@
 
 import UIKit
 
+protocol PhotoCollectionViewCellDelegate: class {
+    func selectedImage(images: [UIImage], index: Int)
+}
+
 class PhotoCollectionViewCell: UICollectionViewCell {
     static var reuseIdentifier = "photo"
-
+    weak var delegate: PhotoCollectionViewCellDelegate?
     var imageView = UIImageView()
+    var images: [UIImage]?
+    //var photos: [String]?
+    var index: Int?
+    
     func initialize() {
         self.addSubview(imageView)
         imageView.layer.cornerRadius = 10
@@ -25,7 +33,15 @@ class PhotoCollectionViewCell: UICollectionViewCell {
     }
     
     func configureWithImage(photo: UIImage) {
+        guard var images = images, let index = index/*, let photos = photos */else { return }
         imageView.image = photo
+        images[index] = photo
+        delegate?.selectedImage(images: images, index: index)
     }
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        imageView.removeFromSuperview()
+        //imageView = nil
+    }
 }

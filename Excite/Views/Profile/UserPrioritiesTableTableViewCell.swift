@@ -8,10 +8,15 @@
 
 import UIKit
 
+protocol UserPrioritiesTableTableViewCellDelegate: class {
+    func editPriorites(priorities: [String])
+}
+
 class UserPrioritiesTableTableViewCell: UITableViewCell {
     static var reuseIdentifier = "UserPrioritiesTableTableViewCell"
     var tableView = UITableView()
     var priorities: [String]?
+    weak var delegate: UserPrioritiesTableTableViewCellDelegate?
       
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -36,6 +41,11 @@ class UserPrioritiesTableTableViewCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
+    override func prepareForReuse() {
+          super.prepareForReuse()
+          tableView.removeFromSuperview()
+          tableView.reloadData()
+      }
 
 }
 
@@ -52,21 +62,23 @@ extension UserPrioritiesTableTableViewCell: UITableViewDelegate, UITableViewData
     }
     
     func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
-        guard let priority = self.priorities?[sourceIndexPath.row] else { return }
-        priorities?.remove(at: sourceIndexPath.row)
-        priorities?.insert(priority, at: destinationIndexPath.row)
+        guard var priorities = priorities, let priority = self.priorities?[sourceIndexPath.row] else { return }
+        priorities.remove(at: sourceIndexPath.row)
+        priorities.insert(priority, at: destinationIndexPath.row)
         tableView.reloadData()
+        delegate?.editPriorites(priorities: priorities)
     }
+    
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 40
     }
     
-     func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
-           return .none
-       }
+    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
+       return .none
+    }
 
-        func tableView(_ tableView: UITableView, shouldIndentWhileEditingRowAt indexPath: IndexPath) -> Bool {
-           return false
-       }
+    func tableView(_ tableView: UITableView, shouldIndentWhileEditingRowAt indexPath: IndexPath) -> Bool {
+       return false
+    }
 }
