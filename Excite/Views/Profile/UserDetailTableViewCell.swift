@@ -21,17 +21,19 @@ class UserDetailTableViewCell: UITableViewCell {
         case company = "Company"
         case jobTitle = "Job Title"
     }
-    var stackView = UIStackView()
+    
+    var stackView: UIStackView?
     override func awakeFromNib() {
         super.awakeFromNib()
     }
     func initialize(model: PersonalDetails, index: Int) {
+        let stackView = UIStackView()
         let userLabel = UILabel()
         userLabel.textAlignment = .left
         userLabel.textColor = UIColor.black
         userLabel.text = populate(model: model, index: index).0
-        let userTextField = UITextField()
-        userTextField.placeholder = populate(model: model, index: index).1
+        let userTextField = UILabel()
+        userTextField.text = populate(model: model, index: index).1
         userTextField.textColor = UIColor.lightGray
         stackView.alignment = .leading
         stackView.addArrangedSubview(userLabel)
@@ -45,33 +47,38 @@ class UserDetailTableViewCell: UITableViewCell {
             make.left.equalTo(20)
             make.right.equalTo(-20)
         }
+        self.stackView = stackView
     }
 
     func populate(model: PersonalDetails, index: Int) -> (String, String) {
         let details = Details.allCases[index]
         switch details {
         case .fullName:
-            return (details.rawValue, model.fullName)
+            return (details.rawValue, model.fullName.title)
         case .age:
-            return (details.rawValue, String(model.age))
+            return (details.rawValue, model.age.title)
         case .height:
-            return (details.rawValue, model.height)
+            return (details.rawValue, model.height.title)
         case .gender:
-            return (details.rawValue, model.gender.rawValue)
+            return (details.rawValue, model.gender.title)
         case .ethnicity:
-            return (details.rawValue, model.ethnicity)
+            return (details.rawValue, model.ethnicity.title)
         case .location:
-            return (details.rawValue, model.location)
+            return (details.rawValue, model.location.title)
         case .company:
-            return (details.rawValue, model.company)
+            return (details.rawValue, model.company.title)
         case .jobTitle:
-            return (details.rawValue, model.jobTitle)
+            return (details.rawValue, model.jobTitle.title)
         }
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        stackView?.removeFromSuperview()
+        stackView = nil
     }
 }

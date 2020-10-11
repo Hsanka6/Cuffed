@@ -8,17 +8,8 @@
 
 import UIKit
 
-class Colors {
-    var gl : CAGradientLayer
-
-    init() {
-        let colorTop = UIColor(hexString: "6CA0FF").cgColor
-        let colorBottom = UIColor(hexString: "FF6299").cgColor
-
-        self.gl = CAGradientLayer()
-        self.gl.colors = [colorTop, colorBottom]
-        self.gl.locations = [0.0, 1.0]
-    }
+protocol AnswerQuestionViewControllerDelegate: class {
+    func didEditFreeResponse(freeResponse: [FreeResponse])
 }
 
 class AnswerQuestionViewController: UIViewController {
@@ -26,8 +17,9 @@ class AnswerQuestionViewController: UIViewController {
     var imageView = UIImageView()
     var answerTF = UITextField()
     var index: Int?
-          
+    weak var delegate: AnswerQuestionViewControllerDelegate?
     public var profile: Profile?
+    var freeResponse: [FreeResponse]?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -98,16 +90,12 @@ class AnswerQuestionViewController: UIViewController {
     
     @objc func action(sender: UIBarButtonItem) {
         let newViewController = ProfileEditViewController()
-        guard let question = question, let profile = profile, let index = index else { return }
-        let freeResponse = FreeResponse(question: question, answer: answerTF.text ?? "", image: "")
+        guard let question = question, var freeResponse = freeResponse, let index = index else { return }
+        let current = FreeResponse(question: question, answer: answerTF.text ?? "", image: "")
         
-        profile.freeResponse[index] = freeResponse
-        let model = ProfileViewModel()
-        
-        model.profile = profile
-        newViewController.viewModel = model
-        newViewController.gotProfile = true
-        self.navigationController?.pushViewController(newViewController, animated: true)
+        freeResponse[index] = current
+        delegate?.didEditFreeResponse(freeResponse: freeResponse)
+        self.navigationController?.popViewController(animated: true)
     }
     
     @objc func selectImage() {

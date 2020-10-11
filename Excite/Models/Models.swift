@@ -10,8 +10,9 @@ import Foundation
 import UIKit
 import FirebaseFirestore
 import FirebaseFirestoreSwift
-import FBSDKLoginKit
 import Firebase
+
+import FBSDKLoginKit
 import FirebaseAuth
 
 class User: Codable {
@@ -38,12 +39,6 @@ class User: Codable {
     
 }
 
-
-enum GenderType: String, Codable {
-    case MALE
-    case FEMALE
-    case OTHER
-}
 
 //class tenQuestions: Game {
 //    let question:[String] = []
@@ -102,19 +97,21 @@ class Match: DateInstance {
 
 
 class Profile: Codable {
-    let photos: [String]
+    var photos: [String]
     let socials: [SocialProfile]
     var freeResponse: [FreeResponse]
     let lat: Double
     let lon: Double
     // your metadata
-    let personalDetails: PersonalDetails
+    var personalDetails: PersonalDetails
     // the answers to the family questions that you display on your profile
     var familyPlans: [MultipleChoiceAnswer]
     // vices: drugs/drinks
     var vices: [MultipleChoiceAnswer]
     // traits that you describe yourself as upon sign-up
     var personalityAnswers: [Personality]
+    // priorities list
+    var priorities: [String]
     
     private enum CodingKeys: String, CodingKey {
         case photos
@@ -126,9 +123,10 @@ class Profile: Codable {
         case familyPlans
         case vices
         case personalityAnswers
+        case priorities 
     }
     
-    init(photos: [String], socials: [SocialProfile], freeResponse: [FreeResponse], lat: Double, lon: Double, personalDetails: PersonalDetails, familyPlans: [MultipleChoiceAnswer], vices: [MultipleChoiceAnswer], personalityAnswers: [Personality]) {
+    init(photos: [String], socials: [SocialProfile], freeResponse: [FreeResponse], lat: Double, lon: Double, personalDetails: PersonalDetails, familyPlans: [MultipleChoiceAnswer], vices: [MultipleChoiceAnswer], personalityAnswers: [Personality], priorities: [String]) {
         self.photos = photos
         self.socials = socials
         self.freeResponse = freeResponse
@@ -138,6 +136,7 @@ class Profile: Codable {
         self.familyPlans = familyPlans
         self.vices = vices
         self.personalityAnswers = personalityAnswers
+        self.priorities = priorities
     }
 
     required init(from decoder: Decoder) throws {
@@ -152,6 +151,7 @@ class Profile: Codable {
         let familyPlans = try container.decode(Array<MultipleChoiceAnswer>.self, forKey: .familyPlans )
         let vices = try container.decode(Array<MultipleChoiceAnswer>.self, forKey: .vices )
         let personalityAnswers = try container.decode(Array<Personality>.self, forKey: .personalityAnswers )
+        let priorities = try container.decode(Array<String>.self, forKey: .priorities )
         
         self.photos = photos
         self.socials = socials
@@ -162,6 +162,7 @@ class Profile: Codable {
         self.familyPlans = familyPlans
         self.vices = vices
         self.personalityAnswers = personalityAnswers
+        self.priorities = priorities
     }
     
     
@@ -176,17 +177,17 @@ class Profile: Codable {
             freeResponses.append(fr.makeFromDict())
         }
         
-        var familyPlans: [[String:Any]] = []
+        var familyPlans: [[String: Any]] = []
         for plans in self.familyPlans {
             familyPlans.append(plans.makeFromDict())
         }
         
-        var vices: [[String:Any]] = []
+        var vices: [[String: Any]] = []
         for vice in self.vices {
             vices.append(vice.makeFromDict())
         }
         
-        var personalities: [[String:Any]] = []
+        var personalities: [[String: Any]] = []
         for personality in self.personalityAnswers {
             personalities.append(personality.makeFromDict())
         }
@@ -199,7 +200,8 @@ class Profile: Codable {
                "personalDetails": self.personalDetails.makeFromDict(),
                "familyPlans": familyPlans,
                "vices": vices,
-               "personalityAnswers": personalities]
+               "personalityAnswers": personalities,
+               "priorities": self.priorities]
     }
     
     
@@ -320,32 +322,61 @@ class MultipleChoice: Codable {
 
 
 struct PersonalDetails: Codable {
-    let fullName: String
-    let age: Int
-    let height: String
-    let gender: GenderType
-    let ethnicity: String
-    let location: String
-    let jobTitle: String
-    let company: String
+    let fullName: PersonalDetailItem
+    let age: PersonalDetailItem
+    let height: PersonalDetailItem
+    var gender: PersonalDetailItem
+    var ethnicity: PersonalDetailItem
+    var location: PersonalDetailItem
+    var jobTitle: PersonalDetailItem
+    var company: PersonalDetailItem
     
     public func makeFromDict() -> [String: Any] {
-       return ["fullName": self.fullName,
-               "age": self.age,
-               "height": self.height,
-               "gender": self.gender.rawValue,
-               "ethnicity": self.ethnicity,
-               "location": self.location,
-               "jobTitle": self.jobTitle,
-               "company": self.company]
+        return ["fullName": self.fullName.makeFromDict(),
+                "age": self.age.makeFromDict(),
+                "height": self.height.makeFromDict(),
+                "gender": self.gender.makeFromDict(),
+                "ethnicity": self.ethnicity.makeFromDict(),
+                "location": self.location.makeFromDict(),
+                "jobTitle": self.jobTitle.makeFromDict(),
+                "company": self.company.makeFromDict()]
     }
 }
 
-//struct PersonalDetailItem: Codable {
-//    let title: String
-//    let isEditable: Bool
-//
-//}
+
+
+class PersonalDetailItem: Codable {
+    var title: String
+    let isEditable: Bool
+    let type: PersonalDetailType
+    let answerChoices: [String]?
+    
+    //use rawValue on makeFromDict
+    enum PersonalDetailType: String, Codable {
+        case textfield
+        case spinner
+        case multipleChoice
+    }
+    
+    
+    init(title: String, isEditable: Bool, type: PersonalDetailType, answerChoices: [String]? = nil) {
+        self.title = title
+        self.isEditable = isEditable
+        self.type = type
+        self.answerChoices = answerChoices
+    }
+    
+    public func makeFromDict() -> [String: Any] {
+        var answerChoices: [String]?
+        if let answers = self.answerChoices {
+            answerChoices = answers
+        }
+          return ["title": self.title,
+                  "isEditable": self.isEditable,
+                  "type": self.type.rawValue,
+                  "answerChoices": answerChoices]
+    }
+}
 
 
 
@@ -364,12 +395,12 @@ class SocialProfile: Codable {
     }
 }
 
-class Filter: Codable {
-    let interest: [GenderType]
-    let distance: Int
-    let age: Int
-    let moreFilters: [MultipleChoice]
-}
+//class Filter: Codable {
+//    let interest: [GenderType]
+//    let distance: Int
+//    let age: Int
+//    let moreFilters: [MultipleChoice]
+//}
 
 struct QuestionCards: Codable {
     let questions: [String]

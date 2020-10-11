@@ -37,7 +37,7 @@ class MultipleChoiceTableViewCell: UITableViewCell {
         }
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.separatorStyle = .singleLine
+        tableView.separatorStyle = .none
         tableView.register(MultipleChoiceCellTableViewCell.self, forCellReuseIdentifier: MultipleChoiceCellTableViewCell.reuseIdentifier)
         tableView.reloadData()
     }
@@ -65,25 +65,25 @@ extension MultipleChoiceTableViewCell: UITableViewDelegate, UITableViewDataSourc
       }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let controller = EditChoiceViewController()
-        controller.selectedAnswer = questions?[indexPath.row].answer
-        controller.choices = questions?[indexPath.row].answerChoices
-        controller.questions = questions
-        controller.index = indexPath.row
+        let controller = EditChoiceViewController(
+            choices: questions?[indexPath.row].answerChoices,
+            index: indexPath.row,
+            questions: questions,
+            identifier: identifier,
+            selectedAnswer: questions?[indexPath.row].answer)
         controller.delegate = self
-        controller.identifier = identifier
         delegate?.didRequestEditChoiceViewController(viewController: controller)
     }
 
 }
 
 extension MultipleChoiceTableViewCell: EditChoiceViewControllerDelegate {
+   
     func mcEdited( questions: [MultipleChoiceAnswer], identifier: String) {
         if identifier == "vices" {
             delegate?.vicesEdited( questions: questions)
         } else {
             delegate?.familyPlanEdited( questions: questions)
         }
-        
     }
 }

@@ -20,7 +20,6 @@ class MultipleChoiceButton: UIButton {
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         setupButton()
-        
     }
     
     func setupButton() {

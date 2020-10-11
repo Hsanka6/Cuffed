@@ -8,15 +8,23 @@
 
 import UIKit
 
+protocol UserTableTableViewCellDelegate: class {    
+    func personalDetailsEdited(personal: PersonalDetails)
+    func requestEditChoiceViewController(controller: EditChoiceViewController)
+}
+
+
 class UserTableTableViewCell: UITableViewCell {
     static var reuseIdentifier = "UserTableTableViewCell"
     var tableView = UITableView()
     var personal: PersonalDetails?
-    var viewController:UIViewController?
+    weak var delegate: UserTableTableViewCellDelegate?
+    var viewController: UIViewController?
+    
     override func awakeFromNib() {
         super.awakeFromNib()
-
     }
+    
     func initialize(personalDetails: PersonalDetails) {
         self.personal = personalDetails
         self.addSubview(tableView)
@@ -26,11 +34,18 @@ class UserTableTableViewCell: UITableViewCell {
         }
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.separatorStyle = .singleLine
+        tableView.separatorStyle = .none
         tableView.register(UserDetailTableViewCell.self, forCellReuseIdentifier: UserDetailTableViewCell.reuseIdentifier)
     }
+    
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        tableView.removeFromSuperview()
+        tableView.reloadData()
     }
 }
 
@@ -48,7 +63,15 @@ extension UserTableTableViewCell: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let controller = EditChoiceViewController()
-        self.viewController?.navigationController?.pushViewController(controller, animated: true)
+        let index = indexPath.row
+        let controller = EditChoiceViewController(index: index, personal: personal)
+        controller.personalDelegate = self
+        delegate?.requestEditChoiceViewController(controller: controller)
+    }
+}
+
+extension UserTableTableViewCell: EditChoicePersonalDetailsDelegate {   
+    func personalDetailsEdited(personal: PersonalDetails) {
+        delegate?.personalDetailsEdited(personal: personal)
     }
 }
