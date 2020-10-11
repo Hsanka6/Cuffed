@@ -29,14 +29,13 @@ class ProfilePhotosCell: UITableViewCell {
     createCollectionView()
     }
     
-    func initImages(){
+    func initImages() {
         images.append(UIImage(named: "user")!)
         images.append(UIImage(named: "user")!)
         images.append(UIImage(named: "user")!)
         images.append(UIImage(named: "user")!)
         images.append(UIImage(named: "user")!)
         images.append(UIImage(named: "user")!)
-        
     }
 
     func createCollectionView() {

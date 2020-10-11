@@ -61,10 +61,6 @@ class QuestionCollectionViewCell: UICollectionViewCell {
         }
         answerButton.isUserInteractionEnabled = true
         answerButton.addTarget(self, action: #selector(self.answerQuestion), for: .touchUpInside)
-        
-     
-        
-
     }
     
     @objc func answerQuestion() {
@@ -76,8 +72,6 @@ class QuestionCollectionViewCell: UICollectionViewCell {
         delegate?.didRequestAnswerQuestionViewController(controller: controller)
         
     }
-      
-        
 }
 
 extension QuestionCollectionViewCell: AnswerQuestionViewControllerDelegate {

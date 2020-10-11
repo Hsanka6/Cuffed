@@ -15,30 +15,30 @@ protocol EditChoicePersonalDetailsDelegate: class {
     func personalDetailsEdited(personal: PersonalDetails)
 }
 
-class EditChoiceViewController: UIViewController, UITextFieldDelegate, UIPickerViewDelegate,  UIPickerViewDataSource {
-    let button = MultipleChoiceButton()
+class EditChoiceViewController: UIViewController {
     var choices: [String]?
     var selectedAnswer: String?
-    let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
     var questions: [MultipleChoiceAnswer]?
-    var profile: Profile?
     var index: Int?
-    weak var delegate: EditChoiceViewControllerDelegate?
-    weak var personalDelegate: EditChoicePersonalDetailsDelegate?
     var identifier: String?
     var personal: PersonalDetails?
+    
+    let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
+   
+    //delegates to update profile
+    weak var delegate: EditChoiceViewControllerDelegate?
+    weak var personalDelegate: EditChoicePersonalDetailsDelegate?
     
     var stackView = UIStackView()
     let userTextField = UITextField()
     
+    //updates appropriate personal detail item
     var currentDetail: PersonalDetailItem?
     var currentType: Details?
     
+    //for date picker
     let datePicker = UIPickerView()
-    
     var feetInches = [["1","2","3","4","5","6","7","8","9"],["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"]]
-
-
 
     enum Details: String, CaseIterable {
         case fullName = "Full Name"
@@ -52,6 +52,25 @@ class EditChoiceViewController: UIViewController, UITextFieldDelegate, UIPickerV
     }
     
     
+    convenience init(choices: [String]? = nil, index: Int, questions: [MultipleChoiceAnswer]? = nil, identifier: String? = nil, selectedAnswer: String? = nil, personal: PersonalDetails? = nil) {
+        self.init(index: index)
+        self.choices = choices
+        self.index = index
+        self.questions = questions
+        self.identifier = identifier
+        self.selectedAnswer = selectedAnswer
+        self.personal = personal
+    }
+    
+    init(index: Int) {
+        self.index = index
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+    }
+    
     override func viewDidLoad() {
        super.viewDidLoad()
        setupAppropriateUI()
@@ -64,10 +83,7 @@ class EditChoiceViewController: UIViewController, UITextFieldDelegate, UIPickerV
         } else {
            setUpCollectionView()
         }
-
     }
-    
-    
     
     func populate(model: PersonalDetails, index: Int) {
         let details = Details.allCases[index]
@@ -82,15 +98,15 @@ class EditChoiceViewController: UIViewController, UITextFieldDelegate, UIPickerV
             currentType = .height
             currentDetail = model.height
         case .gender:
+            currentDetail = model.gender
             currentType = .gender
             selectedAnswer = model.gender.title
             choices = model.gender.answerChoices
-            setUpCollectionView()
         case .ethnicity:
+            currentDetail = model.ethnicity
             currentType = .ethnicity
             selectedAnswer = model.ethnicity.title
             choices = model.ethnicity.answerChoices
-            setUpCollectionView()
         case .location:
             currentDetail = model.location
             currentType = .location
@@ -102,7 +118,12 @@ class EditChoiceViewController: UIViewController, UITextFieldDelegate, UIPickerV
             currentType = .jobTitle
         }
         guard let currentDetail = currentDetail, let cur = currentType else { return }
-        setUpTextField(model: currentDetail, title: currentDetail.title, type: cur )
+        
+        if currentDetail.type == .textfield || currentDetail.type == .spinner {
+            setUpTextField(model: currentDetail, title: currentDetail.title, type: cur)
+        } else {
+            setUpCollectionView()
+        }
     }
     
     
@@ -116,7 +137,7 @@ class EditChoiceViewController: UIViewController, UITextFieldDelegate, UIPickerV
         } else {
             userLabel.text = type.rawValue
             userTextField.placeholder = title
-            userTextField.textColor = UIColor.lightGray
+            userTextField.textColor = UIColor.black
             userTextField.layer.cornerRadius = 5.0
             userTextField.borderStyle = .roundedRect
             userTextField.backgroundColor = UIColor.white
@@ -127,11 +148,8 @@ class EditChoiceViewController: UIViewController, UITextFieldDelegate, UIPickerV
             userTextField.contentVerticalAlignment = UIControl.ContentVerticalAlignment.center
             userTextField.isEnabled = true
             userTextField.isUserInteractionEnabled = true
-            
             setUpNavButtons()
         }
-        
-        
         
         if type == .height {
             self.userTextField.delegate = self
@@ -143,7 +161,6 @@ class EditChoiceViewController: UIViewController, UITextFieldDelegate, UIPickerV
             let toolBar = UIToolbar()
             toolBar.barStyle = UIBarStyle.default
             toolBar.isTranslucent = true
-            toolBar.tintColor = UIColor(red: 76/255, green: 217/255, blue: 100/255, alpha: 1)
             toolBar.sizeToFit()
             let doneButton = UIBarButtonItem(title: "Done", style: UIBarButtonItem.Style.plain, target: self, action: #selector(self.doneButtonTapped))
             toolBar.setItems([doneButton], animated: false)
@@ -160,15 +177,19 @@ class EditChoiceViewController: UIViewController, UITextFieldDelegate, UIPickerV
         stackView.snp.makeConstraints { (make) in
             make.top.equalTo(self.view.safeAreaLayoutGuide.snp.top)
             make.height.equalTo(60)
-            make.width.equalToSuperview()
             make.left.equalTo(20)
             make.right.equalTo(-20)
+        }
+        
+        userTextField.snp.makeConstraints { (make) in
+            make.width.equalToSuperview()
+            
         }
     }
     
     func setUpCollectionView() {
         self.view.addSubview(collectionView)
-       collectionView.snp.makeConstraints { (make) in
+        collectionView.snp.makeConstraints { (make) in
             make.top.bottom.equalTo(5)
             make.height.equalToSuperview()
             make.left.equalTo(20)
@@ -181,8 +202,8 @@ class EditChoiceViewController: UIViewController, UITextFieldDelegate, UIPickerV
         collectionView.showsHorizontalScrollIndicator = true
         collectionView.allowsSelection = true
         collectionView.register(MultipleChoiceCollectionViewCell.self, forCellWithReuseIdentifier: MultipleChoiceCollectionViewCell.reuseIdentifier)
-        
-       setUpNavButtons()
+
+        setUpNavButtons()
     }
     
     func setUpNavButtons() {
@@ -190,30 +211,9 @@ class EditChoiceViewController: UIViewController, UITextFieldDelegate, UIPickerV
         self.navigationItem.rightBarButtonItem  = editButton
     }
     
-    @objc func doneButtonTapped(){
+    @objc func doneButtonTapped() {
         self.userTextField.resignFirstResponder()
     }
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        view.endEditing(true)
-    }
-    
-    func numberOfComponents(in pickerView: UIPickerView) -> Int {
-        return 2
-    }
-    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return self.feetInches[component].count
-    }
-    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return self.feetInches[component][row]
-    }
-    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-
-        let feet = feetInches[0][pickerView.selectedRow(inComponent: 0)]
-        let inches = feetInches[1][pickerView.selectedRow(inComponent: 1)]
-        userTextField.text = feet + "\' " + inches + "\""
-
-    }
-    
     
     func editPersonal(personal: PersonalDetails, edited: String) -> PersonalDetails? {
         let details = currentType
@@ -297,4 +297,28 @@ extension EditChoiceViewController: UICollectionViewDelegate, UICollectionViewDa
         collectionView.reloadData()
     }
     
+}
+
+extension EditChoiceViewController: UITextFieldDelegate {
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        view.endEditing(true)
+    }
+}
+
+extension EditChoiceViewController: UIPickerViewDelegate, UIPickerViewDataSource {
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 2
+    }
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return self.feetInches[component].count
+    }
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        return self.feetInches[component][row]
+    }
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        let feet = feetInches[0][pickerView.selectedRow(inComponent: 0)]
+        let inches = feetInches[1][pickerView.selectedRow(inComponent: 1)]
+        userTextField.text = feet + "\' " + inches + "\""
+    }
 }

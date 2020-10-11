@@ -65,11 +65,9 @@ extension UserTableTableViewCell: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let index = indexPath.row
         
-        
-        
-        let controller = EditChoiceViewController()
-        controller.personal = personal
-        controller.index = index
+        let controller = EditChoiceViewController(index: index, personal: personal)
+//        controller.personal = personal
+//        controller.index = index
         controller.personalDelegate = self
         delegate?.requestEditChoiceViewController(controller: controller)
     }

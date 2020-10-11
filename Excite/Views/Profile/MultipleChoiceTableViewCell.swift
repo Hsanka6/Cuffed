@@ -65,23 +65,25 @@ extension MultipleChoiceTableViewCell: UITableViewDelegate, UITableViewDataSourc
       }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let controller = EditChoiceViewController()
-        controller.selectedAnswer = questions?[indexPath.row].answer
-        controller.choices = questions?[indexPath.row].answerChoices
-        controller.questions = questions
-        controller.index = indexPath.row
+        let controller = EditChoiceViewController(
+            choices: questions?[indexPath.row].answerChoices,
+            index: indexPath.row,
+            questions: questions,
+            identifier: identifier,
+            selectedAnswer: questions?[indexPath.row].answer)
+//        controller.selectedAnswer = questions?[indexPath.row].answer
+//        controller.choices = questions?[indexPath.row].answerChoices
+//        controller.questions = questions
+//        controller.index = indexPath.row
         controller.delegate = self
-        controller.identifier = identifier
+//        controller.identifier = identifier
         delegate?.didRequestEditChoiceViewController(viewController: controller)
     }
 
 }
 
 extension MultipleChoiceTableViewCell: EditChoiceViewControllerDelegate {
-//    func companyEdited(company: PersonalDetailItem) {
-//        <#code#>
-//    }
-    
+   
     func mcEdited( questions: [MultipleChoiceAnswer], identifier: String) {
         if identifier == "vices" {
             delegate?.vicesEdited( questions: questions)

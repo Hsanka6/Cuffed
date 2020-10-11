@@ -12,7 +12,6 @@ protocol UserPersonalityTableViewCellDelegate: class {
     func editPersonality(personalities: [Personality])
 }
 
-
 class UserPersonalityTableViewCell: UITableViewCell {
     static var reuseIdentifier = "personalityDetail"
     var personalities: [Personality]?
@@ -72,8 +71,6 @@ class UserPersonalityTableViewCell: UITableViewCell {
         self.addSubview(rightValue)
         
         
-        
-        
         rightValue.snp.makeConstraints { (make) in
             make.top.equalTo(50)
             make.right.equalTo(-20)
@@ -92,7 +89,7 @@ class UserPersonalityTableViewCell: UITableViewCell {
     }
     
     @objc func changeValue(_ sender: UISlider) {
-        guard var personalities = personalities, let index = index else { return }
+        guard let personalities = personalities, let index = index else { return }
         personalities[index].answer = String(Float(Int(sender.value) * 1))
         sender.value = Float(Int(sender.value) * 1)
         delegate?.editPersonality(personalities: personalities)

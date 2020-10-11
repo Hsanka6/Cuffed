@@ -19,26 +19,22 @@ class QuestionsTableViewCell: UITableViewCell {
     var freeResponse: [FreeResponse]?
     weak var delegate: QuestionTableViewCellDelegate?
     public var viewController: UIViewController?
-      
 
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
     }
 
     func initialize(freeResponse: [FreeResponse]) {
-       
-        
         self.freeResponse = freeResponse
         self.addSubview(tableView)
         self.tableView.snp.makeConstraints { (make) in
-            make.width.height.equalToSuperview()
+            make.height.equalToSuperview()
+            make.width.equalToSuperview()
             make.top.equalTo(5)
         }
         tableView.delegate = self
         tableView.dataSource = self
         tableView.separatorStyle = .singleLine
-       
         tableView.register(QuestionsDetailTableViewCell.self, forCellReuseIdentifier: QuestionsDetailTableViewCell.reuseIdentifier)
     }
 
@@ -80,9 +76,6 @@ extension QuestionsTableViewCell: UITableViewDelegate, UITableViewDataSource {
         delegate?.didRequestBrowseQuestionsViewController(viewController: newViewController)
     
     }
-    
-    
-     
 }
 
 
@@ -90,6 +83,4 @@ extension QuestionsTableViewCell: BrowseQuestionsViewControllerDelegate {
     func questionsEdited(questions: [FreeResponse]) {
         delegate?.questionsEdited(freeResponse: questions)
     }
-    
-    
 }
