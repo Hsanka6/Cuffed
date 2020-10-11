@@ -19,7 +19,6 @@ class UserTablePersonalityTableViewCell: UITableViewCell {
     weak var delegate: UserTablePersonalityTableViewCellDelegate?
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
     }
     
     func initialize(personality: [Personality]) {
@@ -31,14 +30,12 @@ class UserTablePersonalityTableViewCell: UITableViewCell {
         }
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.separatorStyle = .singleLine
+        tableView.separatorStyle = .none
         tableView.register(UserPersonalityTableViewCell.self, forCellReuseIdentifier: UserPersonalityTableViewCell.reuseIdentifier)
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
     }
 
 }

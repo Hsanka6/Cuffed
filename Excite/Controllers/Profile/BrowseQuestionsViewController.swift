@@ -32,7 +32,17 @@ class BrowseQuestionsViewController: UIViewController {
         }
         createCollectionView()
     }
-
+    
+    init(index: Int, freeResponse: [FreeResponse]?) {
+        self.index = index
+        self.freeResponse = freeResponse
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     func createCollectionView() {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
@@ -58,7 +68,6 @@ class BrowseQuestionsViewController: UIViewController {
         collectionView.register(QuestionCollectionViewCell.self, forCellWithReuseIdentifier: QuestionCollectionViewCell.reuseIdentifier)
         
     }
-
 
 }
 
@@ -86,13 +95,11 @@ extension BrowseQuestionsViewController: UICollectionViewDelegate, UICollectionV
     }
 }
 
-
 extension BrowseQuestionsViewController: QuestionCollectionViewCellDelegate {
     func editFreeResponse(freeResponse: [FreeResponse]) {
         delegate?.questionsEdited(questions: freeResponse)
         self.navigationController?.popViewController(animated: true)
     }
-    
     
     func didRequestAnswerQuestionViewController(controller: AnswerQuestionViewController) {
         self.navigationController?.pushViewController(controller, animated: true)

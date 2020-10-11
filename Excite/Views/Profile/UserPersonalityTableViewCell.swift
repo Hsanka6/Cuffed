@@ -25,14 +25,12 @@ class UserPersonalityTableViewCell: UITableViewCell {
     func initialize(model: Personality, index: Int) {
         self.index = index
         let slider = CustomSlider()
-        //slider.center = self.center
-        slider.minimumTrackTintColor = .gray
-        slider.maximumTrackTintColor = .blue
+        slider.minimumTrackTintColor = UIColor(hexString: "6CA0FF")
+        slider.maximumTrackTintColor = UIColor(hexString: "FF6299")
         slider.thumbTintColor = .black
-        slider.setThumbImage(slider.makeCircleWith(size: CGSize(width: 25, height: 25), backgroundColor: .blue), for: .normal)
-        slider.setThumbImage(slider.makeCircleWith(size: CGSize(width: 25, height: 25), backgroundColor: .blue), for: .highlighted)
-
-
+        slider.setThumbImage(slider.makeCircleWith(size: CGSize(width: 25, height: 25), backgroundColor: UIColor(hexString: "6CA0FF")), for: .normal)
+        slider.setThumbImage(slider.makeCircleWith(size: CGSize(width: 25, height: 25), backgroundColor:  UIColor(hexString: "6CA0FF")), for: .highlighted)
+        
         slider.maximumValue = 4
         slider.minimumValue = 0
         if let sliderVal = Float(model.answer) {
@@ -70,7 +68,6 @@ class UserPersonalityTableViewCell: UITableViewCell {
         self.addSubview(leftValue)
         self.addSubview(rightValue)
         
-        
         rightValue.snp.makeConstraints { (make) in
             make.top.equalTo(50)
             make.right.equalTo(-20)
@@ -80,12 +77,10 @@ class UserPersonalityTableViewCell: UITableViewCell {
             make.top.equalTo(50)
             make.left.equalTo(20)
         }
-        
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
     }
     
     @objc func changeValue(_ sender: UISlider) {
@@ -94,5 +89,4 @@ class UserPersonalityTableViewCell: UITableViewCell {
         sender.value = Float(Int(sender.value) * 1)
         delegate?.editPersonality(personalities: personalities)
     }
-
 }

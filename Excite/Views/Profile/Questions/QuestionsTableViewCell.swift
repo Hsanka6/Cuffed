@@ -34,7 +34,7 @@ class QuestionsTableViewCell: UITableViewCell {
         }
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.separatorStyle = .singleLine
+        tableView.separatorStyle = .none
         tableView.register(QuestionsDetailTableViewCell.self, forCellReuseIdentifier: QuestionsDetailTableViewCell.reuseIdentifier)
     }
 
@@ -47,37 +47,32 @@ class QuestionsTableViewCell: UITableViewCell {
         tableView.removeFromSuperview()
         tableView.reloadData()
     }
-   
 
 }
 
 extension QuestionsTableViewCell: UITableViewDelegate, UITableViewDataSource {
-      func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return freeResponse?.count ?? 0
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    return freeResponse?.count ?? 0
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+      let cell = tableView.dequeueReusableCell(withIdentifier: QuestionsDetailTableViewCell.reuseIdentifier) as? QuestionsDetailTableViewCell
+    if let free = freeResponse?[indexPath.row] {
+          cell?.initialize(freeResponse: free)
       }
-      func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-          let cell = tableView.dequeueReusableCell(withIdentifier: QuestionsDetailTableViewCell.reuseIdentifier) as? QuestionsDetailTableViewCell
-          cell?.selectionStyle = .none
-        if let free = freeResponse?[indexPath.row] {
-              cell?.initialize(freeResponse: free)
-          }
-          return cell ?? UITableViewCell()
-      }
+      return cell ?? UITableViewCell()
+    }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
            return 80
        }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let newViewController = BrowseQuestionsViewController()
-        newViewController.index = indexPath.row
-        newViewController.freeResponse = freeResponse
+        let newViewController = BrowseQuestionsViewController(index: indexPath.row, freeResponse: freeResponse)
         newViewController.delegate = self
         delegate?.didRequestBrowseQuestionsViewController(viewController: newViewController)
-    
     }
 }
-
 
 extension QuestionsTableViewCell: BrowseQuestionsViewControllerDelegate {
     func questionsEdited(questions: [FreeResponse]) {

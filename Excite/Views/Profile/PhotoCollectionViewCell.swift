@@ -17,7 +17,6 @@ class PhotoCollectionViewCell: UICollectionViewCell {
     weak var delegate: PhotoCollectionViewCellDelegate?
     var imageView = UIImageView()
     var images: [UIImage]?
-    //var photos: [String]?
     var index: Int?
     
     func initialize() {
@@ -27,13 +26,14 @@ class PhotoCollectionViewCell: UICollectionViewCell {
         imageView.snp.makeConstraints { (make) in
             make.width.height.equalToSuperview()
         }
+        self.dropShadow()
     }
     func configure(photo: String) {
         imageView.kf.setImage(with: URL(string: photo))
     }
     
     func configureWithImage(photo: UIImage) {
-        guard var images = images, let index = index/*, let photos = photos */else { return }
+        guard var images = images, let index = index else { return }
         imageView.image = photo
         images[index] = photo
         delegate?.selectedImage(images: images, index: index)
@@ -42,6 +42,5 @@ class PhotoCollectionViewCell: UICollectionViewCell {
     override func prepareForReuse() {
         super.prepareForReuse()
         imageView.removeFromSuperview()
-        //imageView = nil
     }
 }

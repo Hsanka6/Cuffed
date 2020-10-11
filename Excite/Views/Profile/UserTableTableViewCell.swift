@@ -20,11 +20,10 @@ class UserTableTableViewCell: UITableViewCell {
     var personal: PersonalDetails?
     weak var delegate: UserTableTableViewCellDelegate?
     var viewController: UIViewController?
+    
     override func awakeFromNib() {
         super.awakeFromNib()
     }
-    
-    
     
     func initialize(personalDetails: PersonalDetails) {
         self.personal = personalDetails
@@ -35,18 +34,19 @@ class UserTableTableViewCell: UITableViewCell {
         }
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.separatorStyle = .singleLine
+        tableView.separatorStyle = .none
         tableView.register(UserDetailTableViewCell.self, forCellReuseIdentifier: UserDetailTableViewCell.reuseIdentifier)
     }
+    
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
     }
     
     override func prepareForReuse() {
-           super.prepareForReuse()
-           tableView.removeFromSuperview()
-           tableView.reloadData()
-       }
+        super.prepareForReuse()
+        tableView.removeFromSuperview()
+        tableView.reloadData()
+    }
 }
 
 extension UserTableTableViewCell: UITableViewDelegate, UITableViewDataSource {
@@ -64,10 +64,7 @@ extension UserTableTableViewCell: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let index = indexPath.row
-        
         let controller = EditChoiceViewController(index: index, personal: personal)
-//        controller.personal = personal
-//        controller.index = index
         controller.personalDelegate = self
         delegate?.requestEditChoiceViewController(controller: controller)
     }

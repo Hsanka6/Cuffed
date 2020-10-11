@@ -11,6 +11,7 @@ import UIKit
 class QuestionsDetailTableViewCell: UITableViewCell {
     static var reuseIdentifier = "QuestionsDetailTableViewCell"
     var stackView: UIStackView?
+    
     override func awakeFromNib() {
         super.awakeFromNib()
     }
@@ -26,12 +27,6 @@ class QuestionsDetailTableViewCell: UITableViewCell {
         cardView.backgroundColor = .white
         cardView.layer.cornerRadius = 15
         
-//        cardView.layer.shadowColor = UIColor.gray.cgColor
-//        cardView.layer.shadowOffset = CGSize(width: 0.0, height: 0.0)
-//        cardView.layer.shadowRadius = 12.0
-//        cardView.layer.shadowOpacity = 0.7
-
-        
         self.addSubview(cardView)
         cardView.snp.makeConstraints { (make) in
             make.top.equalTo(10)
@@ -40,7 +35,6 @@ class QuestionsDetailTableViewCell: UITableViewCell {
             make.bottom.equalTo(-10)
         }
         cardView.dropShadow()
-        
         
         let userLabel = UILabel()
         userLabel.textAlignment = .left

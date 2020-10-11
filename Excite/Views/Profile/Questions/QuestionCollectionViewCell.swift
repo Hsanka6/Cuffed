@@ -13,13 +13,13 @@ protocol QuestionCollectionViewCellDelegate: class {
     func editFreeResponse(freeResponse: [FreeResponse])
 }
 
-
 class QuestionCollectionViewCell: UICollectionViewCell {
     static var reuseIdentifier = "question"
     var question: String?
     var freeResponse: [FreeResponse]?
     var index: Int?
     weak var delegate: QuestionCollectionViewCellDelegate?
+    
     func initialize(question: String) {
         self.question = question
         self.backgroundColor = .gray

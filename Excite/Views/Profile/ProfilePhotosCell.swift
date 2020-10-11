@@ -56,7 +56,7 @@ class ProfilePhotosCell: UITableViewCell {
         collectionView.register(PhotoCollectionViewCell.self, forCellWithReuseIdentifier: PhotoCollectionViewCell.reuseIdentifier)
     }
     override func setSelected(_ selected: Bool, animated: Bool) {
-     super.setSelected(selected, animated: animated)
+        super.setSelected(selected, animated: animated)
     }
     
     override func prepareForReuse() {
@@ -70,6 +70,7 @@ extension ProfilePhotosCell: UICollectionViewDelegate, UICollectionViewDataSourc
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return photos.count
     }
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
        if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PhotoCollectionViewCell.reuseIdentifier, for: indexPath) as? PhotoCollectionViewCell {
         cell.initialize()
@@ -81,25 +82,22 @@ extension ProfilePhotosCell: UICollectionViewDelegate, UICollectionViewDataSourc
         }
         return UICollectionViewCell()
     }
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let width = UIScreen.main.bounds.width/3 - (20)
         let height = CGFloat(100) // or what height you want to do
         return CGSize(width: width, height: height)
     }
+    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if let cell = collectionView.cellForItem(at: indexPath) as? PhotoCollectionViewCell {
-//            ImagePickerManager().pickImage(self.viewController!) { image in
-//                cell.configureWithImage(photo: image)
-//            }
-            delegate?.didRequestProfileEditViewController(cell: cell)
+           delegate?.didRequestProfileEditViewController(cell: cell)
         }
     }
 }
 
 extension ProfilePhotosCell: PhotoCollectionViewCellDelegate {
-    func selectedImage(images : [UIImage], index: Int) {
+    func selectedImage(images: [UIImage], index: Int) {
         delegate?.photosEdited(images: images, index: index)
     }
-    
-    
 }

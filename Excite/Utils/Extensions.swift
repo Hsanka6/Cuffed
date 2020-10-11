@@ -41,12 +41,10 @@ func runOnMainThread(work: @escaping () -> Void) {
 }
 extension UIView {
     func dropShadow() {
-        layer.cornerRadius = 10.0
-        layer.shadowColor = UIColor.gray.cgColor
-        layer.shadowOffset = CGSize(width: 0.0, height: 0.0)
-        layer.shadowRadius = 12.0
-        layer.shadowOpacity = 0.7
-        layer.masksToBounds = false
+         layer.shadowColor = UIColor.gray.cgColor
+         layer.shadowOffset = CGSize(width: 0.0, height: 5.0)
+         layer.shadowRadius = 7.0
+         layer.shadowOpacity = 0.5
     }
 }
 

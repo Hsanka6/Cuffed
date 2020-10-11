@@ -20,7 +20,6 @@ class UserPrioritiesTableTableViewCell: UITableViewCell {
       
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
     }
     
     func initialize(priorities: [String]) {
@@ -33,13 +32,11 @@ class UserPrioritiesTableTableViewCell: UITableViewCell {
         self.tableView.isEditing = true
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.separatorStyle = .singleLine
+        tableView.separatorStyle = .none
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
     }
     override func prepareForReuse() {
           super.prepareForReuse()
@@ -55,7 +52,6 @@ extension UserPrioritiesTableTableViewCell: UITableViewDelegate, UITableViewData
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell()
-        //cell?.selectionStyle = .none
         guard let priority = self.priorities?[indexPath.row] else { return UITableViewCell() }
         cell.textLabel?.text = "\(indexPath.row + 1). \(priority)"
         return cell

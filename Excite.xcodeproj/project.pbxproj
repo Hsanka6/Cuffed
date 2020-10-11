@@ -202,7 +202,6 @@
 			children = (
 				70C52B7324BA4011002CFFEA /* Profile */,
 				70CDFC4124FCC6680068CF37 /* MultipleChoiceButton.swift */,
-				7001141C2502390E0023CA21 /* MultipleChoiceCollectionViewCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -309,6 +308,7 @@
 		70C52B7324BA4011002CFFEA /* Profile */ = {
 			isa = PBXGroup;
 			children = (
+				7001141C2502390E0023CA21 /* MultipleChoiceCollectionViewCell.swift */,
 				7032881224F7A999002228ED /* Questions */,
 				709B2C4024C2B737008BA374 /* ProfilePhotosCell.swift */,
 				70A3AC4A24C3A8E7008BB1FF /* UserTableTableViewCell.swift */,

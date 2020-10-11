@@ -36,8 +36,6 @@ class ProfileEditViewController: UIViewController {
             
     }
     
-
-    
     func navBarSetup() {
         let saveButton = UIBarButtonItem(title: "Save", style: .plain, target: self, action: #selector(saveProfile))
         self.navigationItem.rightBarButtonItem  = saveButton
@@ -47,6 +45,7 @@ class ProfileEditViewController: UIViewController {
         let database = Firestore.firestore()
         guard let profile = viewModel?.profile else { return }
         database.collection("Users").document("test").setData([ "profile": profile.makeFromDict() ], merge: true)
+        self.navigationController?.popViewController(animated: true)
     }
     
     func tableViewSetup() {
@@ -79,8 +78,6 @@ class ProfileEditViewController: UIViewController {
                 self.tableView.reloadData()
             }
        }
-    
-
     }
     
 }
@@ -111,13 +108,11 @@ extension ProfileEditViewController: UITableViewDelegate, UITableViewDataSource 
             cell?.selectionStyle = .none
             if let details = viewModel?.profile?.personalDetails {
                 cell?.initialize(personalDetails: details)
-                //cell?.viewController = self
                 cell?.delegate = self
             }
             return cell ?? UITableViewCell()
         case .userPhotos:
             let cell = tableView.dequeueReusableCell(withIdentifier: ProfilePhotosCell.reuseIdentifier, for: indexPath) as? ProfilePhotosCell
-            //cell?.viewController = self
             cell?.delegate = self
             if let photos = viewModel?.profile?.photos {
                  cell?.configure(photos: photos)
@@ -126,16 +121,17 @@ extension ProfileEditViewController: UITableViewDelegate, UITableViewDataSource 
         case .userPersonality:
             let cell = tableView.dequeueReusableCell(withIdentifier: UserTablePersonalityTableViewCell.reuseIdentifier, for: indexPath) as? UserTablePersonalityTableViewCell
             if let personalities = viewModel?.profile?.personalityAnswers {
-                 cell?.initialize(personality: personalities)
-                 cell?.delegate = self
+                cell?.initialize(personality: personalities)
+                cell?.delegate = self
                 cell?.personal = personalities
             }
             return cell ?? UITableViewCell()
         case .userPriorities:
             let cell = tableView.dequeueReusableCell(withIdentifier: UserPrioritiesTableTableViewCell.reuseIdentifier, for: indexPath) as? UserPrioritiesTableTableViewCell
             if let priorities = viewModel?.profile?.priorities {
-                 cell?.initialize(priorities: priorities)
+                cell?.initialize(priorities: priorities)
                 cell?.delegate = self
+                cell?.selectionStyle = .none
             }
             return cell ?? UITableViewCell()
         case .userVice:
@@ -154,8 +150,6 @@ extension ProfileEditViewController: UITableViewDelegate, UITableViewDataSource 
             return cell
         case .userQuestions:
             let cell = tableView.dequeueReusableCell(withIdentifier: QuestionsTableViewCell.reuseIdentifier, for: indexPath) as? QuestionsTableViewCell
-//            cell?.viewController = self
-//            cell?.profile = viewModel?.profile
             cell?.delegate = self
             if let freeResponse = viewModel?.profile?.freeResponse {
                 cell?.initialize(freeResponse: freeResponse)
@@ -175,9 +169,9 @@ extension ProfileEditViewController: UITableViewDelegate, UITableViewDataSource 
         case .userPersonality:
            return 320
         case .userPriorities:
-           return 195
+           return 210
         case .userFamilyPlans:
-            return 160
+            return 120
         case .userQuestions:
            return 250
         }
@@ -200,10 +194,12 @@ extension ProfileEditViewController: UITableViewDelegate, UITableViewDataSource 
     func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
         let header = view as? UITableViewHeaderFooterView
         header?.textLabel?.clipsToBounds = true
-        header?.tintColor = .lightGray
+        header?.tintColor = .clear
         header?.textLabel?.textColor = UIColor.black
-        header?.textLabel?.font = .systemFont(ofSize: 18, weight: .semibold)
+        header?.textLabel?.font = .systemFont(ofSize: 22, weight: .bold)
     }
+    
+   
 }
 
 extension ProfileEditViewController: MultipleChoiceTableViewCellDelegate, QuestionTableViewCellDelegate, UserTablePersonalityTableViewCellDelegate, UserPrioritiesTableTableViewCellDelegate, ProfilePhotoCellDelegate, UserTableTableViewCellDelegate {
@@ -212,24 +208,11 @@ extension ProfileEditViewController: MultipleChoiceTableViewCellDelegate, Questi
         self.tableView.reloadData()
     }
     
-//    func jobTitleEdited(jobTitle: PersonalDetailItem) {
-//        <#code#>
-//    }
-//
-//    func companyEdited(company: PersonalDetailItem) {
-//        self.viewModel?.profile?.personalDetails.company = company
-//        self.tableView.reloadData()
-//    }
-    
-    
-    
     func didRequestProfileEditViewController(cell: PhotoCollectionViewCell) {
         ImagePickerManager().pickImage(self) { image in
             cell.configureWithImage(photo: image)
         }
     }
-    
-    
     func photosEdited(images: [UIImage], index: Int) {
         guard let uuid = viewModel?.user?.userId else { return }
         AuthService.shared.storeImages(photo: images[index],index: index, userId: uuid) { url in

@@ -37,7 +37,7 @@ class MultipleChoiceTableViewCell: UITableViewCell {
         }
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.separatorStyle = .singleLine
+        tableView.separatorStyle = .none
         tableView.register(MultipleChoiceCellTableViewCell.self, forCellReuseIdentifier: MultipleChoiceCellTableViewCell.reuseIdentifier)
         tableView.reloadData()
     }
@@ -71,12 +71,7 @@ extension MultipleChoiceTableViewCell: UITableViewDelegate, UITableViewDataSourc
             questions: questions,
             identifier: identifier,
             selectedAnswer: questions?[indexPath.row].answer)
-//        controller.selectedAnswer = questions?[indexPath.row].answer
-//        controller.choices = questions?[indexPath.row].answerChoices
-//        controller.questions = questions
-//        controller.index = indexPath.row
         controller.delegate = self
-//        controller.identifier = identifier
         delegate?.didRequestEditChoiceViewController(viewController: controller)
     }
 
@@ -90,6 +85,5 @@ extension MultipleChoiceTableViewCell: EditChoiceViewControllerDelegate {
         } else {
             delegate?.familyPlanEdited( questions: questions)
         }
-        
     }
 }
