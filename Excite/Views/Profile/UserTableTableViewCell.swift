@@ -12,7 +12,7 @@ class UserTableTableViewCell: UITableViewCell {
     static var reuseIdentifier = "UserTableTableViewCell"
     var tableView = UITableView()
     var personal: PersonalDetails?
-    var viewController:UIViewController?
+    var viewController: UIViewController?
     override func awakeFromNib() {
         super.awakeFromNib()
 

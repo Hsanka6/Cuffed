@@ -26,4 +26,3 @@ struct LoginViewModel {
         return self.currentUser != nil && self.currentUser!.profile != nil
     }
 }
-

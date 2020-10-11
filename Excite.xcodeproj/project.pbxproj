@@ -53,6 +53,7 @@
 		EC3F87EE2519B2B200B31446 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC3F87ED2519B2B200B31446 /* LoginViewModel.swift */; };
 		EC3F87F12519B3F500B31446 /* SignupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC3F87F02519B3F500B31446 /* SignupViewController.swift */; };
 		EC3F87F42519B43E00B31446 /* SignupCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC3F87F32519B43E00B31446 /* SignupCollectionViewCell.swift */; };
+		EC3F87F62526F0EF00B31446 /* SignupModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC3F87F52526F0EF00B31446 /* SignupModels.swift */; };
 		EC4F636F24C6BCFD00477779 /* Barcelony.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EC4F636E24C6BCFD00477779 /* Barcelony.ttf */; };
 /* End PBXBuildFile section */
 
@@ -131,6 +132,7 @@
 		EC3F87ED2519B2B200B31446 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		EC3F87F02519B3F500B31446 /* SignupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupViewController.swift; sourceTree = "<group>"; };
 		EC3F87F32519B43E00B31446 /* SignupCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupCollectionViewCell.swift; sourceTree = "<group>"; };
+		EC3F87F52526F0EF00B31446 /* SignupModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupModels.swift; sourceTree = "<group>"; };
 		EC4F636E24C6BCFD00477779 /* Barcelony.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = Barcelony.ttf; path = Excite/Utils/Barcelony.ttf; sourceTree = SOURCE_ROOT; };
 		F60BBCA043E7AD0A43D6B4FD /* Pods-Excite.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Excite.release.xcconfig"; path = "Target Support Files/Pods-Excite/Pods-Excite.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -199,6 +201,7 @@
 			isa = PBXGroup;
 			children = (
 				703FBBD52481E5C400438F94 /* Models.swift */,
+				EC3F87F52526F0EF00B31446 /* SignupModels.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -658,6 +661,7 @@
 			files = (
 				7043B30E24EE6BD200F1FD89 /* UserPersonalityTableViewCell.swift in Sources */,
 				7001141D2502390E0023CA21 /* MultipleChoiceCollectionViewCell.swift in Sources */,
+				EC3F87F62526F0EF00B31446 /* SignupModels.swift in Sources */,
 				709B2C4124C2B737008BA374 /* ProfilePhotosCell.swift in Sources */,
 				709C394E24F398EA00D8F7E9 /* MultipleChoiceCellTableViewCell.swift in Sources */,
 				70A3AC4D24C3A98A008BB1FF /* UserDetailTableViewCell.swift in Sources */,

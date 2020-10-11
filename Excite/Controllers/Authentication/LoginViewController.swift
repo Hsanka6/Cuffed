@@ -71,7 +71,7 @@ class LoginViewController: UIViewController, LoginButtonDelegate {
     }
     
     func constructBackground() {
-        let backgroundLayer = self.colors.gl
+        let backgroundLayer = self.colors.gradientLayer
         backgroundLayer.frame = view.frame
         view.layer.insertSublayer(backgroundLayer, at: 0)
     }

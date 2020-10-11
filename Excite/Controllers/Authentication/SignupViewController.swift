@@ -13,7 +13,7 @@ import Firebase
 import FirebaseAuth
 
 extension UIView {
-    var safeArea : ConstraintLayoutGuideDSL {
+    var safeArea: ConstraintLayoutGuideDSL {
         return safeAreaLayoutGuide.snp
     }
 }
@@ -46,14 +46,7 @@ class SignupViewController: UIViewController {
 //    let nameField = UnderlinedTextField(placeholder: "Your Name")
     var viewModel: SignupViewModel?
     var numSlides: [SignupCollectionViewCell]?
-    let label: UILabel = {
-        let curr = UILabel()
-        curr.text = "What is your display name?"
-        curr.font = UIFont.systemFont(ofSize: 20)
-        curr.textAlignment = .right
-        curr.textColor = .black
-        return curr
-    }()
+    var questions = [SignupModels.Question]()
     
     // MARK: - Lifecycle
     override func viewDidLoad() {
@@ -63,12 +56,13 @@ class SignupViewController: UIViewController {
 //            nameField.text = prefilledName
 //        }
         self.constructBackground()
-        self.view.addSubview(label)
-        label.snp.makeConstraints { (make) in
-            make.center.equalToSuperview()
-            make.height.width.equalTo(30)
+        
+        // get questions here
+        NetworkRequester.getSignupQuestions { (questions) in
+            self.questions = questions
+            self.collectionView.reloadData()
+            self.createCollectionView()
         }
-        self.createCollectionView()
     }
     
     override func viewDidLayoutSubviews() {
@@ -91,7 +85,7 @@ class SignupViewController: UIViewController {
     
     // MARK: - Selectors
     func constructBackground() {
-        let backgroundLayer = self.colors.gl
+        let backgroundLayer = self.colors.gradientLayer
         backgroundLayer.frame = view.frame
         view.layer.insertSublayer(backgroundLayer, at: 0)
     }
@@ -117,30 +111,29 @@ class SignupViewController: UIViewController {
         collectionView.clipsToBounds = false
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.register(SignupCollectionViewCell.self, forCellWithReuseIdentifier: SignupCollectionViewCell.reuseIdentifier)
+         self.collectionView.isScrollEnabled = false
+        
+//        self.collectionView.scrollToItem(at: IndexPath(item: 0, section: 0), at: .centeredHorizontally,  animated: true)
     }
 }
+
 extension SignupViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 10
+        return questions.count
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SignupCollectionViewCell.reuseIdentifier, for: indexPath) as? SignupCollectionViewCell {
-            cell.initialize(question: "Test")
-//         cell.configure(photo: photos[indexPath.row])
+            cell.initialize(question: questions[indexPath.row], collectionView: self.collectionView, numSize: questions.count)
          return cell
          }
          return UICollectionViewCell()
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-
-//        let height = view.frame.size.height
-//        let width = view.frame.size.width
-        // in case you you want the cell to be 40% of your controllers view
         let height = self.collectionView.frame.height
         let width = self.collectionView.frame.width
-        return CGSize(width: width * 0.8, height: height * 0.9)
+        return CGSize(width: width, height: height)
     }
 //    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
 //

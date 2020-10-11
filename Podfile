@@ -16,7 +16,7 @@ target 'Excite' do
   pod 'Kingfisher', '~> 5.0'
   pod 'FBSDKLoginKit'
   pod 'Firebase/Firestore'
-
+  pod 'CodableFirebase'
   # Optionally, include the Swift extensions if you're using Swift.
   pod 'FirebaseFirestoreSwift'
 
