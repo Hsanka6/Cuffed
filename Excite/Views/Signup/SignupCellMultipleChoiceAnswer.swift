@@ -12,6 +12,8 @@ import UIKit
 class SignupCellMultipleChoiceAnswer: UICollectionViewCell {
     static var reuseIdentifier = "SignupCellMultipleChoiceAnswer"
     var answer: String?
+    var cellView: UIView?
+    var answerLabel: UILabel?
     func initialize(answer: String) {
         
         let cellView = UIView()
@@ -21,6 +23,8 @@ class SignupCellMultipleChoiceAnswer: UICollectionViewCell {
         cellView.layer.cornerRadius = 5
         
         self.addSubview(cellView)
+        self.cellView = cellView
+        
         cellView.snp.makeConstraints { (make) in
         make.height.equalTo(50)
         make.width.equalToSuperview()
@@ -29,7 +33,6 @@ class SignupCellMultipleChoiceAnswer: UICollectionViewCell {
         
         self.answer = answer
         let answerLabel = UILabel()
-        answerLabel.backgroundColor = .white
         answerLabel.textAlignment = .center
         answerLabel.numberOfLines = 3
         answerLabel.textColor = UIColor.black
@@ -41,6 +44,7 @@ class SignupCellMultipleChoiceAnswer: UICollectionViewCell {
         make.width.equalToSuperview()
         make.center.equalToSuperview()
         }
+        self.answerLabel = answerLabel
 //        answerLabel.snp.makeConstraints { (make) in
 //            make.top.equalTo(15)
 //            make.left.equalTo(15)

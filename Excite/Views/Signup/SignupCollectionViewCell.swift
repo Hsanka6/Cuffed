@@ -30,6 +30,9 @@ class SignupCollectionViewCell: UICollectionViewCell {
     
     var answer: String?
     
+    var selectedIndexPath: IndexPath?
+    
+    
     func initialize(question: SignupModels.Question, collectionView: UICollectionView, numSize: Int) {
         self.question = question
         self.collectionView = collectionView
@@ -191,9 +194,6 @@ extension SignupCollectionViewCell: UICollectionViewDelegate, UICollectionViewDa
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         guard let answerChoices = self.question as? SignupModels.MultipleChoice else {return 0}
         return answerChoices.answer.count
-//        for answer in answerChoices.answer {
-//            print(answer)
-//        }
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -210,6 +210,24 @@ extension SignupCollectionViewCell: UICollectionViewDelegate, UICollectionViewDa
         let width = self.mcAnswersCollectionView.frame.width
         return CGSize(width: width, height: height)
         
+    }
+
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if let cell = self.mcAnswersCollectionView.cellForItem(at: indexPath) as? SignupCellMultipleChoiceAnswer {
+            cell.cellView?.backgroundColor = .green
+            //cell.contentView.backgroundColor = UIColor.green
+            // cell.cellView!.backgroundColor = .green
+        }
+        self.selectedIndexPath = indexPath
+    }
+
+    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
+        if let cell = self.mcAnswersCollectionView.cellForItem(at: indexPath) as? SignupCellMultipleChoiceAnswer {
+            cell.cellView?.backgroundColor = .white
+            //cell.contentView.backgroundColor = UIColor.green
+            // cell.cellView!.backgroundColor = .green
+        }
+        self.selectedIndexPath = nil
     }
 //    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
 //
