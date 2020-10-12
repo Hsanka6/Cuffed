@@ -55,6 +55,7 @@
 		EC3F87F42519B43E00B31446 /* SignupCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC3F87F32519B43E00B31446 /* SignupCollectionViewCell.swift */; };
 		EC3F87F62526F0EF00B31446 /* SignupModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC3F87F52526F0EF00B31446 /* SignupModels.swift */; };
 		EC4F636F24C6BCFD00477779 /* Barcelony.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EC4F636E24C6BCFD00477779 /* Barcelony.ttf */; };
+		ECC6C8372533DE8E00221E5B /* SignupCellMultipleChoiceAnswer.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC6C8362533DE8E00221E5B /* SignupCellMultipleChoiceAnswer.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -134,6 +135,7 @@
 		EC3F87F32519B43E00B31446 /* SignupCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupCollectionViewCell.swift; sourceTree = "<group>"; };
 		EC3F87F52526F0EF00B31446 /* SignupModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupModels.swift; sourceTree = "<group>"; };
 		EC4F636E24C6BCFD00477779 /* Barcelony.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = Barcelony.ttf; path = Excite/Utils/Barcelony.ttf; sourceTree = SOURCE_ROOT; };
+		ECC6C8362533DE8E00221E5B /* SignupCellMultipleChoiceAnswer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupCellMultipleChoiceAnswer.swift; sourceTree = "<group>"; };
 		F60BBCA043E7AD0A43D6B4FD /* Pods-Excite.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Excite.release.xcconfig"; path = "Target Support Files/Pods-Excite/Pods-Excite.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -395,6 +397,7 @@
 			isa = PBXGroup;
 			children = (
 				EC3F87F32519B43E00B31446 /* SignupCollectionViewCell.swift */,
+				ECC6C8362533DE8E00221E5B /* SignupCellMultipleChoiceAnswer.swift */,
 			);
 			path = Signup;
 			sourceTree = "<group>";
@@ -691,6 +694,7 @@
 				7010798124A6C9C300E640B9 /* Settings.swift in Sources */,
 				700F6B8D24C04D3E008C891F /* ProfileEditViewController.swift in Sources */,
 				EC3F87EC2519B29900B31446 /* SignupViewModel.swift in Sources */,
+				ECC6C8372533DE8E00221E5B /* SignupCellMultipleChoiceAnswer.swift in Sources */,
 				7054D59A245F7507007DA9BA /* SceneDelegate.swift in Sources */,
 				7032880F24F65A8E002228ED /* QuestionsTableViewCell.swift in Sources */,
 				7043B30C24EE6A1B00F1FD89 /* UserTablePersonalityTableViewCell.swift in Sources */,

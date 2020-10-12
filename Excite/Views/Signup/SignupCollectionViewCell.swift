@@ -11,23 +11,6 @@ import UIKit
 
 class SignupCollectionViewCell: UICollectionViewCell {
     static var reuseIdentifier = "signup"
-
-    // By valentines day we shoyld have the app finished
-    // By mid oct we should have everything we are currently working on finished
-    // For me oct 15 should be the early date
-    // Oct 30th is the cutoff date for sign up
-    
-    // builder design pattern
-    // question
-    // answers
-        // selection of MC -> Edit questions View Controller
-        // textfield
-        // grid of pictures
-        // question and answer for the personalized questions
-    
-    
-    // Use the Sign Up Specific Models for FR + MC questions here
-    
     var question: SignupModels.Question?
     
     var profile: Profile?
@@ -42,6 +25,10 @@ class SignupCollectionViewCell: UICollectionViewCell {
     
     // numSize is the amount of cells we're going to be rendering
     var numSize: Int?
+    
+    let mcAnswersCollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
+    
+    var answer: String?
     
     func initialize(question: SignupModels.Question, collectionView: UICollectionView, numSize: Int) {
         self.question = question
@@ -103,31 +90,55 @@ class SignupCollectionViewCell: UICollectionViewCell {
         }
         nextButton.isUserInteractionEnabled = true
         nextButton.addTarget(self, action: #selector(self.nextPageButtonClicked), for: .touchUpInside)
-        
-        let answerBox = UITextView()
-        answerBox.backgroundColor = .lightGray
-        answerBox.tintColor = .white
-        answerBox.layer.cornerRadius = 5
-        cardView.addSubview(answerBox)
-        answerBox.snp.makeConstraints { (make) in
-            make.width.equalTo(200)
-            make.height.equalTo(80)
-            make.center.equalToSuperview()
-        }
         renderQuestion()
     }
     
     func renderQuestion() {
+        // this is goign to have a selector to an fillOutAnswer problem
         if type(of: self.question!) == SignupModels.FreeResponse.self {
+            print("FR----------")
+            let answerBox: UITextField = {
+                let answerBox = UITextField()
+                answerBox.textColor       = .black
+                answerBox.textAlignment   = .center
+                answerBox.textColor       = .black
+                answerBox.font            = UIFont.systemFont(ofSize: 30)
+                answerBox.attributedPlaceholder = NSAttributedString(string: self.question!.short, attributes: [.foregroundColor : UIColor.lightGray])
+                return answerBox
+            }()
+            self.cardView!.addSubview(answerBox)
+            answerBox.snp.makeConstraints { (make) in
+                make.width.equalTo(300)
+                make.height.equalTo(80)
+                make.center.equalToSuperview()
+            }
+//            let answerBox = UITextField()
+//            answerBox.backgroundColor = .lightGray
+//            answerBox.tintColor = .white
+//            answerBox.layer.cornerRadius = 5
+//            answerBox.attributedPlaceholder = NSAttributedString(string:"Enter Title", attributes: [NSAttributedString.Key.foregroundColor: UIColor.white])
+//            self.cardView!.addSubview(answerBox)
+//            answerBox.snp.makeConstraints { (make) in
+//                make.width.equalTo(200)
+//                make.height.equalTo(80)
+//                make.center.equalToSuperview()
+//            }
+//
+//
+//            answerBox.addTarget(self, action: #selector(tester), for: .touchDown)
         }
         else if type(of: self.question!) == SignupModels.MultipleChoice.self {
+            // guard let answerChoices = self.question! as! SignupModels.MultipleChoice as SignupModels.MultipleChoice? else {return}
+            setupCollectionView()
         }
         else {
             print("NOT SUPPOSED TO HAPPEN")
         }
     }
     
-    
+    @objc func tester(textField: UITextField) {
+        print("myTargetFunction")
+    }
     
     @objc func answerQuestion() {
         let controller = AnswerQuestionViewController()
@@ -140,10 +151,74 @@ class SignupCollectionViewCell: UICollectionViewCell {
         let indexPath = self.collectionView.indexPathsForVisibleItems.first.flatMap({
             IndexPath(item: $0.row + 1, section: $0.section)
         })
+        print("INDEX PATH IS \(indexPath!.row)")
+        print("NUMSIZE IS \(numSize!)")
         if indexPath!.row < numSize! {
             self.collectionView.scrollToItem(at: indexPath!, at: .right, animated: true)
         } else {
             print("Can't scroll anymore")
         }
     }
+    
+    func setupCollectionView() {
+        self.cardView!.addSubview(self.mcAnswersCollectionView)
+        
+        
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .vertical
+        mcAnswersCollectionView.collectionViewLayout = layout
+        
+        self.mcAnswersCollectionView.snp.makeConstraints { (make) in
+            make.center.equalToSuperview()
+            make.height.equalTo(300)
+            make.width.equalToSuperview().multipliedBy(0.8)
+        }
+        
+        self.mcAnswersCollectionView.dataSource = self
+        self.mcAnswersCollectionView.delegate = self
+        self.mcAnswersCollectionView.backgroundColor = .white
+        self.mcAnswersCollectionView.clipsToBounds = false
+        self.mcAnswersCollectionView.showsVerticalScrollIndicator = true
+        self.mcAnswersCollectionView.register(SignupCellMultipleChoiceAnswer.self, forCellWithReuseIdentifier: SignupCellMultipleChoiceAnswer.reuseIdentifier)
+        self.mcAnswersCollectionView.isScrollEnabled = true
+        
+//        self.collectionView.scrollToItem(at: IndexPath(item: 0, section: 0), at: .centeredHorizontally,  animated: true)
+    }
+}
+
+
+extension SignupCollectionViewCell: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        guard let answerChoices = self.question as? SignupModels.MultipleChoice else {return 0}
+        return answerChoices.answer.count
+//        for answer in answerChoices.answer {
+//            print(answer)
+//        }
+    }
+
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SignupCellMultipleChoiceAnswer.reuseIdentifier, for: indexPath) as? SignupCellMultipleChoiceAnswer {
+            guard let answerChoices = self.question as? SignupModels.MultipleChoice else {return UICollectionViewCell()}
+            cell.initialize(answer: answerChoices.answer[indexPath.row])
+            return cell
+         }
+        return UICollectionViewCell()
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let height = CGFloat(50.0) // self.collectionView.frame.height
+        let width = self.mcAnswersCollectionView.frame.width
+        return CGSize(width: width, height: height)
+        
+    }
+//    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
+//
+//        let totalCellWidth = CellWidth * CellCount
+//        let totalSpacingWidth = CellSpacing * (CellCount - 1)
+//
+//        let leftInset = (collectionViewWidth - CGFloat(totalCellWidth + totalSpacingWidth)) / 2
+//        let rightInset = leftInset
+//
+//        return UIEdgeInsets(top: 0, left: leftInset, bottom: 0, right: rightInset)
+//    }
 }
