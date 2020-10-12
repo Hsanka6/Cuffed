@@ -72,8 +72,8 @@ class ProfileEditViewController: UIViewController {
         }
         self.viewModel = ProfileViewModel()
         runOnBackgroundThread {
-            NetworkRequesterMock().getUser { user in
-                self.viewModel?.profile = user.profile
+            NetworkRequester().getUser("test") { user in
+                self.viewModel?.profile = user?.profile
                 self.viewModel?.user = user
                 self.tableView.reloadData()
             }

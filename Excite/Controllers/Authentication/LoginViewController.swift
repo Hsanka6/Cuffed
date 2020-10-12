@@ -99,14 +99,12 @@ class LoginViewController: UIViewController, LoginButtonDelegate {
                     // newViewController.currentUser = self.viewModel.currentUser
                     self.navigationController?.pushViewController(newViewController, animated: false)
                 } else {
-                    self.viewModel.currentUser = User(firebaseUser: firUser)
-                    let newViewController = SignupViewController()
-                    newViewController.currentUser = self.viewModel.currentUser
+                    //self.viewModel.currentUser = User(firebaseUser: firUser)
+                    let newViewController = MainTabBarController()
+                    //newViewController.currentUser = self.viewModel.currentUser
                     self.navigationController?.pushViewController(newViewController, animated: false)
                 }
             }
-        
-            // pass the current userID in to create a new User Object and store it in Firebase
         }
     }
     

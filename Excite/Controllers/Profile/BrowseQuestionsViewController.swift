@@ -68,7 +68,10 @@ class BrowseQuestionsViewController: UIViewController {
         collectionView.register(QuestionCollectionViewCell.self, forCellWithReuseIdentifier: QuestionCollectionViewCell.reuseIdentifier)
         
     }
-
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        self.view.removeFromSuperview()
+    }
 }
 
 

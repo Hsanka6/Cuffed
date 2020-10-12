@@ -207,6 +207,29 @@ class Profile: Codable {
     
 }
 
+
+
+// “Your most embarrassing memory?”
+// Open Ended questions and answers
+class FreeResponse: Codable {
+    let question: String
+    let answer: String
+    let image: String
+    
+    init(question: String, answer: String, image: String) {
+        self.question = question
+        self.answer = answer
+        self.image = image
+    }
+    
+    public func makeFromDict() -> [String: Any] {
+        return ["question": self.question,
+                "answer": self.answer,
+                "image": self.image]
+    }
+}
+
+
 class Personality: MultipleChoiceAnswer {
     let topValue: String //extroverted
     let bottomValue: String //introverted
@@ -244,25 +267,6 @@ class Personality: MultipleChoiceAnswer {
     }
 }
 
-// “Your most embarrassing memory?”
-// Open Ended questions and answers
-class FreeResponse: Codable {
-    let question: String
-    let answer: String
-    let image: String
-    
-    init(question: String, answer: String, image: String) {
-        self.question = question
-        self.answer = answer
-        self.image = image
-    }
-    
-    public func makeFromDict() -> [String: Any] {
-        return ["question": self.question,
-                "answer": self.answer,
-                "image": self.image]
-    }
-}
 
 class MultipleChoiceAnswer: MultipleChoice {
     var answer: String
@@ -276,7 +280,7 @@ class MultipleChoiceAnswer: MultipleChoice {
     init(answer: String, question: String, answerChoices: [String], short: String) {
         self.answer = answer
         super.init(question: question, answerChoices: answerChoices, short: short)
-        
+
     }
        
     required init(from decoder: Decoder) throws {
@@ -302,10 +306,10 @@ class MultipleChoice: Codable {
     let question: String
     let answerChoices: [String]
     let short: String
-    let isHidden: Bool
-    let isMandatory: Bool
+    let isHidden: Bool?
+    let isMandatory: Bool?
     
-    init(question: String, answerChoices: [String], short: String, isHidden: Bool, isMandatory: Bool) {
+    init(question: String, answerChoices: [String], short: String, isHidden: Bool? = nil, isMandatory: Bool? = nil) {
         self.question = question
         self.answerChoices = answerChoices
         self.short = short
