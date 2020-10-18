@@ -9,7 +9,35 @@
 import Foundation
 import UIKit
 
-class SignupCollectionViewCell: UICollectionViewCell {
+// Decouple Business Logic and View here
+// If the question is a MC, then build the underlying profile with the selected answer. cannot move on until one is selected
+// If the question is a FR, then build the underlying profile with the string of the freeResponseAnswer UITextField.
+// at the very end, do a post request using the NetworkRequesterAPI.
+
+
+// Haasith's suggestions:
+// back button
+// preserving the fields when you switch cells
+
+// (For the Select types of profile questions page)
+// BrowseQuestionsViewController (to show cards) (pass in array of Strings AKA questions)
+// Pass any collection of questions
+
+// character limit (30-40)
+
+// for next time
+// Caching
+// Consolidate some code before we move forward
+
+// AnswerQuestionViewController
+
+
+// TODO:
+// 1. DONT MOVE ON UNTIL AN ANSWER IS SELECTED
+// 2. BUILD THE USER PROFILE
+// 3. SUBMIT ALL THE ANSWERS VIA FIREBASE AT THE END
+// 4.
+class SignupCollectionViewCell: UICollectionViewCell, UITextFieldDelegate {
     static var reuseIdentifier = "signup"
     var question: SignupModels.Question?
     
@@ -28,29 +56,30 @@ class SignupCollectionViewCell: UICollectionViewCell {
     
     let mcAnswersCollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
     
-    var answer: String?
+    var answer: String? = nil
     
     var selectedIndexPath: IndexPath?
     
+    var freeResponseBox: UITextField?
     
-    func initialize(question: SignupModels.Question, collectionView: UICollectionView, numSize: Int) {
+    func initialize(question: SignupModels.Question, parentCollectionView: UICollectionView, numSize: Int) {
         self.question = question
-        self.collectionView = collectionView
+        self.collectionView = parentCollectionView
         self.numSize = numSize
-        
-        
+        self.viewController?.setupToHideKeyboardOnTapOnView()
         let cardView = UIView()
         cardView.backgroundColor = .white
         cardView.layer.cornerRadius = 15
         
         self.addSubview(cardView)
         cardView.snp.makeConstraints { (make) in
-        make.height.equalTo(600)
-        make.width.equalTo(UIScreen.main.bounds.width - 80)
-        make.center.equalToSuperview()
+            make.height.equalTo(600)
+            make.width.equalTo(UIScreen.main.bounds.width - 80)
+            make.center.equalToSuperview()
         }
         cardView.dropShadow()
         self.cardView = cardView
+        
         let questionLabel = UILabel()
         questionLabel.textAlignment = .center
         questionLabel.numberOfLines = 3
@@ -63,21 +92,6 @@ class SignupCollectionViewCell: UICollectionViewCell {
             make.left.equalTo(15)
             make.right.equalTo(-15)
         }
-        
-        let answerButton = UIButton()
-        answerButton.setTitle("Answer", for: .normal)
-        answerButton.backgroundColor = .gray
-        answerButton.tintColor = .white
-        answerButton.layer.cornerRadius = 15
-        cardView.addSubview(answerButton)
-        answerButton.snp.makeConstraints { (make) in
-            make.width.equalTo(100)
-            make.height.equalTo(40)
-            make.centerX.equalToSuperview()
-            make.bottom.equalTo(-10)
-        }
-        answerButton.isUserInteractionEnabled = true
-        answerButton.addTarget(self, action: #selector(self.answerQuestion), for: .touchUpInside)
         
         let nextButton = UIButton()
         nextButton.setTitle("Next", for: .normal)
@@ -92,80 +106,82 @@ class SignupCollectionViewCell: UICollectionViewCell {
             make.bottom.equalTo(-10)
         }
         nextButton.isUserInteractionEnabled = true
+        
         nextButton.addTarget(self, action: #selector(self.nextPageButtonClicked), for: .touchUpInside)
         renderQuestion()
     }
     
     func renderQuestion() {
-        // this is goign to have a selector to an fillOutAnswer problem
         if type(of: self.question!) == SignupModels.FreeResponse.self {
-            print("FR----------")
-            let answerBox: UITextField = {
-                let answerBox = UITextField()
-                answerBox.textColor       = .black
-                answerBox.textAlignment   = .center
-                answerBox.textColor       = .black
-                answerBox.font            = UIFont.systemFont(ofSize: 30)
-                answerBox.attributedPlaceholder = NSAttributedString(string: self.question!.short, attributes: [.foregroundColor : UIColor.lightGray])
-                return answerBox
+            let freeResponseAnswer: UITextField = {
+                let freeResponseAnswer = UITextField()
+                freeResponseAnswer.textColor       = .black
+                freeResponseAnswer.textAlignment   = .center
+                freeResponseAnswer.textColor       = .black
+                freeResponseAnswer.font            = UIFont.systemFont(ofSize: 30)
+                freeResponseAnswer.attributedPlaceholder = NSAttributedString(string: self.question!.short, attributes: [.foregroundColor : UIColor.lightGray])
+                return freeResponseAnswer
             }()
-            self.cardView!.addSubview(answerBox)
-            answerBox.snp.makeConstraints { (make) in
+            self.cardView!.addSubview(freeResponseAnswer)
+            freeResponseAnswer.snp.makeConstraints { (make) in
                 make.width.equalTo(300)
                 make.height.equalTo(80)
                 make.center.equalToSuperview()
             }
-//            let answerBox = UITextField()
-//            answerBox.backgroundColor = .lightGray
-//            answerBox.tintColor = .white
-//            answerBox.layer.cornerRadius = 5
-//            answerBox.attributedPlaceholder = NSAttributedString(string:"Enter Title", attributes: [NSAttributedString.Key.foregroundColor: UIColor.white])
-//            self.cardView!.addSubview(answerBox)
-//            answerBox.snp.makeConstraints { (make) in
-//                make.width.equalTo(200)
-//                make.height.equalTo(80)
-//                make.center.equalToSuperview()
-//            }
-//
-//
-//            answerBox.addTarget(self, action: #selector(tester), for: .touchDown)
-        }
-        else if type(of: self.question!) == SignupModels.MultipleChoice.self {
+            self.answer = freeResponseAnswer.text
+            self.freeResponseBox = freeResponseAnswer
+            self.freeResponseBox!.delegate = self
+        } else if type(of: self.question!) == SignupModels.MultipleChoice.self {
             // guard let answerChoices = self.question! as! SignupModels.MultipleChoice as SignupModels.MultipleChoice? else {return}
             setupCollectionView()
-        }
-        else {
+        } else {
             print("NOT SUPPOSED TO HAPPEN")
         }
     }
     
-    @objc func tester(textField: UITextField) {
-        print("myTargetFunction")
-    }
-    
-    @objc func answerQuestion() {
-        let controller = AnswerQuestionViewController()
-        controller.profile = profile
-        controller.index = index
-        self.viewController?.navigationController?.pushViewController(controller, animated: true)
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        self.answer=self.freeResponseBox!.text
+        print(self.answer)
+        self.freeResponseBox!.endEditing(true)
+        return false
     }
     @objc func nextPageButtonClicked() {
-        print("IS THIS CLICKED")
-        let indexPath = self.collectionView.indexPathsForVisibleItems.first.flatMap({
-            IndexPath(item: $0.row + 1, section: $0.section)
-        })
-        print("INDEX PATH IS \(indexPath!.row)")
-        print("NUMSIZE IS \(numSize!)")
-        if indexPath!.row < numSize! {
-            self.collectionView.scrollToItem(at: indexPath!, at: .right, animated: true)
-        } else {
-            print("Can't scroll anymore")
+        // check if the current page is filled out
+        if (self.pageIsFilledOut()) {
+                let indexPath = self.collectionView.indexPathsForVisibleItems.first.flatMap({
+                    IndexPath(item: $0.row + 1, section: $0.section)
+                })
+                // self.selectedIndexPath = nil
+                // update the profile here
+                self.updateProfile()
+                
+                if indexPath!.row < numSize! {
+                    self.collectionView.scrollToItem(at: indexPath!, at: .right, animated: true)
+                } else {
+                    // push everything to Firebase
+                    // then push to new View Controllerv
+                    print("Can't scroll anymore")
+                }
+            // then update the user object as well.
         }
     }
     
+    func updateProfile() {
+        self.profile?.personalityAnswers
+    }
+    @objc func pageIsFilledOut() -> Bool {
+        return true
+        guard let answer = self.answer else {
+            return false
+        }
+        print("THIS IS ANSWER: \(answer)")
+        return !answer.isEmpty
+//        return self.answer != nil && !self.answer!.isEmpty
+    }
+    
     func setupCollectionView() {
+        print("THIS IS A MULTIPLE CHOICE")
         self.cardView!.addSubview(self.mcAnswersCollectionView)
-        
         
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
@@ -214,9 +230,19 @@ extension SignupCollectionViewCell: UICollectionViewDelegate, UICollectionViewDa
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if let cell = self.mcAnswersCollectionView.cellForItem(at: indexPath) as? SignupCellMultipleChoiceAnswer {
+            
+            if self.selectedIndexPath == indexPath {
+                self.collectionView(mcAnswersCollectionView, didDeselectItemAt: indexPath)
+                return
+            }
+            
             cell.cellView?.backgroundColor = .green
             //cell.contentView.backgroundColor = UIColor.green
             // cell.cellView!.backgroundColor = .green
+            self.answer = cell.answer
+            print(self.question)
+            print("SET ANSWER TO BE \(self.answer)" )
+            
         }
         self.selectedIndexPath = indexPath
     }
@@ -239,4 +265,21 @@ extension SignupCollectionViewCell: UICollectionViewDelegate, UICollectionViewDa
 //
 //        return UIEdgeInsets(top: 0, left: leftInset, bottom: 0, right: rightInset)
 //    }
+}
+extension UIViewController
+{
+    func setupToHideKeyboardOnTapOnView()
+    {
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(
+            target: self,
+            action: #selector(UIViewController.dismissTheKeyboard))
+
+        tap.cancelsTouchesInView = false
+        view.addGestureRecognizer(tap)
+    }
+
+    @objc func dismissTheKeyboard()
+    {
+        view.endEditing(true)
+    }
 }

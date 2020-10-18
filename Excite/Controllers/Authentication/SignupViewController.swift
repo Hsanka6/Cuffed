@@ -29,7 +29,6 @@ extension UICollectionView {
 
 // Browse Collections View Controller
 class SignupViewController: UIViewController {
-     
     // MARK: - Properties
     let colors = GradientBackground()
     let logo: UILabel = {
@@ -63,6 +62,7 @@ class SignupViewController: UIViewController {
             self.collectionView.reloadData()
             self.createCollectionView()
         }
+        questions.append(SignupModels.Question(question: "", isMandatory: false, isHidden: true, short: "dummy"))
     }
     
     override func viewDidLayoutSubviews() {
@@ -111,9 +111,10 @@ class SignupViewController: UIViewController {
         collectionView.clipsToBounds = false
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.register(SignupCollectionViewCell.self, forCellWithReuseIdentifier: SignupCollectionViewCell.reuseIdentifier)
-         self.collectionView.isScrollEnabled = false
+        self.collectionView.isScrollEnabled = false
         
 //        self.collectionView.scrollToItem(at: IndexPath(item: 0, section: 0), at: .centeredHorizontally,  animated: true)
+        
     }
 }
 
@@ -121,10 +122,18 @@ extension SignupViewController: UICollectionViewDelegate, UICollectionViewDataSo
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return questions.count
     }
-
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        // last view here
+         if (indexPath.row == questions.count - 1 ) {
+            let newViewController = MainTabBarController()
+            self.navigationController?.pushViewController(newViewController, animated: false)
+         }
+    }
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        print("YEET \(indexPath.row)")
         if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SignupCollectionViewCell.reuseIdentifier, for: indexPath) as? SignupCollectionViewCell {
-            cell.initialize(question: questions[indexPath.row], collectionView: self.collectionView, numSize: questions.count)
+            print("WHEN SHOULD I RENDER THE NEW VIEW CONTROLLER: \(indexPath.row)")
+            cell.initialize(question: questions[indexPath.row], parentCollectionView: self.collectionView, numSize: questions.count)
          return cell
          }
          return UICollectionViewCell()
@@ -135,14 +144,5 @@ extension SignupViewController: UICollectionViewDelegate, UICollectionViewDataSo
         let width = self.collectionView.frame.width
         return CGSize(width: width, height: height)
     }
-//    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
-//
-//        let totalCellWidth = CellWidth * CellCount
-//        let totalSpacingWidth = CellSpacing * (CellCount - 1)
-//
-//        let leftInset = (collectionViewWidth - CGFloat(totalCellWidth + totalSpacingWidth)) / 2
-//        let rightInset = leftInset
-//
-//        return UIEdgeInsets(top: 0, left: leftInset, bottom: 0, right: rightInset)
-//    }
+    
 }
