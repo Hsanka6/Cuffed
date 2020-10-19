@@ -1,5 +1,5 @@
 //
-//  ProfileViewModel.swift
+//  UserViewModel.swift
 //  Excite
 //
 //  Created by Haasith Sanka on 7/17/20.
@@ -8,7 +8,6 @@
 
 import Foundation
 
-class ProfileViewModel {
-    var profile: Profile?
+class UserViewModel {
     var user: User?
 }

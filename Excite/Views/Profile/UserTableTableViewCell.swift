@@ -11,6 +11,7 @@ import UIKit
 protocol UserTableTableViewCellDelegate: class {    
     func personalDetailsEdited(personal: PersonalDetails)
     func requestEditChoiceViewController(controller: EditChoiceViewController)
+    func showAlertView(alert: UIAlertController)
 }
 
 
@@ -47,6 +48,18 @@ class UserTableTableViewCell: UITableViewCell {
         tableView.removeFromSuperview()
         tableView.reloadData()
     }
+    
+    enum Details: String, CaseIterable {
+       case fullName = "Full Name"
+       case age = "Age"
+       case height = "Height"
+       case gender = "Gender"
+       case ethnicity = "Ethnicity"
+       case location = "Location"
+       case company = "Company"
+       case jobTitle = "Job Title"
+   }
+   
 }
 
 extension UserTableTableViewCell: UITableViewDelegate, UITableViewDataSource {
@@ -64,9 +77,17 @@ extension UserTableTableViewCell: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let index = indexPath.row
-        let controller = EditChoiceViewController(index: index, personal: personal)
-        controller.personalDelegate = self
-        delegate?.requestEditChoiceViewController(controller: controller)
+        
+        let details = Details.allCases[index]
+        if details.rawValue == "Full Name" || details.rawValue == "Age" {
+            let alert = UIAlertController(title: "Alert", message: "\(details.rawValue) is not editable", preferredStyle: UIAlertController.Style.alert)
+            alert.addAction(UIAlertAction(title: "Dismiss", style: UIAlertAction.Style.default, handler: nil))
+            delegate?.showAlertView(alert: alert)
+        } else {
+            let controller = EditChoiceViewController(model: EditChoiceViewModel(index: index, personal: personal))
+            controller.personalDelegate = self
+            delegate?.requestEditChoiceViewController(controller: controller)
+        }
     }
 }
 

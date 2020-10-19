@@ -23,9 +23,11 @@ class LoginViewController: UIViewController, LoginButtonDelegate {
         curr.textColor = .white
         return curr
     }()
-    
+    let actInd: UIActivityIndicatorView = UIActivityIndicatorView()
+      
     let loginButton = FBLoginButton()
     var viewModel = LoginViewModel()
+    
     
     // MARK: - Lifecycle
     
@@ -83,24 +85,42 @@ class LoginViewController: UIViewController, LoginButtonDelegate {
             }
         }
     }
+
+    func showActivityIndicatory(uiView: UIView) {
+     self.view.addSubview(actInd)
+         
+     actInd.snp.makeConstraints { (make) in
+         make.width.height.equalTo(40)
+         make.center.equalToSuperview()
+     }
+         actInd.center = uiView.center
+         actInd.hidesWhenStopped = true
+         actInd.style = .large
+        actInd.color = UIColor.white
+         actInd.startAnimating()
+     }
+
     
     // sign in assigns the viewModel's currentUser object
     func redirect() {
         let credential = FacebookAuthProvider.credential(withAccessToken: AccessToken.current!.tokenString)
         
         Auth.auth().signIn(with: credential) { (authResult, error) in
+            self.loginButton.isHidden = true
+            self.showActivityIndicatory(uiView: self.view)
             guard let authResult = authResult else { print(error); return }
             let firUser = authResult.user
-            NetworkRequester().getUser(firUser.uid) { (user) in
+            NetworkRequester().getUser("test") { (user) in
                 self.viewModel.currentUser = user
                 if self.viewModel.completeUser() {
-                    let newViewController = MainTabBarController()
+                    let newViewController = MainTabBarController(viewModel: self.viewModel)
                     // do something like:
                     // newViewController.currentUser = self.viewModel.currentUser
                     self.navigationController?.pushViewController(newViewController, animated: false)
                 } else {
+                    self.actInd.stopAnimating()
                     //self.viewModel.currentUser = User(firebaseUser: firUser)
-                    let newViewController = MainTabBarController()
+                    let newViewController = MainTabBarController(viewModel: self.viewModel)
                     //newViewController.currentUser = self.viewModel.currentUser
                     self.navigationController?.pushViewController(newViewController, animated: false)
                 }
