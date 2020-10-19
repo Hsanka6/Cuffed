@@ -62,6 +62,8 @@ class SignupCollectionViewCell: UICollectionViewCell, UITextFieldDelegate {
     
     var freeResponseBox: UITextField?
     
+    var nextButtonAction : (()->())?
+    
     func initialize(question: SignupModels.Question, parentCollectionView: UICollectionView, numSize: Int) {
         self.question = question
         self.collectionView = parentCollectionView
@@ -107,7 +109,8 @@ class SignupCollectionViewCell: UICollectionViewCell, UITextFieldDelegate {
         }
         nextButton.isUserInteractionEnabled = true
         
-        nextButton.addTarget(self, action: #selector(self.nextPageButtonClicked), for: .touchUpInside)
+        // nextButton.addTarget(self, action: #selector(self.nextPageButtonClicked), for: .touchUpInside)
+        nextButton.addTarget(self, action: #selector(self.nextButtonTapped), for: .touchUpInside)
         renderQuestion()
     }
     
@@ -145,6 +148,12 @@ class SignupCollectionViewCell: UICollectionViewCell, UITextFieldDelegate {
         self.freeResponseBox!.endEditing(true)
         return false
     }
+    
+    @objc func nextButtonTapped() {
+        print("next button tapped")
+        nextButtonAction?()
+    }
+    
     @objc func nextPageButtonClicked() {
         // check if the current page is filled out
         if (self.pageIsFilledOut()) {

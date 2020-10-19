@@ -130,10 +130,25 @@ extension SignupViewController: UICollectionViewDelegate, UICollectionViewDataSo
          }
     }
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        print("YEET \(indexPath.row)")
         if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SignupCollectionViewCell.reuseIdentifier, for: indexPath) as? SignupCollectionViewCell {
-            print("WHEN SHOULD I RENDER THE NEW VIEW CONTROLLER: \(indexPath.row)")
             cell.initialize(question: questions[indexPath.row], parentCollectionView: self.collectionView, numSize: questions.count)
+            cell.nextButtonAction = {
+                () in
+                print("Next tapped")
+                let indexPath = self.collectionView.indexPathsForVisibleItems.first.flatMap({
+                    IndexPath(item: $0.row + 1, section: $0.section)
+                })
+                // self.selectedIndexPath = nil
+                // update the profile here
+                
+                if indexPath!.row < self.questions.count {
+                    self.collectionView.scrollToItem(at: indexPath!, at: .right, animated: true)
+                } else {
+                    // push everything to Firebase
+                    // then push to new View Controllerv
+                    print("Can't scroll anymore")
+                }
+            }
          return cell
          }
          return UICollectionViewCell()
