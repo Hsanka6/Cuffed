@@ -93,7 +93,7 @@ extension BrowseQuestionsViewController: UICollectionViewDelegate, UICollectionV
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let width = UIScreen.main.bounds.width - 60
-        let height = CGFloat(450)//(UIScreen.main.bounds.height - 100) // or what height you want to do
+        let height = CGFloat(450)
         return CGSize(width: width, height: height)
     }
 }

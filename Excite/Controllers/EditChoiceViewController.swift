@@ -16,13 +16,7 @@ protocol EditChoicePersonalDetailsDelegate: class {
 }
 
 class EditChoiceViewController: UIViewController {
-    var choices: [String]?
-    var selectedAnswer: String?
-    var questions: [MultipleChoiceAnswer]?
-    var index: Int?
-    var identifier: String?
-    var personal: PersonalDetails?
-    
+    var viewModel: EditChoiceViewModel?
     let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
    
     //delegates to update profile
@@ -31,7 +25,7 @@ class EditChoiceViewController: UIViewController {
     
     var stackView = UIStackView()
     let userTextField = UITextField()
-    
+          
     //updates appropriate personal detail item
     var currentDetail: PersonalDetailItem?
     var currentType: Details?
@@ -52,19 +46,13 @@ class EditChoiceViewController: UIViewController {
     }
     
     
-    convenience init(choices: [String]? = nil, index: Int, questions: [MultipleChoiceAnswer]? = nil, identifier: String? = nil, selectedAnswer: String? = nil, personal: PersonalDetails? = nil) {
-        self.init(index: index)
-        self.choices = choices
-        self.index = index
-        self.questions = questions
-        self.identifier = identifier
-        self.selectedAnswer = selectedAnswer
-        self.personal = personal
+    convenience init(model: EditChoiceViewModel) {
+        self.init()
+        self.viewModel = model
     }
     
-    init(index: Int) {
-        self.index = index
-        super.init(nibName: nil, bundle: nil)
+    init() {
+       super.init(nibName: nil, bundle: nil)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -77,11 +65,15 @@ class EditChoiceViewController: UIViewController {
     }
     
     func setupAppropriateUI() {
+        guard let index = viewModel?.index else { return }
         self.view.backgroundColor = .white
-        if let personal = personal, let index = index {
+        self.navigationItem.title = viewModel?.questions?[index].question
+        
+        if let personal = viewModel?.personal {
            populate(model: personal, index: index)
         } else {
            setUpCollectionView()
+            
         }
     }
     
@@ -100,13 +92,13 @@ class EditChoiceViewController: UIViewController {
         case .gender:
             currentDetail = model.gender
             currentType = .gender
-            selectedAnswer = model.gender.title
-            choices = model.gender.answerChoices
+            viewModel?.selectedAnswer = model.gender.title
+            viewModel?.choices = model.gender.answerChoices
         case .ethnicity:
             currentDetail = model.ethnicity
             currentType = .ethnicity
-            selectedAnswer = model.ethnicity.title
-            choices = model.ethnicity.answerChoices
+            viewModel?.selectedAnswer = model.ethnicity.title
+            viewModel?.choices = model.ethnicity.answerChoices
         case .location:
             currentDetail = model.location
             currentType = .location
@@ -119,6 +111,9 @@ class EditChoiceViewController: UIViewController {
         }
         guard let currentDetail = currentDetail, let cur = currentType else { return }
         
+        self.navigationItem.title = cur.rawValue
+
+        
         if currentDetail.type == .textfield || currentDetail.type == .spinner {
             setUpTextField(model: currentDetail, title: currentDetail.title, type: cur)
         } else {
@@ -128,32 +123,24 @@ class EditChoiceViewController: UIViewController {
     
     
     func setUpTextField(model: PersonalDetailItem, title: String, type: Details) {
-        let userLabel = UILabel()
-        userLabel.textAlignment = .left
-        userLabel.textColor = UIColor.black
-        
-        if type == .fullName || type == .age {
-            userLabel.text = "This field cannot be edited"
-        } else {
-            userLabel.text = type.rawValue
-            userTextField.placeholder = title
-            userTextField.textColor = UIColor.black
-            userTextField.layer.cornerRadius = 5.0
-            userTextField.borderStyle = .roundedRect
-            userTextField.backgroundColor = UIColor.white
-            userTextField.autocorrectionType = UITextAutocorrectionType.yes
-            userTextField.keyboardType = UIKeyboardType.default
-            userTextField.returnKeyType = UIReturnKeyType.done
-            userTextField.clearButtonMode = UITextField.ViewMode.whileEditing
-            userTextField.contentVerticalAlignment = UIControl.ContentVerticalAlignment.center
-            userTextField.isEnabled = true
-            userTextField.isUserInteractionEnabled = true
-            setUpNavButtons()
-        }
+         
+        userTextField.placeholder = title
+        userTextField.textColor = UIColor.black
+        userTextField.layer.cornerRadius = 5.0
+        userTextField.borderStyle = .roundedRect
+        userTextField.backgroundColor = UIColor.white
+        userTextField.autocorrectionType = UITextAutocorrectionType.yes
+        userTextField.keyboardType = UIKeyboardType.default
+        userTextField.returnKeyType = UIReturnKeyType.done
+        userTextField.clearButtonMode = UITextField.ViewMode.whileEditing
+        userTextField.contentVerticalAlignment = UIControl.ContentVerticalAlignment.center
+        userTextField.isEnabled = true
+        userTextField.isUserInteractionEnabled = true
+        setUpNavButtons()
+    
         
         if type == .height {
             self.userTextField.delegate = self
-
             self.datePicker.dataSource = self
             self.datePicker.delegate = self
             userTextField.inputView = self.datePicker
@@ -167,7 +154,6 @@ class EditChoiceViewController: UIViewController {
             self.userTextField.inputAccessoryView = toolBar
         }
         
-        stackView.addArrangedSubview(userLabel)
         stackView.addArrangedSubview(userTextField)
         stackView.alignment = .leading
         stackView.spacing = 5
@@ -175,23 +161,22 @@ class EditChoiceViewController: UIViewController {
         stackView.distribution = .fillEqually
         self.view.addSubview(stackView)
         stackView.snp.makeConstraints { (make) in
-            make.top.equalTo(self.view.safeAreaLayoutGuide.snp.top)
-            make.height.equalTo(60)
+            make.top.equalTo(self.view.safeAreaLayoutGuide.snp.top).offset(5)
+            make.height.equalTo(40)
             make.left.equalTo(20)
             make.right.equalTo(-20)
         }
         
         userTextField.snp.makeConstraints { (make) in
             make.width.equalToSuperview()
-            
         }
     }
     
     func setUpCollectionView() {
         self.view.addSubview(collectionView)
         collectionView.snp.makeConstraints { (make) in
-            make.top.bottom.equalTo(5)
-            make.height.equalToSuperview()
+            make.top.equalTo(self.view.safeAreaLayoutGuide.snp.top).offset(5)
+            make.height.equalTo(300)
             make.left.equalTo(20)
             make.right.equalTo(-20)
         }
@@ -241,7 +226,7 @@ class EditChoiceViewController: UIViewController {
     }
     
     func getEditedText() -> String? {
-        if let text = selectedAnswer {
+        if let text = viewModel?.selectedAnswer {
             return text
         } else if let text = userTextField.text {
             return text
@@ -251,10 +236,10 @@ class EditChoiceViewController: UIViewController {
     
     
     @objc func action(sender: UIBarButtonItem) {
-        if let personal = personal, let editedText = getEditedText(), let editedPersonal = editPersonal(personal: personal,edited: editedText) {
+        if let personal = viewModel?.personal, let editedText = getEditedText(), let editedPersonal = editPersonal(personal: personal,edited: editedText) {
             personalDelegate?.personalDetailsEdited(personal: editedPersonal)
         } else {
-            guard let questions = questions, let identifier = identifier else {
+            guard let questions = viewModel?.questions, let identifier = viewModel?.identifier else {
                 return
             }
             delegate?.mcEdited(questions: questions, identifier: identifier)
@@ -265,10 +250,10 @@ class EditChoiceViewController: UIViewController {
 
 extension EditChoiceViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return choices?.count ?? 0
+        return viewModel?.choices?.count ?? 0
     }
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MultipleChoiceCollectionViewCell.reuseIdentifier, for: indexPath) as? MultipleChoiceCollectionViewCell, let choice = choices?[indexPath.row], let selectedAnswer = selectedAnswer {
+        if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MultipleChoiceCollectionViewCell.reuseIdentifier, for: indexPath) as? MultipleChoiceCollectionViewCell, let choice = viewModel?.choices?[indexPath.row], let selectedAnswer = viewModel?.selectedAnswer {
             cell.initialize(answerChoice: choice, selectedChoice: selectedAnswer)
             if choice == selectedAnswer {
                 cell.button.selectedStyling()
@@ -289,10 +274,10 @@ extension EditChoiceViewController: UICollectionViewDelegate, UICollectionViewDa
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let cell = collectionView.cellForItem(at: indexPath) as? MultipleChoiceCollectionViewCell
-        guard let index = index, let choice = (choices?[indexPath.row]) else { return }
+        guard let index = viewModel?.index, let choice = (viewModel?.choices?[indexPath.row]) else { return }
         cell?.button.selectedStyling()
-        self.selectedAnswer = choice
-        questions?[index].answer = self.selectedAnswer ?? "default"
+        viewModel?.selectedAnswer = choice
+        viewModel?.questions?[index].answer = viewModel?.selectedAnswer ?? "default"
         cell?.button.changeState()
         collectionView.reloadData()
     }
@@ -300,7 +285,6 @@ extension EditChoiceViewController: UICollectionViewDelegate, UICollectionViewDa
 }
 
 extension EditChoiceViewController: UITextFieldDelegate {
-    
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         view.endEditing(true)
     }

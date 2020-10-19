@@ -65,12 +65,12 @@ extension MultipleChoiceTableViewCell: UITableViewDelegate, UITableViewDataSourc
       }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let controller = EditChoiceViewController(
+        let controller = EditChoiceViewController(model: EditChoiceViewModel(
             choices: questions?[indexPath.row].answerChoices,
             index: indexPath.row,
             questions: questions,
             identifier: identifier,
-            selectedAnswer: questions?[indexPath.row].answer)
+            selectedAnswer: questions?[indexPath.row].answer))
         controller.delegate = self
         delegate?.didRequestEditChoiceViewController(viewController: controller)
     }

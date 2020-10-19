@@ -11,7 +11,7 @@ import Firebase
 import FirebaseFirestoreSwift
 
 class ProfileEditViewController: UIViewController {
-    var viewModel: ProfileViewModel?
+    var viewModel: UserViewModel?
     static let notificationName = Notification.Name("myNotificationName")
     
     var user: User?
@@ -25,7 +25,15 @@ class ProfileEditViewController: UIViewController {
         case userPriorities = "My Priorities"
         case userVice = "My Vices"
         case userFamilyPlans = "My Family Plans"
-                              
+    }
+    
+    init(viewModel: UserViewModel) {
+       self.viewModel = viewModel
+       super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder: NSCoder) {
+       fatalError("init(coder:) has not been implemented")
     }
     
     override func viewDidLoad() {
@@ -33,7 +41,6 @@ class ProfileEditViewController: UIViewController {
         self.navigationItem.hidesBackButton = true
         tableViewSetup()
         navBarSetup()
-            
     }
     
     func navBarSetup() {
@@ -43,7 +50,7 @@ class ProfileEditViewController: UIViewController {
     
     @objc func saveProfile() {
         let database = Firestore.firestore()
-        guard let profile = viewModel?.profile else { return }
+        guard let profile = viewModel?.user?.profile else { return }
         database.collection("Users").document("test").setData([ "profile": profile.makeFromDict() ], merge: true)
         self.navigationController?.popViewController(animated: true)
     }
@@ -70,14 +77,14 @@ class ProfileEditViewController: UIViewController {
             make.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom)
             make.left.right.equalToSuperview()
         }
-        self.viewModel = ProfileViewModel()
-        runOnBackgroundThread {
-            NetworkRequester().getUser("test") { user in
-                self.viewModel?.profile = user?.profile
-                self.viewModel?.user = user
-                self.tableView.reloadData()
-            }
-       }
+//        self.viewModel = UserViewModel()
+//        runOnBackgroundThread {
+//            NetworkRequester().getUser("test") { user in
+//                self.viewModel?.profile = user?.profile
+//                self.viewModel?.user = user
+//                self.tableView.reloadData()
+//            }
+//       }
     }
     
 }
@@ -106,7 +113,7 @@ extension ProfileEditViewController: UITableViewDelegate, UITableViewDataSource 
         case .userTable:
             let cell = tableView.dequeueReusableCell(withIdentifier: UserTableTableViewCell.reuseIdentifier, for: indexPath) as? UserTableTableViewCell
             cell?.selectionStyle = .none
-            if let details = viewModel?.profile?.personalDetails {
+            if let details = viewModel?.user?.profile?.personalDetails {
                 cell?.initialize(personalDetails: details)
                 cell?.delegate = self
             }
@@ -114,13 +121,13 @@ extension ProfileEditViewController: UITableViewDelegate, UITableViewDataSource 
         case .userPhotos:
             let cell = tableView.dequeueReusableCell(withIdentifier: ProfilePhotosCell.reuseIdentifier, for: indexPath) as? ProfilePhotosCell
             cell?.delegate = self
-            if let photos = viewModel?.profile?.photos {
+            if let photos = viewModel?.user?.profile?.photos {
                  cell?.configure(photos: photos)
             }
             return cell ?? UITableViewCell()
         case .userPersonality:
             let cell = tableView.dequeueReusableCell(withIdentifier: UserTablePersonalityTableViewCell.reuseIdentifier, for: indexPath) as? UserTablePersonalityTableViewCell
-            if let personalities = viewModel?.profile?.personalityAnswers {
+            if let personalities = viewModel?.user?.profile?.personalityAnswers {
                 cell?.initialize(personality: personalities)
                 cell?.delegate = self
                 cell?.personal = personalities
@@ -128,14 +135,14 @@ extension ProfileEditViewController: UITableViewDelegate, UITableViewDataSource 
             return cell ?? UITableViewCell()
         case .userPriorities:
             let cell = tableView.dequeueReusableCell(withIdentifier: UserPrioritiesTableTableViewCell.reuseIdentifier, for: indexPath) as? UserPrioritiesTableTableViewCell
-            if let priorities = viewModel?.profile?.priorities {
+            if let priorities = viewModel?.user?.profile?.priorities {
                 cell?.initialize(priorities: priorities)
                 cell?.delegate = self
                 cell?.selectionStyle = .none
             }
             return cell ?? UITableViewCell()
         case .userVice:
-            guard let vices = viewModel?.profile?.vices, let cell = tableView.dequeueReusableCell(withIdentifier: MultipleChoiceTableViewCell.reuseIdentifier, for: indexPath) as? MultipleChoiceTableViewCell else { return UITableViewCell()}
+            guard let vices = viewModel?.user?.profile?.vices, let cell = tableView.dequeueReusableCell(withIdentifier: MultipleChoiceTableViewCell.reuseIdentifier, for: indexPath) as? MultipleChoiceTableViewCell else { return UITableViewCell()}
             cell.delegate = self
             cell.identifier = "vices"
             cell.initialize(questions: vices)
@@ -144,14 +151,14 @@ extension ProfileEditViewController: UITableViewDelegate, UITableViewDataSource 
             guard let cell = tableView.dequeueReusableCell(withIdentifier: MultipleChoiceTableViewCell.newreuseIdentifier, for: indexPath) as? MultipleChoiceTableViewCell else { return UITableViewCell()}
             cell.identifier = "familyPlans"
             cell.delegate = self
-            if let familyPlans = viewModel?.profile?.familyPlans {
+            if let familyPlans = viewModel?.user?.profile?.familyPlans {
                 cell.initialize(questions: familyPlans)
             }
             return cell
         case .userQuestions:
             let cell = tableView.dequeueReusableCell(withIdentifier: QuestionsTableViewCell.reuseIdentifier, for: indexPath) as? QuestionsTableViewCell
             cell?.delegate = self
-            if let freeResponse = viewModel?.profile?.freeResponse {
+            if let freeResponse = viewModel?.user?.profile?.freeResponse {
                 cell?.initialize(freeResponse: freeResponse)
                 cell?.freeResponse = freeResponse
             }
@@ -203,8 +210,12 @@ extension ProfileEditViewController: UITableViewDelegate, UITableViewDataSource 
 }
 
 extension ProfileEditViewController: MultipleChoiceTableViewCellDelegate, QuestionTableViewCellDelegate, UserTablePersonalityTableViewCellDelegate, UserPrioritiesTableTableViewCellDelegate, ProfilePhotoCellDelegate, UserTableTableViewCellDelegate {
+    func showAlertView(alert: UIAlertController) {
+        self.present(alert, animated: true, completion: nil)
+    }
+    
     func personalDetailsEdited(personal: PersonalDetails) {
-        self.viewModel?.profile?.personalDetails = personal
+        self.viewModel?.user?.profile?.personalDetails = personal
         self.tableView.reloadData()
     }
     
@@ -216,31 +227,31 @@ extension ProfileEditViewController: MultipleChoiceTableViewCellDelegate, Questi
     func photosEdited(images: [UIImage], index: Int) {
         guard let uuid = viewModel?.user?.userId else { return }
         AuthService.shared.storeImages(photo: images[index],index: index, userId: uuid) { url in
-            self.viewModel?.profile?.photos[index] = url
+            self.viewModel?.user?.profile?.photos[index] = url
             self.tableView.reloadData()
         }
     }
    
     func questionsEdited(freeResponse: [FreeResponse]) {
-        self.viewModel?.profile?.freeResponse = freeResponse
+        self.viewModel?.user?.profile?.freeResponse = freeResponse
         self.tableView.reloadData()
     }
 
     func familyPlanEdited( questions: [MultipleChoiceAnswer]) {
-        self.viewModel?.profile?.familyPlans = questions
+        self.viewModel?.user?.profile?.familyPlans = questions
         self.tableView.reloadData()
     }
     func vicesEdited( questions: [MultipleChoiceAnswer]) {
-        self.viewModel?.profile?.vices = questions
+        self.viewModel?.user?.profile?.vices = questions
         self.tableView.reloadData()
     }
     
     func editPersonality(personalities: [Personality]) {
-        self.viewModel?.profile?.personalityAnswers = personalities
+        self.viewModel?.user?.profile?.personalityAnswers = personalities
     }
     
     func editPriorites(priorities: [String]) {
-        self.viewModel?.profile?.priorities = priorities
+        self.viewModel?.user?.profile?.priorities = priorities
         self.tableView.reloadData()
     }
     

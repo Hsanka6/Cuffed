@@ -102,7 +102,6 @@ class AnswerQuestionViewController: UIViewController {
     }
     
     @objc func action(sender: UIBarButtonItem) {
-        let newViewController = ProfileEditViewController()
         guard let question = question, var freeResponse = freeResponse, let index = index else { return }
         let current = FreeResponse(question: question, answer: answerTF.text ?? "", image: "")
         

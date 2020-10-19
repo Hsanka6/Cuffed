@@ -9,6 +9,17 @@
 import UIKit
 
 class ProfileViewController: UIViewController {
+    var viewModel: UserViewModel
+    
+    init(viewModel: UserViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
@@ -17,7 +28,7 @@ class ProfileViewController: UIViewController {
         self.parent?.navigationItem.rightBarButtonItem = editButton
     }
     @objc func action(sender: UIBarButtonItem) {
-        let newViewController = ProfileEditViewController()
+        let newViewController = ProfileEditViewController(viewModel: viewModel)
         self.navigationController?.pushViewController(newViewController, animated: true)
     }
 }
