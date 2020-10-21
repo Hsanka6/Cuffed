@@ -31,13 +31,6 @@ extension UICollectionView {
 class SignupViewController: UIViewController {
     // MARK: - Properties
     let colors = GradientBackground()
-    let logo: UILabel = {
-        let curr = UILabel()
-        curr.text = "Welcome!"
-        curr.font = UIFont(name: "Barcelony", size: 50)
-        curr.textColor = .white
-        return curr
-    }()
     
     var currentUser: User?
     let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
@@ -67,10 +60,6 @@ class SignupViewController: UIViewController {
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-
-        // we use this function to indentify the frame width and height here, these values are only available after viewDidLayoutSubviews starts to run.
-//        nameField.underlined(frameWidth: CGFloat(nameField.frame.width),
-//                             frameHeight: CGFloat(nameField.frame.height))
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -112,9 +101,6 @@ class SignupViewController: UIViewController {
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.register(SignupCollectionViewCell.self, forCellWithReuseIdentifier: SignupCollectionViewCell.reuseIdentifier)
         self.collectionView.isScrollEnabled = false
-        
-//        self.collectionView.scrollToItem(at: IndexPath(item: 0, section: 0), at: .centeredHorizontally,  animated: true)
-        
     }
 }
 
@@ -131,16 +117,15 @@ extension SignupViewController: UICollectionViewDelegate, UICollectionViewDataSo
     }
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SignupCollectionViewCell.reuseIdentifier, for: indexPath) as? SignupCollectionViewCell {
-            cell.initialize(question: questions[indexPath.row], parentCollectionView: self.collectionView, numSize: questions.count)
+            cell.initialize(question: questions[indexPath.row])
+            print("WE ARE AT INDEX \(indexPath.row)")
             cell.nextButtonAction = {
                 () in
-                print("Next tapped")
                 let indexPath = self.collectionView.indexPathsForVisibleItems.first.flatMap({
                     IndexPath(item: $0.row + 1, section: $0.section)
                 })
                 // self.selectedIndexPath = nil
-                // update the profile here
-                
+                // update the profile here4
                 if indexPath!.row < self.questions.count {
                     self.collectionView.scrollToItem(at: indexPath!, at: .right, animated: true)
                 } else {

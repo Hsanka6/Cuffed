@@ -37,6 +37,12 @@ import UIKit
 // 2. BUILD THE USER PROFILE
 // 3. SUBMIT ALL THE ANSWERS VIA FIREBASE AT THE END
 // 4.
+
+// 1 picutres
+// 2 firebase
+// 3 profile questions: https://www.figma.com/file/yktAvueZgO6tP9uBNoyjmN/Excite?node-id=0%3A1
+// 4
+//
 class SignupCollectionViewCell: UICollectionViewCell, UITextFieldDelegate {
     static var reuseIdentifier = "signup"
     var question: SignupModels.Question?
@@ -48,27 +54,21 @@ class SignupCollectionViewCell: UICollectionViewCell, UITextFieldDelegate {
     // keep track of the background card view
     var cardView: UIView?
     
-    // this is here to switch the cells
-    var collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
-    
-    // numSize is the amount of cells we're going to be rendering
-    var numSize: Int?
-    
     let mcAnswersCollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
-    
-    var answer: String? = nil
-    
+    // index path of current answer of the 
     var selectedIndexPath: IndexPath?
+    var answer: String?
     
     var freeResponseBox: UITextField?
     
     var nextButtonAction : (()->())?
     
-    func initialize(question: SignupModels.Question, parentCollectionView: UICollectionView, numSize: Int) {
+    func initialize(question: SignupModels.Question) {
         self.question = question
-        self.collectionView = parentCollectionView
-        self.numSize = numSize
+        print("THIS IS THE CURRENT QUESTION: ")
+        print(self.question?.question)
         self.viewController?.setupToHideKeyboardOnTapOnView()
+        
         let cardView = UIView()
         cardView.backgroundColor = .white
         cardView.layer.cornerRadius = 15
@@ -134,52 +134,35 @@ class SignupCollectionViewCell: UICollectionViewCell, UITextFieldDelegate {
             self.answer = freeResponseAnswer.text
             self.freeResponseBox = freeResponseAnswer
             self.freeResponseBox!.delegate = self
+//            let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: cardview.self, action: #selector(dDismissKeyboard))
+//            self.freeResponseBox!.addGestureRecognizer(tap)
         } else if type(of: self.question!) == SignupModels.MultipleChoice.self {
             // guard let answerChoices = self.question! as! SignupModels.MultipleChoice as SignupModels.MultipleChoice? else {return}
             setupCollectionView()
         } else {
+            // TableView
+            //
             print("NOT SUPPOSED TO HAPPEN")
         }
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         self.answer=self.freeResponseBox!.text
-        print(self.answer)
         self.freeResponseBox!.endEditing(true)
         return false
     }
     
     @objc func nextButtonTapped() {
-        print("next button tapped")
-        nextButtonAction?()
-    }
-    
-    @objc func nextPageButtonClicked() {
-        // check if the current page is filled out
-        if (self.pageIsFilledOut()) {
-                let indexPath = self.collectionView.indexPathsForVisibleItems.first.flatMap({
-                    IndexPath(item: $0.row + 1, section: $0.section)
-                })
-                // self.selectedIndexPath = nil
-                // update the profile here
-                self.updateProfile()
-                
-                if indexPath!.row < numSize! {
-                    self.collectionView.scrollToItem(at: indexPath!, at: .right, animated: true)
-                } else {
-                    // push everything to Firebase
-                    // then push to new View Controllerv
-                    print("Can't scroll anymore")
-                }
-            // then update the user object as well.
+        if pageIsFilledOut() {
+            nextButtonAction?()
         }
     }
     
     func updateProfile() {
         self.profile?.personalityAnswers
     }
+    
     @objc func pageIsFilledOut() -> Bool {
-        return true
         guard let answer = self.answer else {
             return false
         }
@@ -189,7 +172,6 @@ class SignupCollectionViewCell: UICollectionViewCell, UITextFieldDelegate {
     }
     
     func setupCollectionView() {
-        print("THIS IS A MULTIPLE CHOICE")
         self.cardView!.addSubview(self.mcAnswersCollectionView)
         
         let layout = UICollectionViewFlowLayout()
@@ -205,25 +187,32 @@ class SignupCollectionViewCell: UICollectionViewCell, UITextFieldDelegate {
         self.mcAnswersCollectionView.dataSource = self
         self.mcAnswersCollectionView.delegate = self
         self.mcAnswersCollectionView.backgroundColor = .white
-        self.mcAnswersCollectionView.clipsToBounds = false
-        self.mcAnswersCollectionView.showsVerticalScrollIndicator = true
+        self.mcAnswersCollectionView.clipsToBounds = true
+        self.mcAnswersCollectionView.showsVerticalScrollIndicator = false
         self.mcAnswersCollectionView.register(SignupCellMultipleChoiceAnswer.self, forCellWithReuseIdentifier: SignupCellMultipleChoiceAnswer.reuseIdentifier)
         self.mcAnswersCollectionView.isScrollEnabled = true
         
-//        self.collectionView.scrollToItem(at: IndexPath(item: 0, section: 0), at: .centeredHorizontally,  animated: true)
     }
 }
-
 
 extension SignupCollectionViewCell: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         guard let answerChoices = self.question as? SignupModels.MultipleChoice else {return 0}
+//        print("CALLED INSIDE OF numberOfItemsInSection")
+//        for answer in answerChoices.answer {
+//            print(answer)
+//        }
         return answerChoices.answer.count
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SignupCellMultipleChoiceAnswer.reuseIdentifier, for: indexPath) as? SignupCellMultipleChoiceAnswer {
             guard let answerChoices = self.question as? SignupModels.MultipleChoice else {return UICollectionViewCell()}
+//            print("CALLED INSIDE OF cellForItemAt")
+//            print(self.question?.question)
+//            for answer in answerChoices.answer {
+//                print(answer)
+//            }
             cell.initialize(answer: answerChoices.answer[indexPath.row])
             return cell
          }
@@ -249,8 +238,6 @@ extension SignupCollectionViewCell: UICollectionViewDelegate, UICollectionViewDa
             //cell.contentView.backgroundColor = UIColor.green
             // cell.cellView!.backgroundColor = .green
             self.answer = cell.answer
-            print(self.question)
-            print("SET ANSWER TO BE \(self.answer)" )
             
         }
         self.selectedIndexPath = indexPath
@@ -264,16 +251,6 @@ extension SignupCollectionViewCell: UICollectionViewDelegate, UICollectionViewDa
         }
         self.selectedIndexPath = nil
     }
-//    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
-//
-//        let totalCellWidth = CellWidth * CellCount
-//        let totalSpacingWidth = CellSpacing * (CellCount - 1)
-//
-//        let leftInset = (collectionViewWidth - CGFloat(totalCellWidth + totalSpacingWidth)) / 2
-//        let rightInset = leftInset
-//
-//        return UIEdgeInsets(top: 0, left: leftInset, bottom: 0, right: rightInset)
-//    }
 }
 extension UIViewController
 {

@@ -23,6 +23,7 @@ struct SignupModels {
             self.short = short
         }
     }
+    
     class FreeResponse: Question {
         var answer: String?
         
