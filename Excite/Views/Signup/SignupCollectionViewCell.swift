@@ -49,7 +49,6 @@ class SignupCollectionViewCell: UICollectionViewCell, UITextFieldDelegate {
     
     var profile: Profile?
     var index: Int?
-    var viewController: UIViewController?
     
     // keep track of the background card view
     var cardView: UIView?
@@ -65,10 +64,6 @@ class SignupCollectionViewCell: UICollectionViewCell, UITextFieldDelegate {
     
     func initialize(question: SignupModels.Question) {
         self.question = question
-        print("THIS IS THE CURRENT QUESTION: ")
-        print(self.question?.question)
-        self.viewController?.setupToHideKeyboardOnTapOnView()
-        
         let cardView = UIView()
         cardView.backgroundColor = .white
         cardView.layer.cornerRadius = 15
@@ -81,6 +76,7 @@ class SignupCollectionViewCell: UICollectionViewCell, UITextFieldDelegate {
         }
         cardView.dropShadow()
         self.cardView = cardView
+        self.cardView?.setupToHideKeyboardOnTapOnView()
         
         let questionLabel = UILabel()
         questionLabel.textAlignment = .center
@@ -146,12 +142,6 @@ class SignupCollectionViewCell: UICollectionViewCell, UITextFieldDelegate {
         }
     }
     
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        self.answer=self.freeResponseBox!.text
-        self.freeResponseBox!.endEditing(true)
-        return false
-    }
-    
     @objc func nextButtonTapped() {
         if pageIsFilledOut() {
             nextButtonAction?()
@@ -163,11 +153,20 @@ class SignupCollectionViewCell: UICollectionViewCell, UITextFieldDelegate {
     }
     
     @objc func pageIsFilledOut() -> Bool {
-        guard let answer = self.answer else {
-            return false
+        if type(of: self.question!) == SignupModels.FreeResponse.self {
+            // try to see if
+            if self.freeResponseBox?.text != nil && !self.freeResponseBox!.text!.isEmpty {
+                self.answer = self.freeResponseBox?.text
+                print(self.question!.question)
+                print(self.answer)
+                return true
+            }
+        } else if let answer = self.answer {
+            print(self.question!.question)
+            print(self.answer)
+            return !answer.isEmpty
         }
-        print("THIS IS ANSWER: \(answer)")
-        return !answer.isEmpty
+        return false
 //        return self.answer != nil && !self.answer!.isEmpty
     }
     
@@ -198,21 +197,18 @@ class SignupCollectionViewCell: UICollectionViewCell, UITextFieldDelegate {
 extension SignupCollectionViewCell: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         guard let answerChoices = self.question as? SignupModels.MultipleChoice else {return 0}
-//        print("CALLED INSIDE OF numberOfItemsInSection")
-//        for answer in answerChoices.answer {
-//            print(answer)
-//        }
         return answerChoices.answer.count
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        mcAnswersCollectionView.removeFromSuperview()
+        mcAnswersCollectionView.reloadData()
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SignupCellMultipleChoiceAnswer.reuseIdentifier, for: indexPath) as? SignupCellMultipleChoiceAnswer {
             guard let answerChoices = self.question as? SignupModels.MultipleChoice else {return UICollectionViewCell()}
-//            print("CALLED INSIDE OF cellForItemAt")
-//            print(self.question?.question)
-//            for answer in answerChoices.answer {
-//                print(answer)
-//            }
             cell.initialize(answer: answerChoices.answer[indexPath.row])
             return cell
          }
@@ -235,8 +231,6 @@ extension SignupCollectionViewCell: UICollectionViewDelegate, UICollectionViewDa
             }
             
             cell.cellView?.backgroundColor = .green
-            //cell.contentView.backgroundColor = UIColor.green
-            // cell.cellView!.backgroundColor = .green
             self.answer = cell.answer
             
         }
@@ -246,26 +240,24 @@ extension SignupCollectionViewCell: UICollectionViewDelegate, UICollectionViewDa
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
         if let cell = self.mcAnswersCollectionView.cellForItem(at: indexPath) as? SignupCellMultipleChoiceAnswer {
             cell.cellView?.backgroundColor = .white
-            //cell.contentView.backgroundColor = UIColor.green
-            // cell.cellView!.backgroundColor = .green
         }
         self.selectedIndexPath = nil
     }
 }
-extension UIViewController
+extension UIView
 {
     func setupToHideKeyboardOnTapOnView()
     {
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(
             target: self,
-            action: #selector(UIViewController.dismissTheKeyboard))
+            action: #selector(UIView.dismissTheKeyboard))
 
         tap.cancelsTouchesInView = false
-        view.addGestureRecognizer(tap)
+        self.addGestureRecognizer(tap)
     }
 
     @objc func dismissTheKeyboard()
     {
-        view.endEditing(true)
+        self.endEditing(true)
     }
 }
