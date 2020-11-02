@@ -68,7 +68,6 @@ class DateInstance: Codable {
         self.games = games
     }
 }
-
 class Match: DateInstance {
    let isMatch: Bool
     
@@ -97,9 +96,7 @@ class Match: DateInstance {
             self.isMatch = isMatch
            super.init(id: id, chatId: chatId, user1Id: user1Id, user2Id: user2Id, games: games)
        }
-    
 }
-
 
 class Profile: Codable {
     let photos: [String]
@@ -110,11 +107,13 @@ class Profile: Codable {
     // your metadata
     let personalDetails: PersonalDetails
     // the answers to the family questions that you display on your profile
+    
     var familyPlans: [MultipleChoiceAnswer]
     // vices: drugs/drinks
     var vices: [MultipleChoiceAnswer]
     // traits that you describe yourself as upon sign-up
     var personalityAnswers: [Personality]
+    var signupQuestions: [SignupModels.Question]
     
     private enum CodingKeys: String, CodingKey {
         case photos
@@ -126,9 +125,10 @@ class Profile: Codable {
         case familyPlans
         case vices
         case personalityAnswers
+        case signupQuestions
     }
-    
-    init(photos: [String], socials: [SocialProfile], freeResponse: [FreeResponse], lat: Double, lon: Double, personalDetails: PersonalDetails, familyPlans: [MultipleChoiceAnswer], vices: [MultipleChoiceAnswer], personalityAnswers: [Personality]) {
+
+    init(photos: [String], socials: [SocialProfile], freeResponse: [FreeResponse], lat: Double, lon: Double, personalDetails: PersonalDetails, familyPlans: [MultipleChoiceAnswer], vices: [MultipleChoiceAnswer], personalityAnswers: [Personality], signupQuestions: [SignupModels.Question]) {
         self.photos = photos
         self.socials = socials
         self.freeResponse = freeResponse
@@ -138,6 +138,7 @@ class Profile: Codable {
         self.familyPlans = familyPlans
         self.vices = vices
         self.personalityAnswers = personalityAnswers
+        self.signupQuestions = signupQuestions
     }
 
     required init(from decoder: Decoder) throws {
@@ -152,7 +153,7 @@ class Profile: Codable {
         let familyPlans = try container.decode(Array<MultipleChoiceAnswer>.self, forKey: .familyPlans )
         let vices = try container.decode(Array<MultipleChoiceAnswer>.self, forKey: .vices )
         let personalityAnswers = try container.decode(Array<Personality>.self, forKey: .personalityAnswers )
-        
+        let signupQuestions = try container.decode(Array<SignupModels.Question>.self, forKey: .signupQuestions )
         self.photos = photos
         self.socials = socials
         self.freeResponse = freeResponse
@@ -162,6 +163,7 @@ class Profile: Codable {
         self.familyPlans = familyPlans
         self.vices = vices
         self.personalityAnswers = personalityAnswers
+        self.signupQuestions = signupQuestions
     }
     
     
@@ -201,8 +203,6 @@ class Profile: Codable {
                "vices": vices,
                "personalityAnswers": personalities]
     }
-    
-    
 }
 
 class Personality: MultipleChoiceAnswer {

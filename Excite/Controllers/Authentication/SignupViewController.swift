@@ -34,28 +34,25 @@ class SignupViewController: UIViewController {
     
     var currentUser: User?
     let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
-    // let nameBox = RoundedRectangleTextField(placeholder: "Your Name")
-//    let nameField = UnderlinedTextField(placeholder: "Your Name")
     var viewModel: SignupViewModel?
-    var numSlides: [SignupCollectionViewCell]?
-    var questions = [SignupModels.Question]()
+    var cells: [CardViewCell]?
+    var questions = [ String: [SignupModels.Question] ]()
     
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         self.viewModel = SignupViewModel(currentUser)
-//        if let prefilledName = self.viewModel?.user!.name {
-//            nameField.text = prefilledName
-//        }
         self.constructBackground()
         
-        // get questions here
-        NetworkRequester.getSignupQuestions { (questions) in
+        NetworkRequester.getProfileQuestions { (questions) in
             self.questions = questions
-            self.collectionView.reloadData()
-            self.createCollectionView()
         }
-        questions.append(SignupModels.Question(question: "", isMandatory: false, isHidden: true, short: "dummy"))
+        
+        
+        // render a cell for each question
+        // and then add the CardViewPhotosCell at the end
+        
     }
     
     override func viewDidLayoutSubviews() {
@@ -80,69 +77,34 @@ class SignupViewController: UIViewController {
     }
     
     // MARK: - Helpers
-    
-    func createCollectionView() {
-        self.view.addSubview(collectionView)
-        
-        
-        let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .horizontal
-        collectionView.collectionViewLayout = layout
-        
-        collectionView.snp.makeConstraints { (make) in
-            make.leading.trailing.equalToSuperview()
-            make.top.equalTo(view.safeArea.top)
-            make.bottom.equalTo(view.safeArea.bottom)
-        }
-        collectionView.dataSource = self
-        collectionView.delegate = self
-        collectionView.backgroundColor = .none
-        collectionView.clipsToBounds = false
-        collectionView.showsHorizontalScrollIndicator = false
-        collectionView.register(SignupCollectionViewCell.self, forCellWithReuseIdentifier: SignupCollectionViewCell.reuseIdentifier)
-        self.collectionView.isScrollEnabled = false
-    }
 }
 
-extension SignupViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return questions.count
-    }
-    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        // last view here
-         if (indexPath.row == questions.count - 1 ) {
-            let newViewController = MainTabBarController()
-            self.navigationController?.pushViewController(newViewController, animated: false)
-         }
-    }
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SignupCollectionViewCell.reuseIdentifier, for: indexPath) as? SignupCollectionViewCell {
-            cell.initialize(question: questions[indexPath.row])
-            print("WE ARE AT INDEX \(indexPath.row)")
-            cell.nextButtonAction = {
-                () in
-                let indexPath = self.collectionView.indexPathsForVisibleItems.first.flatMap({
-                    IndexPath(item: $0.row + 1, section: $0.section)
-                })
-                // self.selectedIndexPath = nil
-                // update the profile here4
-                if indexPath!.row < self.questions.count {
-                    self.collectionView.scrollToItem(at: indexPath!, at: .right, animated: true)
-                } else {
-                    // push everything to Firebase
-                    // then push to new View Controllerv
-                    print("Can't scroll anymore")
-                }
-            }
-         return cell
-         }
-         return UICollectionViewCell()
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let height = self.collectionView.frame.height
-        let width = self.collectionView.frame.width
-        return CGSize(width: width, height: height)
-    }
-    
-}
+// FINAL TODO: -----------------------------------
+// so I would render all of the cells inside of collectionViewCEll first
+// then register the input for photos last
+
+// two types of cells
+// one for individual questions
+// the other for group of questions
+// those are two children of a generic type
+
+// that generic type will be the one that shows up inside of the SignupViewController
+
+// the way we will identify what types of questions there are is that inside of this file
+// there will be a dictonary [ String : [Question] ]
+// where the key will be from a network call
+// QuestionType (this will be documentID)
+// [Question] Generic question object that I already have
+
+// ID the questions as well so any time you want to edit a specific one then you can
+
+// then we will have a generic collectionViewCell
+// that renders views
+// which can take either an individual question
+// or one that renders photo inputs
+
+// so the collectionViewCell will have a generic card inside of it
+// the first cards will be constructed from the questions from the collection inside of the dictionary`
+// then at the end we will have one individual custom cell that has the photo inputs
+
+// -------------------------------------------------

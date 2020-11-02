@@ -16,6 +16,18 @@ protocol NetworkRequesterProtocol {
     //func getProfile(completion: @escaping (Swift.Result<Profile, Error>) -> Void)
 }
 
+
+extension Dictionary {
+    var jsonStringRepresentation: String? {
+        guard let theJSONData = try? JSONSerialization.data(withJSONObject: self,
+                                                            options: [.prettyPrinted]) else {
+            return nil
+        }
+
+        return String(data: theJSONData, encoding: .ascii)
+    }
+}
+
 class NetworkRequester: NetworkRequesterProtocol {
 //    func getQuestion(completion: @escaping (Result<Question, Error>) -> Void) {
 //        let oneSecond = DispatchTime.now() + 1
@@ -64,40 +76,48 @@ class NetworkRequester: NetworkRequesterProtocol {
         }
     }
 
-    static func getSignupQuestions(completion: @escaping([SignupModels.Question]) -> Void) {
+    static func updateUser(user: User) {
+        dump(user)
         let database = Firestore.firestore()
-        var results = [SignupModels.Question]()
-        database.collection("Questions").getDocuments { (documents, error) in
+        print("GOT TO UPDATE USER")
+        print(user.profile!)
+        print(user.userId)
+        database.collection("Users").document(user.userId).setData([ "profile": user.profile!.makeFromDict() ], merge: true)
+        
+    }
+    
+    // return a key of questions organized by documentID as key and an array of corresponding questions as values.
+    static func getProfileQuestions(completion: @escaping([ String: [SignupModels.Question] ]) -> Void) {
+        let database = Firestore.firestore()
+        var results = [ String: [SignupModels.Question] ]()
+//        database.collection("QuestionsCollection").getDocuments { (documents, error) in
+        database.collection("QuestionsCollection").getDocuments { (documents, error) in
             for document in documents!.documents {
                 // print("\(document.documentID) => \(document.data())")
-                let MCResult = Result {
-                    try document.data(as: SignupModels.MultipleChoice.self)
-                }
-                switch MCResult {
-                case .success(let question):
-                    if let question = question {
-                        results.append(question)
-                        continue
-                    } else {
-                        print("Document doesn't exist")
-                    }
-                default:
-                    break
-                }
                 
-                let FRresult = Result {
-                    try document.data(as: SignupModels.FreeResponse.self)
-                }
-                switch FRresult {
-                case .success(let question):
-                    if let question = question {
-                        results.append(question)
-                    } else {
-                        print("Document doesn't exist")
+                // ------------------------------------
+                let profileAttribute = document.documentID
+                let value = document.data()
+                var arr = [SignupModels.Question]()
+                
+                print(profileAttribute)
+                let cnt = value.compactMap { (tuple) in
+                    guard let dictionaryValue = tuple.value as? Dictionary<String, Any> else {return}
+                    if let question = dictionaryValue["question"] as? String,
+                       let isHidden = dictionaryValue["isHidden"] as? Bool,
+                       let short = dictionaryValue["short"] as? String,
+                       let isMandatory = dictionaryValue["isMandatory"] as? Bool,
+                       let answers = dictionaryValue["answers"] as? [String] {
+                            arr.append(SignupModels.MultipleChoice(id: tuple.key, question: question, answers: answers, isMandatory: isMandatory, isHidden: isHidden, short: short, answerChoice: nil))
+                        
+                    } else if let question = dictionaryValue["question"] as? String,
+                           let isHidden = dictionaryValue["isHidden"] as? Bool,
+                           let short = dictionaryValue["short"] as? String,
+                           let isMandatory = dictionaryValue["isMandatory"] as? Bool {
+                            arr.append(SignupModels.FreeResponse(id: tuple.key, question: question, isMandatory: isMandatory, isHidden: isHidden, short: short, answerChoice: nil))
                     }
-                case .failure(let error):
-                    print("Wasn't able to decode a FR or MC question \(error)")
                 }
+                results[profileAttribute]=arr
             }
             completion(results)
         }
@@ -121,5 +141,86 @@ class NetworkRequester: NetworkRequesterProtocol {
             }
         }
     }
+
     
+        static func getProfileQuestions(completion: @escaping() -> Void) {
+            let database = Firestore.firestore()
+            var results = [ String: [SignupModels.Question] ]()
+    //        database.collection("QuestionsCollection").getDocuments { (documents, error) in
+            database.collection("Questions").getDocuments { (documents, error) in
+                for document in documents!.documents {
+                    
+                    
+                    
+                    // print("\(document.documentID) => \(document.data())")
+                    
+                    // ------------------------------------
+                    /*
+                    let profileAttribute = document.documentID
+                    let value = document.data()
+                    var results = [SignupModels.Question]()
+                    
+                    print(profileAttribute)
+                    let cnt = value.compactMap { (tuple) in
+                        guard let dictionaryValue = tuple.value as? Dictionary<String, Any> else {return}
+                        print(type(of: dictionaryValue))
+                        print(dictionaryValue)
+                        let MC: SignupModels.MultipleChoice = try dictionaryValue as
+    //                    let model = try! dictionaryValue as SignupModels.MultipleChoice
+    //                    let model = try! JSONDecoder().decode(SignupModels.MultipleChoice.self, from: dictionaryValue)
+    //                    print(
+    //                    let jsonData = dictionary.value.data(using: .utf8)!
+    //                    print(type(of: dictionary))
+                        
+    //                    let jsonData = dictionary.data(using: .utf8)!
+    //                    let model = try! JSONDecoder().decode(SignupModels.MultipleChoice.self, from: dictionary)
+                    }
+                    print(type(of: cnt))
+                     //                for val in value.values {
+                     //                    guard let json = val as
+                     //                }
+                     //                print(profileAttribute)
+                     //                let MC = value.values as? SignupModels.MultipleChoice
+                     //                let FR = value.values as? SignupModels.FreeResponse
+                     //                print(MC)
+                     //                print(FR)
+                                     
+                    */
+                    // ------------------------------------
+                    
+                    print(type(of: document.data()))
+                    // document.data() is a dictionary<String, Any>
+                    let MCResult = Result {
+                         try document.data(as: SignupModels.MultipleChoice.self)
+                    }
+                    switch MCResult {
+                    case .success(let question):
+                        if let question = question {
+                            
+    //                        results[key] = question
+                            continue
+                        } else {
+                            print("Document doesn't exist")
+                        }
+                    default:
+                        break
+                    }
+
+                    let FRresult = Result {
+                        try document.data(as: SignupModels.FreeResponse.self)
+                    }
+                    switch FRresult {
+                    case .success(let question):
+                        if let question = question {
+    //                        results[document.documentID] = question
+                        } else {
+                            print("Document doesn't exist")
+                        }
+                    case .failure(let error):
+                        print("Wasn't able to decode a FR or MC question \(error)")
+                    }
+                }
+                completion()
+            }
+        }
 }

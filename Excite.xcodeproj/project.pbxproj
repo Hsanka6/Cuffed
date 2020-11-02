@@ -51,11 +51,15 @@
 		D8EE311ED3256FAB5A1073CE /* Pods_Excite.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B3112B2EAD0500421CCA693 /* Pods_Excite.framework */; };
 		EC3F87EC2519B29900B31446 /* SignupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC3F87EB2519B29900B31446 /* SignupViewModel.swift */; };
 		EC3F87EE2519B2B200B31446 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC3F87ED2519B2B200B31446 /* LoginViewModel.swift */; };
-		EC3F87F12519B3F500B31446 /* SignupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC3F87F02519B3F500B31446 /* SignupViewController.swift */; };
-		EC3F87F42519B43E00B31446 /* SignupCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC3F87F32519B43E00B31446 /* SignupCollectionViewCell.swift */; };
+		EC3F87F12519B3F500B31446 /* SignupViewControllerDeprecated.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC3F87F02519B3F500B31446 /* SignupViewControllerDeprecated.swift */; };
+		EC3F87F42519B43E00B31446 /* SignupCollectionViewCellDeprecated.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC3F87F32519B43E00B31446 /* SignupCollectionViewCellDeprecated.swift */; };
 		EC3F87F62526F0EF00B31446 /* SignupModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC3F87F52526F0EF00B31446 /* SignupModels.swift */; };
 		EC4F636F24C6BCFD00477779 /* Barcelony.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EC4F636E24C6BCFD00477779 /* Barcelony.ttf */; };
-		ECC6C8372533DE8E00221E5B /* SignupCellMultipleChoiceAnswer.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC6C8362533DE8E00221E5B /* SignupCellMultipleChoiceAnswer.swift */; };
+		EC593A81254F57AE00F588DD /* SignupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC593A80254F57AE00F588DD /* SignupViewController.swift */; };
+		EC593A83254F580600F588DD /* CardViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC593A82254F580600F588DD /* CardViewCell.swift */; };
+		EC593A85254F583600F588DD /* CardViewQuestionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC593A84254F583600F588DD /* CardViewQuestionCell.swift */; };
+		EC593A87254F584700F588DD /* CardViewPhotosCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC593A86254F584700F588DD /* CardViewPhotosCell.swift */; };
+		ECC6C8372533DE8E00221E5B /* SignupCellMultipleChoiceAnswerDeprecated.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC6C8362533DE8E00221E5B /* SignupCellMultipleChoiceAnswerDeprecated.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -131,11 +135,15 @@
 		CA6B3FD5E385BCEC34B609B4 /* Pods-Excite-ExciteUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Excite-ExciteUITests.debug.xcconfig"; path = "Target Support Files/Pods-Excite-ExciteUITests/Pods-Excite-ExciteUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		EC3F87EB2519B29900B31446 /* SignupViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupViewModel.swift; sourceTree = "<group>"; };
 		EC3F87ED2519B2B200B31446 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
-		EC3F87F02519B3F500B31446 /* SignupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupViewController.swift; sourceTree = "<group>"; };
-		EC3F87F32519B43E00B31446 /* SignupCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupCollectionViewCell.swift; sourceTree = "<group>"; };
+		EC3F87F02519B3F500B31446 /* SignupViewControllerDeprecated.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupViewControllerDeprecated.swift; sourceTree = "<group>"; };
+		EC3F87F32519B43E00B31446 /* SignupCollectionViewCellDeprecated.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupCollectionViewCellDeprecated.swift; sourceTree = "<group>"; };
 		EC3F87F52526F0EF00B31446 /* SignupModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupModels.swift; sourceTree = "<group>"; };
 		EC4F636E24C6BCFD00477779 /* Barcelony.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = Barcelony.ttf; path = Excite/Utils/Barcelony.ttf; sourceTree = SOURCE_ROOT; };
-		ECC6C8362533DE8E00221E5B /* SignupCellMultipleChoiceAnswer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupCellMultipleChoiceAnswer.swift; sourceTree = "<group>"; };
+		EC593A80254F57AE00F588DD /* SignupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupViewController.swift; sourceTree = "<group>"; };
+		EC593A82254F580600F588DD /* CardViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardViewCell.swift; sourceTree = "<group>"; };
+		EC593A84254F583600F588DD /* CardViewQuestionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardViewQuestionCell.swift; sourceTree = "<group>"; };
+		EC593A86254F584700F588DD /* CardViewPhotosCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardViewPhotosCell.swift; sourceTree = "<group>"; };
+		ECC6C8362533DE8E00221E5B /* SignupCellMultipleChoiceAnswerDeprecated.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupCellMultipleChoiceAnswerDeprecated.swift; sourceTree = "<group>"; };
 		F60BBCA043E7AD0A43D6B4FD /* Pods-Excite.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Excite.release.xcconfig"; path = "Target Support Files/Pods-Excite/Pods-Excite.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -215,6 +223,7 @@
 				70C52B7324BA4011002CFFEA /* Profile */,
 				70CDFC4124FCC6680068CF37 /* MultipleChoiceButton.swift */,
 				7001141C2502390E0023CA21 /* MultipleChoiceCollectionViewCell.swift */,
+				EC593A82254F580600F588DD /* CardViewCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -388,7 +397,8 @@
 			isa = PBXGroup;
 			children = (
 				7054D59B245F7507007DA9BA /* LoginViewController.swift */,
-				EC3F87F02519B3F500B31446 /* SignupViewController.swift */,
+				EC3F87F02519B3F500B31446 /* SignupViewControllerDeprecated.swift */,
+				EC593A80254F57AE00F588DD /* SignupViewController.swift */,
 			);
 			path = Authentication;
 			sourceTree = "<group>";
@@ -396,8 +406,10 @@
 		EC3F87F22519B42B00B31446 /* Signup */ = {
 			isa = PBXGroup;
 			children = (
-				EC3F87F32519B43E00B31446 /* SignupCollectionViewCell.swift */,
-				ECC6C8362533DE8E00221E5B /* SignupCellMultipleChoiceAnswer.swift */,
+				EC3F87F32519B43E00B31446 /* SignupCollectionViewCellDeprecated.swift */,
+				ECC6C8362533DE8E00221E5B /* SignupCellMultipleChoiceAnswerDeprecated.swift */,
+				EC593A84254F583600F588DD /* CardViewQuestionCell.swift */,
+				EC593A86254F584700F588DD /* CardViewPhotosCell.swift */,
 			);
 			path = Signup;
 			sourceTree = "<group>";
@@ -671,10 +683,13 @@
 				70A3AC4B24C3A8E7008BB1FF /* UserTableTableViewCell.swift in Sources */,
 				7054D59C245F7507007DA9BA /* LoginViewController.swift in Sources */,
 				7032881124F65AA6002228ED /* QuestionsDetailTableViewCell.swift in Sources */,
+				EC593A81254F57AE00F588DD /* SignupViewController.swift in Sources */,
 				7033774E24C6A78900834FB8 /* PhotoCollectionViewCell.swift in Sources */,
 				7054D598245F7507007DA9BA /* AppDelegate.swift in Sources */,
 				EC3F87EE2519B2B200B31446 /* LoginViewModel.swift in Sources */,
 				70CDFC4424FCEF380068CF37 /* EditChoiceViewController.swift in Sources */,
+				EC593A83254F580600F588DD /* CardViewCell.swift in Sources */,
+				EC593A85254F583600F588DD /* CardViewQuestionCell.swift in Sources */,
 				709C394C24F3968100D8F7E9 /* MultipleChoiceTableViewCell.swift in Sources */,
 				70AA64CB247F6C2600F56CB3 /* MainTabBarController.swift in Sources */,
 				70FB575E2481D8F900CB24C4 /* Extensions.swift in Sources */,
@@ -685,8 +700,8 @@
 				7032881624F7AAC9002228ED /* QuestionCollectionViewCell.swift in Sources */,
 				70AA64CF247F6D4E00F56CB3 /* ChatViewController.swift in Sources */,
 				7010798324A6CC1F00E640B9 /* DatingAudioVideoViewControllerExtensions.swift in Sources */,
-				EC3F87F42519B43E00B31446 /* SignupCollectionViewCell.swift in Sources */,
-				EC3F87F12519B3F500B31446 /* SignupViewController.swift in Sources */,
+				EC3F87F42519B43E00B31446 /* SignupCollectionViewCellDeprecated.swift in Sources */,
+				EC3F87F12519B3F500B31446 /* SignupViewControllerDeprecated.swift in Sources */,
 				709B2C3D24C2B40E008BA374 /* ProfileViewModel.swift in Sources */,
 				701F1CD8249D70080096B564 /* DatingAudioVideoViewController.swift in Sources */,
 				70CDFC4224FCC6680068CF37 /* MultipleChoiceButton.swift in Sources */,
@@ -694,8 +709,9 @@
 				7010798124A6C9C300E640B9 /* Settings.swift in Sources */,
 				700F6B8D24C04D3E008C891F /* ProfileEditViewController.swift in Sources */,
 				EC3F87EC2519B29900B31446 /* SignupViewModel.swift in Sources */,
-				ECC6C8372533DE8E00221E5B /* SignupCellMultipleChoiceAnswer.swift in Sources */,
+				ECC6C8372533DE8E00221E5B /* SignupCellMultipleChoiceAnswerDeprecated.swift in Sources */,
 				7054D59A245F7507007DA9BA /* SceneDelegate.swift in Sources */,
+				EC593A87254F584700F588DD /* CardViewPhotosCell.swift in Sources */,
 				7032880F24F65A8E002228ED /* QuestionsTableViewCell.swift in Sources */,
 				7043B30C24EE6A1B00F1FD89 /* UserTablePersonalityTableViewCell.swift in Sources */,
 				70521E1724FB943900847629 /* AnswerQuestionViewController.swift in Sources */,
