@@ -27,32 +27,59 @@ extension UICollectionView {
     }
 }
 
-// Browse Collections View Controller
 class SignupViewController: UIViewController {
     // MARK: - Properties
     let colors = GradientBackground()
     
     var currentUser: User?
-    let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
     var viewModel: SignupViewModel?
-    var cells: [CardViewCell]?
+    
+    let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
+    var collectionViewCells: [UIView]?
+    
     var questions = [ String: [SignupModels.Question] ]()
     
     // MARK: - Lifecycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        self.viewModel = SignupViewModel(currentUser)
         self.constructBackground()
+        
+        self.collectionViewCells = [UIView]()
+        self.viewModel = SignupViewModel(currentUser)
         
         NetworkRequester.getProfileQuestions { (questions) in
             self.questions = questions
+            // go through all of the questions
+            for (attribute, arr) in self.questions {
+                self.collectionViewCells?.append(QuestionCardView())
+            }
+            self.collectionViewCells?.append(PhotosCardView())
+            self.collectionView.reloadData()
+            self.createCollectionView()
         }
         
-        
-        // render a cell for each question
-        // and then add the CardViewPhotosCell at the end
-        
+    }
+    
+    func createCollectionView() {
+        self.view.addSubview(collectionView)
+
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .horizontal
+        collectionView.collectionViewLayout = layout
+
+        collectionView.snp.makeConstraints { (make) in
+            make.leading.trailing.equalToSuperview()
+            make.top.equalTo(view.safeArea.top)
+            make.bottom.equalTo(view.safeArea.bottom)
+        }
+        collectionView.dataSource = self
+        collectionView.delegate = self
+        collectionView.backgroundColor = .none
+        collectionView.clipsToBounds = false
+        collectionView.showsHorizontalScrollIndicator = false
+        collectionView.register(CardViewCell.self, forCellWithReuseIdentifier: CardViewCell.reuseIdentifier)
+        self.collectionView.isScrollEnabled = false
     }
     
     override func viewDidLayoutSubviews() {
@@ -78,6 +105,85 @@ class SignupViewController: UIViewController {
     
     // MARK: - Helpers
 }
+
+
+
+extension SignupViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 1
+    }
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        if (indexPath.row == 3 ) {
+            print("WE HAVE REACHED THE END")
+            print(self.currentUser?.profile)
+            NetworkRequester.updateUser(user: currentUser!)
+            let newViewController = MainTabBarController()
+            self.navigationController?.pushViewController(newViewController, animated: false)
+         }
+    }
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CardViewCell.reuseIdentifier, for: indexPath) as? CardViewCell {
+            indexPath.row
+            print(self.collectionViewCells?.count)
+            cell.initialize(mainView: collectionViewCells![indexPath.row])
+            return cell
+        }
+        return UICollectionViewCell()
+//        if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cells[indexPath.row].reuseIdentifier, for: indexPath) as? CardViewQuestionCell {
+//
+//        }
+//        if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CardViewCell.reuseIdentifier, for: indexPath) as? CardViewPhotosCell {
+//
+//            cell.initialize(questionId: Array(questions)[indexPath.row].key, questionNum: indexPath.row, question: Array(questions)[indexPath.row].value)
+//
+//            cell.nextButtonAction = {
+//                (answerChoice) in
+//                let indexPath = self.collectionView.indexPathsForVisibleItems.first.flatMap({
+//                    IndexPath(item: $0.row + 1, section: $0.section)
+//                })
+//                if indexPath!.row < self.questions.count {
+//                    self.collectionView.scrollToItem(at: indexPath!, at: .right, animated: true)
+//                } else {
+//                    print("Can't scroll anymore")
+//                }
+//                self.saveFieldInUserObject(questionId: Array(self.questions)[indexPath!.row].key, answerChoice: answerChoice)
+//            }
+//            cell.backButtonAction = {
+//                (answerChoice) in
+//                let indexPath = self.collectionView.indexPathsForVisibleItems.first.flatMap({
+//                    IndexPath(item: $0.row - 1, section: $0.section)
+//                })
+//
+//                if indexPath!.row >= 0 {
+//                    self.collectionView.scrollToItem(at: indexPath!, at: .left, animated: true)
+//                } else {
+//                    print("Can't scroll anymore")
+//                }
+//                self.saveFieldInUserObject(questionId: Array(self.questions)[indexPath!.row].key, answerChoice: answerChoice)
+//            }
+//
+//         return cell
+//         }
+    }
+
+    // saves the user fields
+//    func saveFieldInUserObject(questionId: String, answerChoice: String?) {
+//
+//        self.questions[questionId]?.answerChoice = answerChoice
+//
+//        print("QUESTION \(self.questions[questionId]?.question)")
+//        print("ANSWER \(self.questions[questionId]?.answerChoice)")
+//
+//    }
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let height = self.collectionView.frame.height
+        let width = self.collectionView.frame.width
+        return CGSize(width: width, height: height)
+    }
+
+}
+
 
 // FINAL TODO: -----------------------------------
 // so I would render all of the cells inside of collectionViewCEll first

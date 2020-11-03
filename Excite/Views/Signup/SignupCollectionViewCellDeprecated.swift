@@ -42,23 +42,23 @@
 //class SignupCollectionViewCell: UICollectionViewCell, UITextFieldDelegate {
 //    static var reuseIdentifier = "signup"
 //    var question: SignupModels.Question?
-//    
+//
 //    var profile: Profile?
 //    var index: Int?
-//    
+//
 //    // keep track of the background card view
 //    var cardView: UIView?
-//    
+//
 //    let mcAnswersCollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
-//    // index path of current answer of the 
+//    // index path of current answer of the
 //    var selectedIndexPath: IndexPath?
-//    
+//
 //    var freeResponseBox: UITextField?
-//    
+//
 //    // this isn't working as I intended
 //    var nextButtonAction : ((_ answerChoice: String?)->())?
 //    var backButtonAction : ((_ answerChoice: String?)->())?
-//    
+//
 ////    func initialize(question: SignupModels.Question, questionNum: Int, user: User) {
 //    func initialize(questionId: String, questionNum: Int, question: SignupModels.Question) {
 //        print("FROM INIT IM READING THAT THE ANSWER IS \(question.answerChoice)")
@@ -66,7 +66,7 @@
 //        let cardView = UIView()
 //        cardView.backgroundColor = .white
 //        cardView.layer.cornerRadius = 15
-//        
+//
 //        self.addSubview(cardView)
 //        cardView.snp.makeConstraints { (make) in
 //            make.height.equalTo(600)
@@ -76,7 +76,7 @@
 //        cardView.dropShadow()
 //        self.cardView = cardView
 //        self.cardView?.setupToHideKeyboardOnTapOnView()
-//        
+//
 //        let questionLabel = UILabel()
 //        questionLabel.textAlignment = .center
 //        questionLabel.numberOfLines = 3
@@ -89,7 +89,7 @@
 //            make.left.equalTo(15)
 //            make.right.equalTo(-15)
 //        }
-//        
+//
 //        let nextButton = UIButton()
 //        nextButton.setTitle("Next", for: .normal)
 //        nextButton.backgroundColor = .blue
@@ -103,14 +103,14 @@
 //            make.bottom.equalTo(-10)
 //        }
 //        nextButton.isUserInteractionEnabled = true
-//        
+//
 //        // nextButton.addTarget(self, action: #selector(self.nextPageButtonClicked), for: .touchUpInside)
 //        nextButton.addTarget(self, action: #selector(self.nextButtonTapped), for: .touchUpInside)
 //
 //        renderBackButton(questionNum)
 //        renderQuestion()
 //    }
-//    
+//
 //    func renderQuestion() {
 //        if type(of: self.question!) == SignupModels.FreeResponse.self {
 //            let freeResponseAnswer: UITextField = {
@@ -145,7 +145,7 @@
 //            print("NOT SUPPOSED TO HAPPEN")
 //        }
 //    }
-//    
+//
 //    @objc func renderBackButton(_ questionNum: Int) {
 //        if questionNum>0 {
 //                let backButton = UIButton()
@@ -161,21 +161,21 @@
 //                    make.bottom.equalTo(-10)
 //                }
 //                backButton.isUserInteractionEnabled = true
-//                
+//
 //                backButton.addTarget(self, action: #selector(self.backButtonTapped), for: .touchUpInside)
 //        }
 //    }
-//    
+//
 //    @objc func nextButtonTapped() {
 //        if pageIsFilledOut() {
 //            nextButtonAction?(self.question?.answerChoice)
 //        }
 //    }
-//    
+//
 //    @objc func backButtonTapped() {
 //        backButtonAction?(self.question?.answerChoice)
 //    }
-//    
+//
 //    @objc func pageIsFilledOut() -> Bool {
 //        if type(of: self.question!) == SignupModels.FreeResponse.self {
 //            // try to see if
@@ -193,20 +193,20 @@
 //        return false
 ////        return self.answer != nil && !self.answer!.isEmpty
 //    }
-//    
+//
 //    func setupCollectionView() {
 //        self.cardView!.addSubview(self.mcAnswersCollectionView)
-//        
+//
 //        let layout = UICollectionViewFlowLayout()
 //        layout.scrollDirection = .vertical
 //        mcAnswersCollectionView.collectionViewLayout = layout
-//        
+//
 //        self.mcAnswersCollectionView.snp.makeConstraints { (make) in
 //            make.center.equalToSuperview()
 //            make.height.equalTo(300)
 //            make.width.equalToSuperview().multipliedBy(0.8)
 //        }
-//        
+//
 //        self.mcAnswersCollectionView.dataSource = self
 //        self.mcAnswersCollectionView.delegate = self
 //        self.mcAnswersCollectionView.backgroundColor = .white
@@ -214,7 +214,7 @@
 //        self.mcAnswersCollectionView.showsVerticalScrollIndicator = false
 //        self.mcAnswersCollectionView.register(SignupCellMultipleChoiceAnswer.self, forCellWithReuseIdentifier: SignupCellMultipleChoiceAnswer.reuseIdentifier)
 //        self.mcAnswersCollectionView.isScrollEnabled = true
-//        
+//
 //    }
 //}
 //
@@ -224,7 +224,7 @@
 //        // remember answer is the selection of answers... answerChoice is the choice that the user made
 //        return answerChoices.answer.count
 //    }
-//    
+//
 //    override func prepareForReuse() {
 //        super.prepareForReuse()
 //        mcAnswersCollectionView.removeFromSuperview()
@@ -239,25 +239,25 @@
 //         }
 //        return UICollectionViewCell()
 //    }
-//    
+//
 //    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
 //        let height = CGFloat(50.0) // self.collectionView.frame.height
 //        let width = self.mcAnswersCollectionView.frame.width
 //        return CGSize(width: width, height: height)
-//        
+//
 //    }
 //
 //    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 //        if let cell = self.mcAnswersCollectionView.cellForItem(at: indexPath) as? SignupCellMultipleChoiceAnswer {
-//            
+//
 //            if self.selectedIndexPath == indexPath {
 //                self.collectionView(mcAnswersCollectionView, didDeselectItemAt: indexPath)
 //                return
 //            }
-//            
+//
 //            cell.cellView?.backgroundColor = .green
 //            self.question?.answerChoice = cell.answer
-//            
+//
 //        }
 //        self.selectedIndexPath = indexPath
 //    }
