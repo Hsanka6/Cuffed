@@ -27,13 +27,37 @@ class QuestionCardView: UIView {
     var nextButtonAction : ((_ answerChoice: String?)->())?
     var backButtonAction : ((_ answerChoice: String?)->())?
     
-    init(question: SignupModels.Question?, frame: CGRect) {
+    init(for attribute: String, question: SignupModels.Question?, frame: CGRect) {
         super.init(frame: frame)
+        
+        // why isn't this rendering??? 
+        let cardView = UIView()
+        self.addSubview(cardView)
+        cardView.backgroundColor = .black
+        cardView.layer.cornerRadius = 15
+        cardView.snp.makeConstraints { (make) in
+            make.height.equalTo(250)
+            make.width.equalTo(UIScreen.main.bounds.width - 80)
+            make.center.equalToSuperview()
+        }
+        
+        let questionLabel = UILabel()
+        questionLabel.textAlignment = .center
+        questionLabel.numberOfLines = 3
+        questionLabel.textColor = UIColor.black
+        questionLabel.text = "TesT"
+        questionLabel.font = UIFont.systemFont(ofSize: 25)
+        self.addSubview(questionLabel)
+        questionLabel.snp.makeConstraints { (make) in
+            make.top.equalTo(15)
+            make.left.equalTo(15)
+            make.right.equalTo(-15)
+        }
         addBehavior()
     }
 
     convenience init() {
-        self.init(question: nil, frame: CGRect.zero)
+        self.init(for: "", question: nil, frame: CGRect.zero)
         
     }
 

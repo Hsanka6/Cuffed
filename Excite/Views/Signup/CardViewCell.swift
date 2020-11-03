@@ -22,12 +22,12 @@ class CardViewCell: UICollectionViewCell {
         self.addSubview(cardView)
         cardView.backgroundColor = .white
         cardView.layer.cornerRadius = 15
-        print("INIT FROM CARDVIEWCELL")
         cardView.snp.makeConstraints { (make) in
             make.height.equalTo(600)
             make.width.equalTo(UIScreen.main.bounds.width - 80)
             make.center.equalToSuperview()
         }
+        self.addSubview(mainView)
         
         cardView.dropShadow()
 //        cardView.addSubview(mainView)

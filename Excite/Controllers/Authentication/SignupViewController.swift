@@ -35,6 +35,8 @@ class SignupViewController: UIViewController {
     var viewModel: SignupViewModel?
     
     let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
+    // key is what type of attribute it should refer to
+    // value is the array of questions for that particular attribute
     var collectionViewCells: [UIView]?
     
     var questions = [ String: [SignupModels.Question] ]()
@@ -51,9 +53,12 @@ class SignupViewController: UIViewController {
         NetworkRequester.getProfileQuestions { (questions) in
             self.questions = questions
             // go through all of the questions
-            for (attribute, arr) in self.questions {
-                self.collectionViewCells?.append(QuestionCardView())
+            for (attribute, arrayOfQuestions) in self.questions {
+                for question in arrayOfQuestions {
+                    self.collectionViewCells?.append(QuestionCardView(for: attribute, question: question, frame: CGRect(x: 0, y: 0, width: 300, height: 300)))
+                }
             }
+            // this will be the last element inside of the thing
             self.collectionViewCells?.append(PhotosCardView())
             self.collectionView.reloadData()
             self.createCollectionView()
