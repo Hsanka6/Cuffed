@@ -24,7 +24,7 @@ class CardViewCell: UICollectionViewCell {
         cardView.layer.cornerRadius = 15
         cardView.snp.makeConstraints { (make) in
             make.height.equalTo(600)
-            make.width.equalTo(UIScreen.main.bounds.width - 80)
+            make.width.equalTo(UIScreen.main.bounds.width - 60)
             make.center.equalToSuperview()
         }
         self.addSubview(mainView)

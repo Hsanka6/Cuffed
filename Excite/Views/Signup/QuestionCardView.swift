@@ -32,17 +32,14 @@ class QuestionCardView: UIView {
         
         // why isn't this rendering??? 
         
-        let questionLabel = UILabel()
-        questionLabel.textAlignment = .center
-        questionLabel.numberOfLines = 3
-        questionLabel.textColor = UIColor.black
-        questionLabel.text = "TesT"
-        questionLabel.font = UIFont.systemFont(ofSize: 25)
-        self.addSubview(questionLabel)
-        questionLabel.snp.makeConstraints { (make) in
-            make.top.equalTo(15)
-            make.left.equalTo(15)
-            make.right.equalTo(-15)
+        let cardView = UIView()
+        self.addSubview(cardView)
+        cardView.backgroundColor = .blue
+        cardView.snp.makeConstraints { (make) in
+            make.height.equalTo(500)
+            make.width.equalTo(UIScreen.main.bounds.width - 60)
+            make.centerX.equalToSuperview()
+            make.top.equalToSuperview().inset(140)
         }
         addBehavior()
     }

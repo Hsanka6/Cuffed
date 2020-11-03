@@ -55,11 +55,11 @@ class SignupViewController: UIViewController {
             // go through all of the questions
             for (attribute, arrayOfQuestions) in self.questions {
                 for question in arrayOfQuestions {
-                    self.collectionViewCells?.append(QuestionCardView(for: attribute, question: question, frame: CGRect(x: 0, y: 0, width: 300, height: 300)))
+                    self.collectionViewCells?.append(QuestionCardView(for: attribute, question: question, frame: self.view.frame))
                 }
             }
             // this will be the last element inside of the thing
-            self.collectionViewCells?.append(PhotosCardView())
+            self.collectionViewCells?.append(PhotosCardView(frame: self.view.frame))
             self.collectionView.reloadData()
             self.createCollectionView()
         }
@@ -84,8 +84,8 @@ class SignupViewController: UIViewController {
         collectionView.clipsToBounds = false
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.register(CardViewCell.self, forCellWithReuseIdentifier: CardViewCell.reuseIdentifier)
-//        collectionView.isScrollEnabled = true
-        collectionView.isScrollEnabled = false
+//        collectionView.isScrollEnabled = false
+        collectionView.isScrollEnabled = true
     }
     
     override func viewDidLayoutSubviews() {
@@ -119,12 +119,12 @@ extension SignupViewController: UICollectionViewDelegate, UICollectionViewDataSo
         return self.collectionViewCells!.count
     }
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        if (indexPath.row == 3 ) {
+        if (indexPath.row == self.collectionViewCells!.count - 1 ) {
             print("WE HAVE REACHED THE END")
             print(self.currentUser?.profile)
-            NetworkRequester.updateUser(user: currentUser!)
-            let newViewController = MainTabBarController()
-            self.navigationController?.pushViewController(newViewController, animated: false)
+//            NetworkRequester.updateUser(user: currentUser!)
+//            let newViewController = MainTabBarController()
+//            self.navigationController?.pushViewController(newViewController, animated: false)
          }
     }
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {

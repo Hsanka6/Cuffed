@@ -18,11 +18,11 @@ class PhotosCardView: UIView {
         let cardView = UIView()
         self.addSubview(cardView)
         cardView.backgroundColor = .black
-        cardView.layer.cornerRadius = 15
         cardView.snp.makeConstraints { (make) in
-            make.height.equalTo(250)
-            make.width.equalTo(UIScreen.main.bounds.width - 80)
-            make.center.equalToSuperview()
+            make.height.equalTo(500)
+            make.width.equalTo(UIScreen.main.bounds.width - 60)
+            make.centerX.equalToSuperview()
+            make.top.equalToSuperview().inset(140)
         }
         
         addBehavior()
@@ -38,7 +38,7 @@ class PhotosCardView: UIView {
     }
 
     func addBehavior() {
-        print("Add all the behavior here")
+        print("INSIDE OF PHOTOS CARD VIEW")
     }
 //    static var reuseIdentifier = "signupPhotos"
 //    var question: SignupModels.Question?
