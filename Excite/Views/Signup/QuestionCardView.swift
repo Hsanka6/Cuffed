@@ -31,15 +31,6 @@ class QuestionCardView: UIView {
         super.init(frame: frame)
         
         // why isn't this rendering??? 
-        let cardView = UIView()
-        self.addSubview(cardView)
-        cardView.backgroundColor = .black
-        cardView.layer.cornerRadius = 15
-        cardView.snp.makeConstraints { (make) in
-            make.height.equalTo(250)
-            make.width.equalTo(UIScreen.main.bounds.width - 80)
-            make.center.equalToSuperview()
-        }
         
         let questionLabel = UILabel()
         questionLabel.textAlignment = .center

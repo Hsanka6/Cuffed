@@ -84,7 +84,8 @@ class SignupViewController: UIViewController {
         collectionView.clipsToBounds = false
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.register(CardViewCell.self, forCellWithReuseIdentifier: CardViewCell.reuseIdentifier)
-        self.collectionView.isScrollEnabled = false
+//        collectionView.isScrollEnabled = true
+        collectionView.isScrollEnabled = false
     }
     
     override func viewDidLayoutSubviews() {
@@ -115,7 +116,7 @@ class SignupViewController: UIViewController {
 
 extension SignupViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 1
+        return self.collectionViewCells!.count
     }
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         if (indexPath.row == 3 ) {
