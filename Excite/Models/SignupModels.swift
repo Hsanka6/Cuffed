@@ -100,7 +100,6 @@ struct SignupModels {
             self.answers = answers
             super.init(id: id, question: question, isMandatory: isMandatory, isHidden: isHidden, short: short, answerChoice: answerChoice)
         }
-        
 //        func setAnswer(answerChoice: String) {
 //            self.answerChoice = answerChoice
 //        }

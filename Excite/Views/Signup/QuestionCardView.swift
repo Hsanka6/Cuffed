@@ -27,32 +27,30 @@ class QuestionCardView: UIView {
 
     init(for attribute: String, question: SignupModels.Question?, frame: CGRect) {
         super.init(frame: frame)
-        self.question = question
-        let cardView = UIView()
-        self.addSubview(cardView)
-        cardView.backgroundColor = .lightGray
-        cardView.snp.makeConstraints { (make) in
-            make.height.equalTo(500)
-            make.width.equalTo(UIScreen.main.bounds.width - 60)
-            make.centerX.equalToSuperview()
-            make.top.equalToSuperview().inset(140)
+//        self.backgroundColor = .green
+//        let cardView = UIView()
+//        self.addSubview(cardView)
+//        cardView.backgroundColor = .lightGray
+//        cardView.snp.makeConstraints { (make) in
+//            make.height.equalTo(300)
+//            make.width.equalToSuperview()
+//            make.trailing.equalToSuperview()
+//            make.top.equalToSuperview().inset(140)
+//        }
+//
+//
+        let questionLabel = UILabel()
+        questionLabel.textAlignment = .center
+        questionLabel.numberOfLines = 3
+        questionLabel.textColor = UIColor.black
+        questionLabel.text = question!.question
+        questionLabel.font = UIFont.systemFont(ofSize: 25)
+        self.addSubview(questionLabel)
+        questionLabel.snp.makeConstraints { (make) in
+            make.top.equalTo(15)
+            make.left.equalTo(15)
+            make.right.equalTo(-15)
         }
-        
-        let nextButton = UIButton()
-        nextButton.setTitle("Next", for: .normal)
-        nextButton.backgroundColor = .blue
-        nextButton.tintColor = .white
-        nextButton.layer.cornerRadius = 15
-        cardView.addSubview(nextButton)
-        nextButton.snp.makeConstraints { (make) in
-            make.width.equalTo(40)
-            make.height.equalTo(40)
-            make.trailing.equalToSuperview().multipliedBy(0.9)
-            make.bottom.equalTo(-10)
-        }
-        nextButton.isUserInteractionEnabled=true
-        nextButton.addTarget(self, action: #selector(watta), for: .touchUpInside)
-        
         addBehavior()
     }
 

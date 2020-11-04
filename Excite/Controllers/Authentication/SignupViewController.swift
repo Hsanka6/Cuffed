@@ -41,6 +41,7 @@ class SignupViewController: UIViewController {
     
     var questions = [ String: [SignupModels.Question] ]()
     
+    var questionsFlat = [ (String, SignupModels.Question? )]()
     // MARK: - Lifecycle
     
     override func viewDidLoad() {
@@ -53,14 +54,16 @@ class SignupViewController: UIViewController {
         NetworkRequester.getProfileQuestions { (questions) in
             self.questions = questions
             // go through all of the questions
+            
             for (attribute, arrayOfQuestions) in self.questions {
                 for question in arrayOfQuestions {
-                    // figure out a way to 
-                    self.collectionViewCells?.append(QuestionCardView(for: attribute, question: question, frame: self.view.frame))
+                    self.questionsFlat.append((attribute, question))
+//                    self.collectionViewCells?.append(QuestionCardView(for: attribute, question: question, frame: self.view.frame))
                 }
             }
-            // this will be the last element inside of the thing
-            self.collectionViewCells?.append(PhotosCardView(frame: self.view.frame))
+//            self.collectionViewCells?.append(PhotosCardView(frame: self.view.frame))
+            // pictures slide appended to last
+            self.questionsFlat.append(("photos", nil))
             self.collectionView.reloadData()
             self.createCollectionView()
         }
@@ -82,11 +85,10 @@ class SignupViewController: UIViewController {
         collectionView.dataSource = self
         collectionView.delegate = self
         collectionView.backgroundColor = .none
-        collectionView.clipsToBounds = false
+        collectionView.clipsToBounds = true
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.register(CardViewCell.self, forCellWithReuseIdentifier: CardViewCell.reuseIdentifier)
-        collectionView.isScrollEnabled = false
-//        collectionView.isScrollEnabled = true
+        collectionView.isScrollEnabled = true
     }
     
     override func viewDidLayoutSubviews() {
@@ -117,12 +119,12 @@ class SignupViewController: UIViewController {
 
 extension SignupViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return self.collectionViewCells!.count
+        return self.questionsFlat.count
     }
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        if (indexPath.row == self.collectionViewCells!.count - 1 ) {
+        if (indexPath.row == self.questionsFlat.count - 1 ) {
             print("WE HAVE REACHED THE END")
-            print(self.currentUser?.profile)
+//            print(self.currentUser?.profile)
 //            NetworkRequester.updateUser(user: currentUser!)
 //            let newViewController = MainTabBarController()
 //            self.navigationController?.pushViewController(newViewController, animated: false)
@@ -130,14 +132,29 @@ extension SignupViewController: UICollectionViewDelegate, UICollectionViewDataSo
     }
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CardViewCell.reuseIdentifier, for: indexPath) as? CardViewCell {
-            cell.initialize(mainView: collectionViewCells![indexPath.row])
+            
+            cell.initialize()
+            
+            let currentAttribute = self.questionsFlat[indexPath.row].0
+            let currentQuestion = self.questionsFlat[indexPath.row].1
+            // also load which attribute the question will add to
+            
+            if let question = currentQuestion {
+                print("QUESTION CARD VIEW")
+                cell.addSubview(QuestionCardView(for: currentAttribute, question: question, frame: cell.cardView.frame))
+            } else if currentQuestion == nil {
+                print("PHOTOS CARD VIEW")
+                cell.addSubview(PhotosCardView(frame: cell.cardView.frame))
+            }
+            
             cell.nextButtonAction = {
                 let indexPath = self.collectionView.indexPathsForVisibleItems.first.flatMap({
                     IndexPath(item: $0.row + 1, section: $0.section)
                 })
-                if indexPath!.row < self.collectionViewCells!.count {
+                if indexPath!.row < self.questionsFlat.count {
                     self.collectionView.scrollToItem(at: indexPath!, at: .right, animated: true)
                 } else {
+                    print(indexPath!.row)
                     print("Can't scroll anymore")
                 }
 //                self.saveFieldInUserObject(questionId: Array(self.questions)[indexPath!.row].key, answerChoice: answerChoice)
@@ -150,6 +167,7 @@ extension SignupViewController: UICollectionViewDelegate, UICollectionViewDataSo
                 if indexPath!.row >= 0 {
                     self.collectionView.scrollToItem(at: indexPath!, at: .left, animated: true)
                 } else {
+                    print(indexPath!.row)
                     print("Can't scroll anymore")
                 }
 //                self.saveFieldInUserObject(questionId: Array(self.questions)[indexPath!.row].key, answerChoice: answerChoice)

@@ -22,21 +22,30 @@ class CardViewCell: UICollectionViewCell {
     
     var nextButtonAction : (()->())?
     var backButtonAction : (()->())?
-    
-    // takes in a UIView. This is what will be rendered to the card!
-    func initialize(mainView: UIView) {
+    var cardView: UIView = {
         let cardView = UIView()
-        self.addSubview(cardView)
         cardView.backgroundColor = .white
         cardView.layer.cornerRadius = 15
+        cardView.dropShadow()
+        return cardView
+    }()
+    // takes in a UIView. This is what will be rendered to the card!
+    func initialize() {
+//        let cardView = UIView()
+        self.addSubview(cardView)
         cardView.snp.makeConstraints { (make) in
             make.height.equalTo(600)
             make.width.equalTo(UIScreen.main.bounds.width - 60)
             make.center.equalToSuperview()
         }
-        self.addSubview(mainView)
-        
-        cardView.dropShadow()
+//        cardView.backgroundColor = .white
+//        cardView.layer.cornerRadius = 15
+//        cardView.snp.makeConstraints { (make) in
+//            make.height.equalTo(600)
+//            make.width.equalTo(UIScreen.main.bounds.width - 60)
+//            make.center.equalToSuperview()
+//        }
+//        cardView.dropShadow()
         
         let nextButton = UIButton()
         nextButton.setTitle("Next", for: .normal)
