@@ -26,7 +26,14 @@ class QuestionCardView: UIView {
     var freeResponseBox: UITextField?
 
     init(for attribute: String, question: SignupModels.Question?, frame: CGRect) {
+        
+        // make the frame smaller here
         super.init(frame: frame)
+        
+        // so i still get the same error --
+        // the whole view actually blocks the buttons from being pressed
+        
+        
 //        self.backgroundColor = .green
 //        let cardView = UIView()
 //        self.addSubview(cardView)

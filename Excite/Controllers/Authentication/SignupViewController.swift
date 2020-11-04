@@ -88,7 +88,7 @@ class SignupViewController: UIViewController {
         collectionView.clipsToBounds = true
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.register(CardViewCell.self, forCellWithReuseIdentifier: CardViewCell.reuseIdentifier)
-        collectionView.isScrollEnabled = true
+        collectionView.isScrollEnabled = false
     }
     
     override func viewDidLayoutSubviews() {
@@ -122,12 +122,12 @@ extension SignupViewController: UICollectionViewDelegate, UICollectionViewDataSo
         return self.questionsFlat.count
     }
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        if (indexPath.row == self.questionsFlat.count - 1 ) {
+        if (indexPath.row == self.questionsFlat.count ) {
             print("WE HAVE REACHED THE END")
 //            print(self.currentUser?.profile)
 //            NetworkRequester.updateUser(user: currentUser!)
-//            let newViewController = MainTabBarController()
-//            self.navigationController?.pushViewController(newViewController, animated: false)
+            let newViewController = MainTabBarController()
+            self.navigationController?.pushViewController(newViewController, animated: false)
          }
     }
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
