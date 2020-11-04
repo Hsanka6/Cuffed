@@ -10,6 +10,8 @@ import Foundation
 import UIKit
 
 
+// Render question here, and have references to either the object or pass in a closure function to update user data inside of  SignupViewController
+
 // can either be Multiple Choice or Free Response
 class QuestionCardView: UIView {
     var question: SignupModels.Question?
@@ -23,27 +25,40 @@ class QuestionCardView: UIView {
 
     var freeResponseBox: UITextField?
 
-    // this isn't working as I intended
-    var nextButtonAction : ((_ answerChoice: String?)->())?
-    var backButtonAction : ((_ answerChoice: String?)->())?
-    
     init(for attribute: String, question: SignupModels.Question?, frame: CGRect) {
         super.init(frame: frame)
-        
-        // why isn't this rendering??? 
-        
+        self.question = question
         let cardView = UIView()
         self.addSubview(cardView)
-        cardView.backgroundColor = .blue
+        cardView.backgroundColor = .lightGray
         cardView.snp.makeConstraints { (make) in
             make.height.equalTo(500)
             make.width.equalTo(UIScreen.main.bounds.width - 60)
             make.centerX.equalToSuperview()
             make.top.equalToSuperview().inset(140)
         }
+        
+        let nextButton = UIButton()
+        nextButton.setTitle("Next", for: .normal)
+        nextButton.backgroundColor = .blue
+        nextButton.tintColor = .white
+        nextButton.layer.cornerRadius = 15
+        cardView.addSubview(nextButton)
+        nextButton.snp.makeConstraints { (make) in
+            make.width.equalTo(40)
+            make.height.equalTo(40)
+            make.trailing.equalToSuperview().multipliedBy(0.9)
+            make.bottom.equalTo(-10)
+        }
+        nextButton.isUserInteractionEnabled=true
+        nextButton.addTarget(self, action: #selector(watta), for: .touchUpInside)
+        
         addBehavior()
     }
 
+    @objc func watta() {
+        print("YO")
+    }
     convenience init() {
         self.init(for: "", question: nil, frame: CGRect.zero)
         
@@ -54,7 +69,7 @@ class QuestionCardView: UIView {
     }
 
     func addBehavior() {
-        print("Add all the behavior here")
+        
     }
     //    func initialize(question: SignupModels.Question, questionNum: Int, user: User) {
     func initialize(questionId: String, questionNum: Int, question: SignupModels.Question) {

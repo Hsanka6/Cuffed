@@ -10,6 +10,8 @@ import Foundation
 import UIKit
 
 
+// Render Haasith's photos things here, and have references to either the object or pass in a closure function to update user data inside of  SignupViewController
+
 class PhotosCardView: UIView {
     
     override init(frame: CGRect) {

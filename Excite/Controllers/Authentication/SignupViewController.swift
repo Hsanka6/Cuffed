@@ -55,6 +55,7 @@ class SignupViewController: UIViewController {
             // go through all of the questions
             for (attribute, arrayOfQuestions) in self.questions {
                 for question in arrayOfQuestions {
+                    // figure out a way to 
                     self.collectionViewCells?.append(QuestionCardView(for: attribute, question: question, frame: self.view.frame))
                 }
             }
@@ -84,8 +85,8 @@ class SignupViewController: UIViewController {
         collectionView.clipsToBounds = false
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.register(CardViewCell.self, forCellWithReuseIdentifier: CardViewCell.reuseIdentifier)
-//        collectionView.isScrollEnabled = false
-        collectionView.isScrollEnabled = true
+        collectionView.isScrollEnabled = false
+//        collectionView.isScrollEnabled = true
     }
     
     override func viewDidLayoutSubviews() {
@@ -129,9 +130,30 @@ extension SignupViewController: UICollectionViewDelegate, UICollectionViewDataSo
     }
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CardViewCell.reuseIdentifier, for: indexPath) as? CardViewCell {
-            indexPath.row
-            print(self.collectionViewCells?.count)
             cell.initialize(mainView: collectionViewCells![indexPath.row])
+            cell.nextButtonAction = {
+                let indexPath = self.collectionView.indexPathsForVisibleItems.first.flatMap({
+                    IndexPath(item: $0.row + 1, section: $0.section)
+                })
+                if indexPath!.row < self.collectionViewCells!.count {
+                    self.collectionView.scrollToItem(at: indexPath!, at: .right, animated: true)
+                } else {
+                    print("Can't scroll anymore")
+                }
+//                self.saveFieldInUserObject(questionId: Array(self.questions)[indexPath!.row].key, answerChoice: answerChoice)
+            }
+            cell.backButtonAction = {
+                let indexPath = self.collectionView.indexPathsForVisibleItems.first.flatMap({
+                    IndexPath(item: $0.row - 1, section: $0.section)
+                })
+
+                if indexPath!.row >= 0 {
+                    self.collectionView.scrollToItem(at: indexPath!, at: .left, animated: true)
+                } else {
+                    print("Can't scroll anymore")
+                }
+//                self.saveFieldInUserObject(questionId: Array(self.questions)[indexPath!.row].key, answerChoice: answerChoice)
+            }
             return cell
         }
         return UICollectionViewCell()
