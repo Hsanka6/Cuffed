@@ -32,9 +32,6 @@ class QuestionCardView: UIView {
         
         // so i still get the same error --
         // the whole view actually blocks the buttons from being pressed
-        
-        
-//        self.backgroundColor = .green
 //        let cardView = UIView()
 //        self.addSubview(cardView)
 //        cardView.backgroundColor = .lightGray
@@ -52,6 +49,7 @@ class QuestionCardView: UIView {
         questionLabel.textColor = UIColor.black
         questionLabel.text = question!.question
         questionLabel.font = UIFont.systemFont(ofSize: 25)
+        questionLabel.backgroundColor = .lightGray
         self.addSubview(questionLabel)
         questionLabel.snp.makeConstraints { (make) in
             make.top.equalTo(15)

@@ -22,6 +22,11 @@ class CardViewCell: UICollectionViewCell {
     
     var nextButtonAction : (()->())?
     var backButtonAction : (()->())?
+    
+//    override func prepareForReuse() {
+//        super.prepareForReuse()
+//        
+//    }
     var cardView: UIView = {
         let cardView = UIView()
         cardView.backgroundColor = .white
@@ -29,6 +34,12 @@ class CardViewCell: UICollectionViewCell {
         cardView.dropShadow()
         return cardView
     }()
+    
+    var viewPlaceholder: UIView = {
+        let viewPlaceholder = UIView()
+        return viewPlaceholder
+    }()
+    
     // takes in a UIView. This is what will be rendered to the card!
     func initialize() {
 //        let cardView = UIView()
@@ -37,6 +48,15 @@ class CardViewCell: UICollectionViewCell {
             make.height.equalTo(600)
             make.width.equalTo(UIScreen.main.bounds.width - 60)
             make.center.equalToSuperview()
+        }
+
+        cardView.addSubview(viewPlaceholder)
+        viewPlaceholder.backgroundColor = .green
+        viewPlaceholder.snp.makeConstraints { (make) in
+            make.bottom.equalToSuperview().inset(80)
+            make.width.equalToSuperview()
+            make.top.equalToSuperview()
+            make.centerX.equalToSuperview()
         }
 //        cardView.backgroundColor = .white
 //        cardView.layer.cornerRadius = 15
@@ -81,14 +101,10 @@ class CardViewCell: UICollectionViewCell {
     }
     
     @objc func nextButtonTapped(_ sender: AnyObject) {
-        print("WATTA")
-//            nextButtonAction?(self.question?.answerChoice)
             nextButtonAction?()
     }
 
     @objc func backButtonTapped(_ sender: AnyObject) {
-        print("FAK")
-//        backButtonAction?(self.question?.answerChoice)
         backButtonAction?()
     }
 }

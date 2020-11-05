@@ -50,7 +50,7 @@ class SignupViewController: UIViewController {
         
         self.collectionViewCells = [UIView]()
         self.viewModel = SignupViewModel(currentUser)
-        
+        self.createCollectionView()
         NetworkRequester.getProfileQuestions { (questions) in
             self.questions = questions
             // go through all of the questions
@@ -58,14 +58,12 @@ class SignupViewController: UIViewController {
             for (attribute, arrayOfQuestions) in self.questions {
                 for question in arrayOfQuestions {
                     self.questionsFlat.append((attribute, question))
-//                    self.collectionViewCells?.append(QuestionCardView(for: attribute, question: question, frame: self.view.frame))
                 }
             }
 //            self.collectionViewCells?.append(PhotosCardView(frame: self.view.frame))
             // pictures slide appended to last
             self.questionsFlat.append(("photos", nil))
             self.collectionView.reloadData()
-            self.createCollectionView()
         }
         
     }
@@ -122,29 +120,33 @@ extension SignupViewController: UICollectionViewDelegate, UICollectionViewDataSo
         return self.questionsFlat.count
     }
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        if (indexPath.row == self.questionsFlat.count ) {
+        if (indexPath.row == self.questionsFlat.count - 1 ) {
             print("WE HAVE REACHED THE END")
 //            print(self.currentUser?.profile)
 //            NetworkRequester.updateUser(user: currentUser!)
-            let newViewController = MainTabBarController()
-            self.navigationController?.pushViewController(newViewController, animated: false)
+//            let newViewController = MainTabBarController()
+//            self.navigationController?.pushViewController(newViewController, animated: false)
          }
     }
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CardViewCell.reuseIdentifier, for: indexPath) as? CardViewCell {
-            
-            cell.initialize()
-            
+            print(indexPath.row)
             let currentAttribute = self.questionsFlat[indexPath.row].0
             let currentQuestion = self.questionsFlat[indexPath.row].1
             // also load which attribute the question will add to
+            cell.initialize()
+            DispatchQueue.main.async {
             
-            if let question = currentQuestion {
-                print("QUESTION CARD VIEW")
-                cell.addSubview(QuestionCardView(for: currentAttribute, question: question, frame: cell.cardView.frame))
-            } else if currentQuestion == nil {
-                print("PHOTOS CARD VIEW")
-                cell.addSubview(PhotosCardView(frame: cell.cardView.frame))
+                if let question = currentQuestion {
+//                    cell.addSubview(QuestionCardView(for: currentAttribute, question: question, frame: cell.viewPlaceholder.frame))
+                    cell.viewPlaceholder = (QuestionCardView(for: currentAttribute, question: question, frame: cell.viewPlaceholder.frame))
+                } else if currentQuestion == nil {
+                    print(currentQuestion)
+                    print("PHOTOS CARD VIEW")
+//                    cell.addSubview(PhotosCardView(frame: cell.viewPlaceholder.frame))
+                    cell.viewPlaceholder = (PhotosCardView(frame: cell.viewPlaceholder.frame))
+                }
             }
             
             cell.nextButtonAction = {
