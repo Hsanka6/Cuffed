@@ -121,8 +121,6 @@ extension SignupViewController: UICollectionViewDelegate, UICollectionViewDataSo
     }
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         if (indexPath.row == self.questionsFlat.count - 1 ) {
-            print("WE HAVE REACHED THE END")
-//            print(self.currentUser?.profile)
 //            NetworkRequester.updateUser(user: currentUser!)
 //            let newViewController = MainTabBarController()
 //            self.navigationController?.pushViewController(newViewController, animated: false)
@@ -131,22 +129,22 @@ extension SignupViewController: UICollectionViewDelegate, UICollectionViewDataSo
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CardViewCell.reuseIdentifier, for: indexPath) as? CardViewCell {
-            print(indexPath.row)
             let currentAttribute = self.questionsFlat[indexPath.row].0
             let currentQuestion = self.questionsFlat[indexPath.row].1
             // also load which attribute the question will add to
             cell.initialize()
-            
             DispatchQueue.main.async {
                         
                 if self.acceptedAttributes.contains(currentAttribute), let question = currentQuestion as? SignupModels.Question {
-                    cell.viewPlaceholder!.addSubview(QuestionCardView(for: currentAttribute, question: question, frame: cell.viewPlaceholder!.frame))
+                    cell.viewPlaceholder!.addSubview(QuestionCardView(for: currentAttribute, question: question, frame: cell.viewPlaceholder!.frame) {(updatedQuestion) in
+                        print(updatedQuestion.answerChoice)
+                    })
                 } else if currentAttribute == "photos" {
 //                    cell.addSubview(PhotosCardView(frame: cell.viewPlaceholder.frame))
                     cell.viewPlaceholder!.addSubview(PhotosCardView(frame: cell.viewPlaceholder!.frame))
                 }
             }
-            
+            // find a way to save the answers from the UIView
             cell.nextButtonAction = {
                 var visibleRect    = CGRect()
                 visibleRect.origin = self.collectionView.contentOffset
@@ -154,7 +152,6 @@ extension SignupViewController: UICollectionViewDelegate, UICollectionViewDataSo
                 let visiblePoint   = CGPoint(x: visibleRect.midX, y: visibleRect.midY)
 
                 guard let visibleIndexPath: IndexPath = collectionView.indexPathForItem(at: visiblePoint) else { return }
-                print(visibleIndexPath)
                 let nextIndexPath = IndexPath(item: visibleIndexPath.row + 1, section: visibleIndexPath.section)
                 if nextIndexPath.row < self.questionsFlat.count {
                     collectionView.scrollToItem(at: nextIndexPath, at: .right, animated: true)
@@ -167,7 +164,6 @@ extension SignupViewController: UICollectionViewDelegate, UICollectionViewDataSo
                 let visiblePoint   = CGPoint(x: visibleRect.midX, y: visibleRect.midY)
 
                 guard let visibleIndexPath: IndexPath = collectionView.indexPathForItem(at: visiblePoint) else { return }
-                print(visibleIndexPath)
                 let previousIndexPath = IndexPath(item: visibleIndexPath.row - 1, section: visibleIndexPath.section)
                 
                 if previousIndexPath.row >= 0 {
@@ -177,6 +173,29 @@ extension SignupViewController: UICollectionViewDelegate, UICollectionViewDataSo
             return cell
         }
         return UICollectionViewCell()
+
+    }
+
+    func saveAnswer() {
+        print("SAVING ANSWER")
+    }
+    // saves the user fields
+//    func saveFieldInUserObject(questionId: String, answerChoice: String?) {
+//
+//        self.questions[questionId]?.answerChoice = answerChoice
+//
+//    }
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let height = self.collectionView.frame.height
+        let width = self.collectionView.frame.width
+        return CGSize(width: width, height: height)
+    }
+
+}
+
+
+
 //        if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cells[indexPath.row].reuseIdentifier, for: indexPath) as? CardViewQuestionCell {
 //
 //        }
@@ -192,7 +211,6 @@ extension SignupViewController: UICollectionViewDelegate, UICollectionViewDataSo
 //                if indexPath!.row < self.questions.count {
 //                    self.collectionView.scrollToItem(at: indexPath!, at: .right, animated: true)
 //                } else {
-//                    print("Can't scroll anymore")
 //                }
 //                self.saveFieldInUserObject(questionId: Array(self.questions)[indexPath!.row].key, answerChoice: answerChoice)
 //            }
@@ -205,32 +223,12 @@ extension SignupViewController: UICollectionViewDelegate, UICollectionViewDataSo
 //                if indexPath!.row >= 0 {
 //                    self.collectionView.scrollToItem(at: indexPath!, at: .left, animated: true)
 //                } else {
-//                    print("Can't scroll anymore")
 //                }
 //                self.saveFieldInUserObject(questionId: Array(self.questions)[indexPath!.row].key, answerChoice: answerChoice)
 //            }
 //
 //         return cell
 //         }
-    }
-
-    // saves the user fields
-//    func saveFieldInUserObject(questionId: String, answerChoice: String?) {
-//
-//        self.questions[questionId]?.answerChoice = answerChoice
-//
-//        print("QUESTION \(self.questions[questionId]?.question)")
-//        print("ANSWER \(self.questions[questionId]?.answerChoice)")
-//
-//    }
-
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let height = self.collectionView.frame.height
-        let width = self.collectionView.frame.width
-        return CGSize(width: width, height: height)
-    }
-
-}
 
 
 // FINAL TODO: -----------------------------------

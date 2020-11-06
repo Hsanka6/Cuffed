@@ -17,13 +17,14 @@ class QuestionCardView: UIView {
     var question: SignupModels.Question
     
     // free response
-    var freeResponseBox: UITextField?
+    var freeResponseAnswer: UITextField?
     
     // multiple choice fields
     var selectedIndexPath: IndexPath?
     let mcAnswersCollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
-    
-    init(for attribute: String, question: SignupModels.Question, frame: CGRect) {
+    var saveAnswer: ((SignupModels.Question)->())?
+    init(for attribute: String, question: SignupModels.Question, frame: CGRect, saveClosure: @escaping(SignupModels.Question) -> Void) {
+        self.saveAnswer = saveClosure
         self.question = question
         super.init(frame: frame)
         let questionLabel = UILabel()
@@ -42,12 +43,12 @@ class QuestionCardView: UIView {
         
     }
     convenience init() {
-        self.init(for: "", question: SignupModels.Question(id: "", question: "", isMandatory: false, isHidden: true, short: "", answerChoice: ""), frame: CGRect.zero)
-        
+        self.init(for: "", question: SignupModels.Question(id: "", question: "", isMandatory: false, isHidden: true, short: "", answerChoice: ""), frame: CGRect.zero) { _ in }
     }
     required init(coder aDecoder: NSCoder) {
         fatalError("This class does not support NSCoding")
     }
+    
     func renderQuestion() {
         if type(of: self.question) == SignupModels.MultipleChoice.self {
             setupCollectionView()
@@ -59,15 +60,25 @@ class QuestionCardView: UIView {
                 freeResponseAnswer.textColor       = .black
                 freeResponseAnswer.font            = UIFont.systemFont(ofSize: 30)
                 freeResponseAnswer.attributedPlaceholder = NSAttributedString(string: self.question.short, attributes: [.foregroundColor : UIColor.lightGray])
+                freeResponseAnswer.addTarget(self, action: #selector(enterPressed), for: .editingDidEndOnExit)
+                if let previousAnswer = question.answerChoice {
+                    freeResponseAnswer.text = previousAnswer
+                }
                 return freeResponseAnswer
             }()
             self.addSubview(freeResponseAnswer)
+            self.freeResponseAnswer = freeResponseAnswer
             freeResponseAnswer.snp.makeConstraints { (make) in
                 make.width.equalTo(300)
                 make.height.equalTo(80)
                 make.center.equalToSuperview()
             }
+            
         }
+    }
+    @objc func enterPressed() {
+        self.question.answerChoice = self.freeResponseAnswer?.text
+        self.saveAnswer?(self.question)
     }
     func setupCollectionView() {
         self.addSubview(self.mcAnswersCollectionView)

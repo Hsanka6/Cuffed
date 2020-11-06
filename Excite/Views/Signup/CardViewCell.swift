@@ -99,7 +99,6 @@ class CardViewCell: UICollectionViewCell {
         backButton.isUserInteractionEnabled = true
         backButton.addTarget(self, action: #selector(self.backButtonTapped(_:)), for: .touchUpInside)
         
-//        cardView.addSubview(mainView)
     }
     
     @objc func nextButtonTapped(_ sender: AnyObject) {
