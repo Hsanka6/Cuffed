@@ -13,6 +13,7 @@
 		7010798124A6C9C300E640B9 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7010798024A6C9C300E640B9 /* Settings.swift */; };
 		7010798324A6CC1F00E640B9 /* DatingAudioVideoViewControllerExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7010798224A6CC1F00E640B9 /* DatingAudioVideoViewControllerExtensions.swift */; };
 		701F1CD8249D70080096B564 /* DatingAudioVideoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 701F1CD7249D70080096B564 /* DatingAudioVideoViewController.swift */; };
+		702CEBEA254BBDBD00609C17 /* BigPhotoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 702CEBE9254BBDBD00609C17 /* BigPhotoCollectionViewCell.swift */; };
 		7032880F24F65A8E002228ED /* QuestionsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7032880E24F65A8E002228ED /* QuestionsTableViewCell.swift */; };
 		7032881124F65AA6002228ED /* QuestionsDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7032881024F65AA6002228ED /* QuestionsDetailTableViewCell.swift */; };
 		7032881424F7A9C6002228ED /* BrowseQuestionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7032881324F7A9C6002228ED /* BrowseQuestionsViewController.swift */; };
@@ -32,6 +33,7 @@
 		7054D5BA245F750B007DA9BA /* ExciteUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7054D5B9245F750B007DA9BA /* ExciteUITests.swift */; };
 		7054D5C8245F755F007DA9BA /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7054D5C7245F755F007DA9BA /* GoogleService-Info.plist */; };
 		705D27162521418100567D20 /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 705D27152521418100567D20 /* AuthService.swift */; };
+		705EECDF25529ECA000C1B7E /* ProfileQuestionCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 705EECDE25529ECA000C1B7E /* ProfileQuestionCollectionViewCell.swift */; };
 		708DE8A2253AE3D5004B3735 /* EditChoiceViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 708DE8A1253AE3D5004B3735 /* EditChoiceViewModel.swift */; };
 		709B2C3D24C2B40E008BA374 /* UserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 709B2C3C24C2B40E008BA374 /* UserViewModel.swift */; };
 		709B2C3F24C2B43E008BA374 /* Profile.json in Resources */ = {isa = PBXBuildFile; fileRef = 709B2C3E24C2B43E008BA374 /* Profile.json */; };
@@ -83,6 +85,7 @@
 		7010798024A6C9C300E640B9 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		7010798224A6CC1F00E640B9 /* DatingAudioVideoViewControllerExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatingAudioVideoViewControllerExtensions.swift; sourceTree = "<group>"; };
 		701F1CD7249D70080096B564 /* DatingAudioVideoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatingAudioVideoViewController.swift; sourceTree = "<group>"; };
+		702CEBE9254BBDBD00609C17 /* BigPhotoCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BigPhotoCollectionViewCell.swift; sourceTree = "<group>"; };
 		7032880E24F65A8E002228ED /* QuestionsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionsTableViewCell.swift; sourceTree = "<group>"; };
 		7032881024F65AA6002228ED /* QuestionsDetailTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionsDetailTableViewCell.swift; sourceTree = "<group>"; };
 		7032881324F7A9C6002228ED /* BrowseQuestionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowseQuestionsViewController.swift; sourceTree = "<group>"; };
@@ -108,6 +111,7 @@
 		7054D5BB245F750B007DA9BA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7054D5C7245F755F007DA9BA /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		705D27152521418100567D20 /* AuthService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
+		705EECDE25529ECA000C1B7E /* ProfileQuestionCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileQuestionCollectionViewCell.swift; sourceTree = "<group>"; };
 		708DE8A1253AE3D5004B3735 /* EditChoiceViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditChoiceViewModel.swift; sourceTree = "<group>"; };
 		709B2C3C24C2B40E008BA374 /* UserViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewModel.swift; sourceTree = "<group>"; };
 		709B2C3E24C2B43E008BA374 /* Profile.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Profile.json; sourceTree = "<group>"; };
@@ -234,6 +238,7 @@
 				7032880E24F65A8E002228ED /* QuestionsTableViewCell.swift */,
 				7032881024F65AA6002228ED /* QuestionsDetailTableViewCell.swift */,
 				7032881524F7AAC9002228ED /* QuestionCollectionViewCell.swift */,
+				705EECDE25529ECA000C1B7E /* ProfileQuestionCollectionViewCell.swift */,
 			);
 			path = Questions;
 			sourceTree = "<group>";
@@ -333,6 +338,7 @@
 				7048578324F36A6B00F47A31 /* UserPrioritiesTableTableViewCell.swift */,
 				709C394B24F3968000D8F7E9 /* MultipleChoiceTableViewCell.swift */,
 				709C394D24F398EA00D8F7E9 /* MultipleChoiceCellTableViewCell.swift */,
+				702CEBE9254BBDBD00609C17 /* BigPhotoCollectionViewCell.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -665,6 +671,7 @@
 				7043B30E24EE6BD200F1FD89 /* UserPersonalityTableViewCell.swift in Sources */,
 				7001141D2502390E0023CA21 /* MultipleChoiceCollectionViewCell.swift in Sources */,
 				709B2C4124C2B737008BA374 /* ProfilePhotosCell.swift in Sources */,
+				702CEBEA254BBDBD00609C17 /* BigPhotoCollectionViewCell.swift in Sources */,
 				709C394E24F398EA00D8F7E9 /* MultipleChoiceCellTableViewCell.swift in Sources */,
 				70A3AC4D24C3A98A008BB1FF /* UserDetailTableViewCell.swift in Sources */,
 				70A3AC4B24C3A8E7008BB1FF /* UserTableTableViewCell.swift in Sources */,
@@ -687,6 +694,7 @@
 				EC3F87F42519B43E00B31446 /* SignupCollectionViewCell.swift in Sources */,
 				EC3F87F12519B3F500B31446 /* SignupViewController.swift in Sources */,
 				709B2C3D24C2B40E008BA374 /* UserViewModel.swift in Sources */,
+				705EECDF25529ECA000C1B7E /* ProfileQuestionCollectionViewCell.swift in Sources */,
 				701F1CD8249D70080096B564 /* DatingAudioVideoViewController.swift in Sources */,
 				70CDFC4224FCC6680068CF37 /* MultipleChoiceButton.swift in Sources */,
 				708DE8A2253AE3D5004B3735 /* EditChoiceViewModel.swift in Sources */,

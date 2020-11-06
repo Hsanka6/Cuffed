@@ -77,14 +77,7 @@ class ProfileEditViewController: UIViewController {
             make.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom)
             make.left.right.equalToSuperview()
         }
-//        self.viewModel = UserViewModel()
-//        runOnBackgroundThread {
-//            NetworkRequester().getUser("test") { user in
-//                self.viewModel?.profile = user?.profile
-//                self.viewModel?.user = user
-//                self.tableView.reloadData()
-//            }
-//       }
+
     }
     
 }
@@ -159,7 +152,7 @@ extension ProfileEditViewController: UITableViewDelegate, UITableViewDataSource 
             let cell = tableView.dequeueReusableCell(withIdentifier: QuestionsTableViewCell.reuseIdentifier, for: indexPath) as? QuestionsTableViewCell
             cell?.delegate = self
             if let freeResponse = viewModel?.user?.profile?.freeResponse {
-                cell?.initialize(freeResponse: freeResponse)
+                cell?.initialize(freeResponse: freeResponse, isTableView: true)
                 cell?.freeResponse = freeResponse
             }
             return cell ?? UITableViewCell()
