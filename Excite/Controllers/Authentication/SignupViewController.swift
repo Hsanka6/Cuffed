@@ -33,7 +33,7 @@ class SignupViewController: UIViewController {
     
     var currentUser: User?
     var viewModel: SignupViewModel?
-    
+    let acceptedAttributes=["familyPlans", "vices"]
     let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
     // key is what type of attribute it should refer to
     // value is the array of questions for that particular attribute
@@ -136,13 +136,12 @@ extension SignupViewController: UICollectionViewDelegate, UICollectionViewDataSo
             let currentQuestion = self.questionsFlat[indexPath.row].1
             // also load which attribute the question will add to
             cell.initialize()
+            
             DispatchQueue.main.async {
                         
-                if let question = currentQuestion {
-//                    cell.addSubview(QuestionCardView(for: currentAttribute, question: question, frame: cell.viewPlaceholder.frame))
+                if self.acceptedAttributes.contains(currentAttribute), let question = currentQuestion as? SignupModels.Question {
                     cell.viewPlaceholder!.addSubview(QuestionCardView(for: currentAttribute, question: question, frame: cell.viewPlaceholder!.frame))
-                } else if currentQuestion == nil {
-                    print(currentQuestion)
+                } else if currentAttribute == "photos" {
                     print("PHOTOS CARD VIEW")
 //                    cell.addSubview(PhotosCardView(frame: cell.viewPlaceholder.frame))
                     cell.viewPlaceholder!.addSubview(PhotosCardView(frame: cell.viewPlaceholder!.frame))
@@ -150,26 +149,33 @@ extension SignupViewController: UICollectionViewDelegate, UICollectionViewDataSo
             }
             
             cell.nextButtonAction = {
-                let indexPath = self.collectionView.indexPathsForVisibleItems.first.flatMap({
+//                let indexPath = self.collectionView.indexPathsForVisibleItems.first.flatMap({
+//                    IndexPath(item: $0.row + 1, section: $0.section)
+//                })
+//                if indexPath!.row < self.questionsFlat.count {
+//                    self.collectionView.scrollToItem(at: indexPath!, at: .right, animated: true)
+//                } else {
+//                    print("Can't scroll anymore")
+//                }
+                print(self.collectionView.indexPathsForVisibleItems.first)
+                guard let indexPath = self.collectionView.indexPathsForVisibleItems.first.flatMap({
                     IndexPath(item: $0.row + 1, section: $0.section)
-                })
-                if indexPath!.row < self.questionsFlat.count {
-                    self.collectionView.scrollToItem(at: indexPath!, at: .right, animated: true)
-                } else {
-                    print(indexPath!.row)
-                    print("Can't scroll anymore")
+                }) else {
+                    return
                 }
+                //, self.collectionView.cellForItem(at: indexPath) != nil
+
+                collectionView.scrollToItem(at: indexPath, at: .left, animated: true)
 //                self.saveFieldInUserObject(questionId: Array(self.questions)[indexPath!.row].key, answerChoice: answerChoice)
             }
             cell.backButtonAction = {
                 let indexPath = self.collectionView.indexPathsForVisibleItems.first.flatMap({
                     IndexPath(item: $0.row - 1, section: $0.section)
                 })
-
+                print(indexPath!.row)
                 if indexPath!.row >= 0 {
                     self.collectionView.scrollToItem(at: indexPath!, at: .left, animated: true)
                 } else {
-                    print(indexPath!.row)
                     print("Can't scroll anymore")
                 }
 //                self.saveFieldInUserObject(questionId: Array(self.questions)[indexPath!.row].key, answerChoice: answerChoice)

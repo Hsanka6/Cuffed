@@ -25,7 +25,13 @@ class CardViewCell: UICollectionViewCell {
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        self.viewPlaceholder=nil
+        for subview in self.viewPlaceholder!.subviews {
+             // you can place "if" condition to remove image view, labels, etc.
+             //it will remove subviews of cell's content view
+             subview.removeFromSuperview()
+        }
+        self.backButtonAction = nil
+        self.nextButtonAction = nil
     }
     var cardView: UIView = {
         let cardView = UIView()
@@ -47,7 +53,6 @@ class CardViewCell: UICollectionViewCell {
             make.center.equalToSuperview()
         }
         self.viewPlaceholder=UIView()
-        viewPlaceholder!.backgroundColor = .green
         cardView.addSubview(viewPlaceholder!)
         viewPlaceholder!.snp.makeConstraints { (make) in
             make.bottom.equalToSuperview().inset(80)
