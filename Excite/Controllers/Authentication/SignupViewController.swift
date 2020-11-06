@@ -137,15 +137,15 @@ extension SignupViewController: UICollectionViewDelegate, UICollectionViewDataSo
             // also load which attribute the question will add to
             cell.initialize()
             DispatchQueue.main.async {
-            
+                        
                 if let question = currentQuestion {
 //                    cell.addSubview(QuestionCardView(for: currentAttribute, question: question, frame: cell.viewPlaceholder.frame))
-                    cell.viewPlaceholder = (QuestionCardView(for: currentAttribute, question: question, frame: cell.viewPlaceholder.frame))
+                    cell.viewPlaceholder!.addSubview(QuestionCardView(for: currentAttribute, question: question, frame: cell.viewPlaceholder!.frame))
                 } else if currentQuestion == nil {
                     print(currentQuestion)
                     print("PHOTOS CARD VIEW")
 //                    cell.addSubview(PhotosCardView(frame: cell.viewPlaceholder.frame))
-                    cell.viewPlaceholder = (PhotosCardView(frame: cell.viewPlaceholder.frame))
+                    cell.viewPlaceholder!.addSubview(PhotosCardView(frame: cell.viewPlaceholder!.frame))
                 }
             }
             

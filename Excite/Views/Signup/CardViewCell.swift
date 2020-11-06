@@ -23,10 +23,10 @@ class CardViewCell: UICollectionViewCell {
     var nextButtonAction : (()->())?
     var backButtonAction : (()->())?
     
-//    override func prepareForReuse() {
-//        super.prepareForReuse()
-//        
-//    }
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        self.viewPlaceholder=nil
+    }
     var cardView: UIView = {
         let cardView = UIView()
         cardView.backgroundColor = .white
@@ -35,10 +35,7 @@ class CardViewCell: UICollectionViewCell {
         return cardView
     }()
     
-    var viewPlaceholder: UIView = {
-        let viewPlaceholder = UIView()
-        return viewPlaceholder
-    }()
+    var viewPlaceholder: UIView?
     
     // takes in a UIView. This is what will be rendered to the card!
     func initialize() {
@@ -49,10 +46,10 @@ class CardViewCell: UICollectionViewCell {
             make.width.equalTo(UIScreen.main.bounds.width - 60)
             make.center.equalToSuperview()
         }
-
-        cardView.addSubview(viewPlaceholder)
-        viewPlaceholder.backgroundColor = .green
-        viewPlaceholder.snp.makeConstraints { (make) in
+        self.viewPlaceholder=UIView()
+        viewPlaceholder!.backgroundColor = .green
+        cardView.addSubview(viewPlaceholder!)
+        viewPlaceholder!.snp.makeConstraints { (make) in
             make.bottom.equalToSuperview().inset(80)
             make.width.equalToSuperview()
             make.top.equalToSuperview()

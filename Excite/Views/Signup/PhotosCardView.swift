@@ -19,6 +19,7 @@ class PhotosCardView: UIView {
         
         let questionLabel = UILabel()
         questionLabel.textAlignment = .center
+        questionLabel.backgroundColor = .white
         questionLabel.numberOfLines = 3
         questionLabel.textColor = UIColor.black
         questionLabel.text = "Add Photos"
