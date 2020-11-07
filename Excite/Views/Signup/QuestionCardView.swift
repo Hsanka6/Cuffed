@@ -89,8 +89,6 @@ class QuestionCardView: UIView {
     
     // preserve the free response
     @objc func getFRAnswer(_ textField: UITextField) {
-        print("INSIDE OF PRESERVECURRENTANSWER")
-        print(textField.text)
         if let answer = textField.text {
             self.saveAnswer(answer: answer)
         }
@@ -123,7 +121,6 @@ class QuestionCardView: UIView {
         self.mcAnswersCollectionView.showsVerticalScrollIndicator = false
         self.mcAnswersCollectionView.register(MultipleChoiceQuestionViewCell.self, forCellWithReuseIdentifier: MultipleChoiceQuestionViewCell.reuseIdentifier)
         self.mcAnswersCollectionView.isScrollEnabled = true
-
     }
 }
 
@@ -144,6 +141,13 @@ extension QuestionCardView: UICollectionViewDelegate, UICollectionViewDataSource
         if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MultipleChoiceQuestionViewCell.reuseIdentifier, for: indexPath) as? MultipleChoiceQuestionViewCell {
             guard let currentQuestion = self.question as? SignupModels.MultipleChoice else {return UICollectionViewCell()}
             cell.initialize(answer: currentQuestion.answers[indexPath.row])
+            if let previousAnswer = self.question.answerChoice {
+                
+                if previousAnswer == currentQuestion.answers[indexPath.row] {
+                    print("SHOULD BE SELECTING \(previousAnswer)")
+                    self.mcAnswersCollectionView.selectItem(at: indexPath, animated: false, scrollPosition: UICollectionView.ScrollPosition.centeredHorizontally)
+                }
+            }
             return cell
          }
         return UICollectionViewCell()
