@@ -137,6 +137,17 @@ extension SignupViewController: UICollectionViewDelegate, UICollectionViewDataSo
                         
                 if self.acceptedAttributes.contains(currentAttribute), let question = currentQuestion as? SignupModels.Question {
                     cell.viewPlaceholder!.addSubview(QuestionCardView(for: currentAttribute, question: question, frame: cell.viewPlaceholder!.frame) {(updatedQuestion) in
+                        // TODO
+                        // I receive the question with the updated answer choice
+                        // I now need to save it by going through the array and matching the question ID
+                        // and updating that value with the updatedQuestion's answer choice
+                        for (attribute, question) in self.questionsFlat {
+                            if attribute==currentAttribute && question?.id==updatedQuestion.id {
+                                print("OVERWRITING QUESTION \(question?.question)")
+                                question?.answerChoice = updatedQuestion.answerChoice
+                                break
+                            }
+                        }
                         print(updatedQuestion.answerChoice)
                     })
                 } else if currentAttribute == "photos" {

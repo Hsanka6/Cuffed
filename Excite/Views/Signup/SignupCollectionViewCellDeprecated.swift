@@ -75,7 +75,7 @@ class SignupCollectionViewCellDeprecated: UICollectionViewCell, UITextFieldDeleg
         }
         cardView.dropShadow()
         self.cardView = cardView
-        self.cardView?.setupToHideKeyboardOnTapOnView()
+//        self.cardView?.setupToHideKeyboardOnTapOnView()
 
         let questionLabel = UILabel()
         questionLabel.textAlignment = .center

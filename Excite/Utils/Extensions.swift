@@ -50,24 +50,6 @@ extension UIView {
     }
 }
 
-extension UIView
-{
-    func setupToHideKeyboardOnTapOnView()
-    {
-        let tap: UITapGestureRecognizer = UITapGestureRecognizer(
-            target: self,
-            action: #selector(UIView.dismissTheKeyboard))
-
-        tap.cancelsTouchesInView = false
-        self.addGestureRecognizer(tap)
-    }
-
-    @objc func dismissTheKeyboard()
-    {
-        self.endEditing(true)
-    }
-}
-
 extension UIViewController {
     func setDefaultNavigation() {
         setTitle("TuneShares", andImage: UIImage(named: "logo")!)

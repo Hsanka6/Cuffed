@@ -22,10 +22,16 @@ class QuestionCardView: UIView {
     // multiple choice fields
     var selectedIndexPath: IndexPath?
     let mcAnswersCollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
-    var saveAnswer: ((SignupModels.Question)->())?
+    var saveAnswerCompletion: ((SignupModels.Question)->())?
     init(for attribute: String, question: SignupModels.Question, frame: CGRect, saveClosure: @escaping(SignupModels.Question) -> Void) {
-        self.saveAnswer = saveClosure
+        self.saveAnswerCompletion = saveClosure
         self.question = question
+        if let answer = self.question.answerChoice {
+            print("THIS HAS A PREVIOUSLY SET ANSWER \(answer)")
+        }
+        else {
+            print("HAS NEVER HAD AN ANSWER BEFORE")
+        }
         super.init(frame: frame)
         let questionLabel = UILabel()
         questionLabel.textAlignment = .center
@@ -53,6 +59,7 @@ class QuestionCardView: UIView {
         if type(of: self.question) == SignupModels.MultipleChoice.self {
             setupCollectionView()
         } else if type(of: self.question) == SignupModels.FreeResponse.self {
+            self.saveCurrentAnswerUponTappingOut()
             let freeResponseAnswer: UITextField = {
                 let freeResponseAnswer = UITextField()
                 freeResponseAnswer.textColor       = .black
@@ -60,7 +67,10 @@ class QuestionCardView: UIView {
                 freeResponseAnswer.textColor       = .black
                 freeResponseAnswer.font            = UIFont.systemFont(ofSize: 30)
                 freeResponseAnswer.attributedPlaceholder = NSAttributedString(string: self.question.short, attributes: [.foregroundColor : UIColor.lightGray])
-                freeResponseAnswer.addTarget(self, action: #selector(enterPressed), for: .editingDidEndOnExit)
+                freeResponseAnswer.addTarget(self, action: #selector(self.getFRAnswer(_:)), for: .editingDidEndOnExit)
+//                let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.preserveCurrentAnswer))
+//                freeResponseAnswer.addGestureRecognizer(tapGesture)
+                
                 if let previousAnswer = question.answerChoice {
                     freeResponseAnswer.text = previousAnswer
                 }
@@ -76,10 +86,23 @@ class QuestionCardView: UIView {
             
         }
     }
-    @objc func enterPressed() {
-        self.question.answerChoice = self.freeResponseAnswer?.text
-        self.saveAnswer?(self.question)
+    
+    // preserve the free response
+    @objc func getFRAnswer(_ textField: UITextField) {
+        print("INSIDE OF PRESERVECURRENTANSWER")
+        print(textField.text)
+        if let answer = textField.text {
+            self.saveAnswer(answer: answer)
+        }
     }
+    
+    @objc func saveAnswer(answer: String) {
+        self.question.answerChoice = answer
+        self.saveAnswerCompletion?(self.question)
+    }
+    
+//    @objc func saveCurrentAnswer(
+    
     func setupCollectionView() {
         self.addSubview(self.mcAnswersCollectionView)
 
@@ -140,12 +163,16 @@ extension QuestionCardView: UICollectionViewDelegate, UICollectionViewDataSource
                 self.collectionView(mcAnswersCollectionView, didDeselectItemAt: indexPath)
                 return
             }
-
+            
             cell.cellView?.backgroundColor = .green
+            print("selected \(cell.answer!)")
+            self.saveAnswer(answer: cell.answer!)
 //            self.question?.answerChoice = cell.answers.count
-
+            
         }
         self.selectedIndexPath = indexPath
+        // save the answer here
+        
     }
 
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
@@ -156,3 +183,27 @@ extension QuestionCardView: UICollectionViewDelegate, UICollectionViewDataSource
     }
 }
 
+
+
+extension QuestionCardView
+{
+    func saveCurrentAnswerUponTappingOut()
+    {
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(
+            target: self,
+            action: #selector(dismissTheKeyboard))
+
+        tap.cancelsTouchesInView = false
+        self.addGestureRecognizer(tap)
+    }
+
+    @objc func dismissTheKeyboard()
+    {
+        self.endEditing(true)
+        // save the answer here somehow
+        if let answer = self.freeResponseAnswer?.text {
+            self.saveAnswer(answer: answer)
+        }
+//        self.preserveCurrentAnswer()
+    }
+}
