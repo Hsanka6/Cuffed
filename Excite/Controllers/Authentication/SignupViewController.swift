@@ -126,11 +126,9 @@ extension SignupViewController: UICollectionViewDelegate, UICollectionViewDataSo
             
             
             // TODO:
-            // 1. Preserve fields (almost done here) like why does it also skip stuff
-            
             // 2. Photos page
             // 3. Push up to Firebase and log in
-            
+            // why don't we register the object
             
             
 //            self.viewModel?.user?.profile = Profile(photos: <#T##[String]#>, socials: <#T##[SocialProfile]#>, freeResponse: <#T##[FreeResponse]#>, lat: <#T##Double#>, lon: <#T##Double#>, personalDetails: <#T##PersonalDetails#>, familyPlans: <#T##[MultipleChoiceAnswer]#>, vices: <#T##[MultipleChoiceAnswer]#>, personalityAnswers: <#T##[Personality]#>, signupQuestions: <#T##[SignupModels.Question]#>)
@@ -154,6 +152,8 @@ extension SignupViewController: UICollectionViewDelegate, UICollectionViewDataSo
                         
                 if self.acceptedAttributes.contains(currentAttribute), let question = currentQuestion as? SignupModels.Question {
                     cell.viewPlaceholder!.addSubview(QuestionCardView(for: currentAttribute, question: question, frame: cell.viewPlaceholder!.frame) {(updatedQuestion) in
+                        // if completion handler is somehow triggered, we need to save that field and then
+                        // find that question inside of or list of questions and then overwrite it. 
                         for (attribute, question) in self.questionsFlat {
                             if attribute==currentAttribute && question?.id==updatedQuestion.id {
                                 print("OVERWRITING QUESTION'S ANSWER \(question?.question)")

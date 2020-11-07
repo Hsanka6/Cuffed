@@ -26,13 +26,13 @@ class QuestionCardView: UIView {
     init(for attribute: String, question: SignupModels.Question, frame: CGRect, saveClosure: @escaping(SignupModels.Question) -> Void) {
         self.saveAnswerCompletion = saveClosure
         self.question = question
-        print(self.question.question)
-        if let answer = self.question.answerChoice {
-            print("THIS HAS A PREVIOUSLY SET ANSWER \(answer)")
-        }
-        else {
-            print("HAS NEVER HAD AN ANSWER BEFORE")
-        }
+//        print(self.question.question)
+//        if let answer = self.question.answerChoice {
+//            print("THIS HAS A PREVIOUSLY SET ANSWER \(answer)")
+//        }
+//        else {
+//            print("HAS NEVER HAD AN ANSWER BEFORE")
+//        }
         super.init(frame: frame)
         let questionLabel = UILabel()
         questionLabel.textAlignment = .center
@@ -147,6 +147,8 @@ extension QuestionCardView: UICollectionViewDelegate, UICollectionViewDataSource
                 if previousAnswer == currentQuestion.answers[indexPath.row] {
                     // hacky way but we really should be selecting the Item I guess?
                     cell.cellView?.backgroundColor = .green
+                    self.mcAnswersCollectionView.selectItem(at: indexPath, animated: false, scrollPosition: [])
+                    self.collectionView(self.mcAnswersCollectionView, didSelectItemAt: indexPath)
 //                    self.mcAnswersCollectionView.selectItem(at: indexPath, animated: false, scrollPosition: UICollectionView.ScrollPosition.centeredHorizontally)
                 }
             }
@@ -154,7 +156,7 @@ extension QuestionCardView: UICollectionViewDelegate, UICollectionViewDataSource
          }
         return UICollectionViewCell()
     }
-
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let height = CGFloat(50.0) // self.collectionView.frame.height
         let width = self.mcAnswersCollectionView.frame.width
@@ -169,6 +171,9 @@ extension QuestionCardView: UICollectionViewDelegate, UICollectionViewDataSource
                 self.collectionView(mcAnswersCollectionView, didDeselectItemAt: indexPath)
                 return
             }
+            
+            // make all others selected not green
+            
             
             cell.cellView?.backgroundColor = .green
             print("selected \(cell.answer!)")
