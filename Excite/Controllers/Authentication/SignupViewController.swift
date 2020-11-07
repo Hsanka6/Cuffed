@@ -50,7 +50,6 @@ class SignupViewController: UIViewController {
         
         self.collectionViewCells = [UIView]()
         self.viewModel = SignupViewModel(currentUser)
-        self.createCollectionView()
         NetworkRequester.getProfileQuestions { (questions) in
             self.questions = questions
             // go through all of the questions
@@ -63,6 +62,7 @@ class SignupViewController: UIViewController {
 //            self.collectionViewCells?.append(PhotosCardView(frame: self.view.frame))
             // pictures slide appended to last
             self.questionsFlat.append(("photos", nil))
+            self.createCollectionView()
             self.collectionView.reloadData()
         }
         
@@ -121,6 +121,22 @@ extension SignupViewController: UICollectionViewDelegate, UICollectionViewDataSo
     }
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         if (indexPath.row == self.questionsFlat.count - 1 ) {
+            
+            // construct the profile via the questionsFlat
+            
+            
+            // TODO:
+            // 1. Preserve fields (almost done here) like why does it also skip stuff
+            
+            // 2. Photos page
+            // 3. Push up to Firebase and log in
+            
+            
+            
+//            self.viewModel?.user?.profile = Profile(photos: <#T##[String]#>, socials: <#T##[SocialProfile]#>, freeResponse: <#T##[FreeResponse]#>, lat: <#T##Double#>, lon: <#T##Double#>, personalDetails: <#T##PersonalDetails#>, familyPlans: <#T##[MultipleChoiceAnswer]#>, vices: <#T##[MultipleChoiceAnswer]#>, personalityAnswers: <#T##[Personality]#>, signupQuestions: <#T##[SignupModels.Question]#>)
+            
+            // then update the Firebase
+            // and then finally push the User to the ViewController
 //            NetworkRequester.updateUser(user: currentUser!)
 //            let newViewController = MainTabBarController()
 //            self.navigationController?.pushViewController(newViewController, animated: false)
@@ -133,25 +149,20 @@ extension SignupViewController: UICollectionViewDelegate, UICollectionViewDataSo
             let currentQuestion = self.questionsFlat[indexPath.row].1
             // also load which attribute the question will add to
             cell.initialize()
+            print("Cell \(indexPath.row). We're at question \(currentQuestion?.question)")
             DispatchQueue.main.async {
                         
                 if self.acceptedAttributes.contains(currentAttribute), let question = currentQuestion as? SignupModels.Question {
                     cell.viewPlaceholder!.addSubview(QuestionCardView(for: currentAttribute, question: question, frame: cell.viewPlaceholder!.frame) {(updatedQuestion) in
-                        // TODO
-                        // I receive the question with the updated answer choice
-                        // I now need to save it by going through the array and matching the question ID
-                        // and updating that value with the updatedQuestion's answer choice
                         for (attribute, question) in self.questionsFlat {
                             if attribute==currentAttribute && question?.id==updatedQuestion.id {
-                                print("OVERWRITING QUESTION \(question?.question)")
+                                print("OVERWRITING QUESTION'S ANSWER \(question?.question)")
                                 question?.answerChoice = updatedQuestion.answerChoice
                                 break
                             }
                         }
-                        print(updatedQuestion.answerChoice)
                     })
                 } else if currentAttribute == "photos" {
-//                    cell.addSubview(PhotosCardView(frame: cell.viewPlaceholder.frame))
                     cell.viewPlaceholder!.addSubview(PhotosCardView(frame: cell.viewPlaceholder!.frame))
                 }
             }

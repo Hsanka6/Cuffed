@@ -26,6 +26,7 @@ class QuestionCardView: UIView {
     init(for attribute: String, question: SignupModels.Question, frame: CGRect, saveClosure: @escaping(SignupModels.Question) -> Void) {
         self.saveAnswerCompletion = saveClosure
         self.question = question
+        print(self.question.question)
         if let answer = self.question.answerChoice {
             print("THIS HAS A PREVIOUSLY SET ANSWER \(answer)")
         }
@@ -144,8 +145,9 @@ extension QuestionCardView: UICollectionViewDelegate, UICollectionViewDataSource
             if let previousAnswer = self.question.answerChoice {
                 
                 if previousAnswer == currentQuestion.answers[indexPath.row] {
-                    print("SHOULD BE SELECTING \(previousAnswer)")
-                    self.mcAnswersCollectionView.selectItem(at: indexPath, animated: false, scrollPosition: UICollectionView.ScrollPosition.centeredHorizontally)
+                    // hacky way but we really should be selecting the Item I guess?
+                    cell.cellView?.backgroundColor = .green
+//                    self.mcAnswersCollectionView.selectItem(at: indexPath, animated: false, scrollPosition: UICollectionView.ScrollPosition.centeredHorizontally)
                 }
             }
             return cell
