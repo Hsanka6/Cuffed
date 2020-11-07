@@ -153,7 +153,7 @@ extension SignupViewController: UICollectionViewDelegate, UICollectionViewDataSo
                 if self.acceptedAttributes.contains(currentAttribute), let question = currentQuestion as? SignupModels.Question {
                     cell.viewPlaceholder!.addSubview(QuestionCardView(for: currentAttribute, question: question, frame: cell.viewPlaceholder!.frame) {(updatedQuestion) in
                         // if completion handler is somehow triggered, we need to save that field and then
-                        // find that question inside of or list of questions and then overwrite it. 
+                        // overwrite 
                         for (attribute, question) in self.questionsFlat {
                             if attribute==currentAttribute && question?.id==updatedQuestion.id {
                                 print("OVERWRITING QUESTION'S ANSWER \(question?.question)")
@@ -163,7 +163,7 @@ extension SignupViewController: UICollectionViewDelegate, UICollectionViewDataSo
                         }
                     })
                 } else if currentAttribute == "photos" {
-                    cell.viewPlaceholder!.addSubview(PhotosCardView(frame: cell.viewPlaceholder!.frame))
+                    cell.viewPlaceholder!.addSubview(PhotosCardView(photos: [], frame: cell.viewPlaceholder!.frame, currentViewController: self))
                 }
             }
             // find a way to save the answers from the UIView
