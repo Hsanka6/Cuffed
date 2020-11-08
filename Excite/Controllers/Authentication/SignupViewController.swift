@@ -170,15 +170,23 @@ extension SignupViewController: UICollectionViewDelegate, UICollectionViewDataSo
                     cell.viewPlaceholder!.addSubview(SignupFinishedCardView(frame: cell.viewPlaceholder!.frame ) {
                         // do checks first
                         // if everythign else is good, then
-                        // 1. checks for all of the details to be completed organized by keys 
+                        // 1. checks for all of the details to be completed organized by keys
                         // 2. Then, we need to get the current user
                         // 3. Construct a profile object
                         // 4. attach Profile object to user
                         // 5. let newViewController = MainTabBarController
                         // 6. newViewController.viewModel.user = user
                         // 7. push View Controller baby!
-                        let newViewController = MainTabBarController()
-                        self.navigationController?.pushViewController(newViewController, animated: false)
+                        
+                        for question in self.questions {
+                            
+                            print(question.value)
+                        }
+                        for photo in self.profileImages {
+                            print(photo)
+                        }
+//                        let newViewController = MainTabBarController()
+//                        self.navigationController?.pushViewController(newViewController, animated: false)
                     })
                 }
             }
