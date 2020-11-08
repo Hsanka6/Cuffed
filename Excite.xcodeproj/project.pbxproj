@@ -51,7 +51,6 @@
 		D8EE311ED3256FAB5A1073CE /* Pods_Excite.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B3112B2EAD0500421CCA693 /* Pods_Excite.framework */; };
 		EC3F87EC2519B29900B31446 /* SignupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC3F87EB2519B29900B31446 /* SignupViewModel.swift */; };
 		EC3F87EE2519B2B200B31446 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC3F87ED2519B2B200B31446 /* LoginViewModel.swift */; };
-		EC3F87F42519B43E00B31446 /* SignupCollectionViewCellDeprecated.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC3F87F32519B43E00B31446 /* SignupCollectionViewCellDeprecated.swift */; };
 		EC3F87F62526F0EF00B31446 /* SignupModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC3F87F52526F0EF00B31446 /* SignupModels.swift */; };
 		EC4F636F24C6BCFD00477779 /* Barcelony.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EC4F636E24C6BCFD00477779 /* Barcelony.ttf */; };
 		EC593A81254F57AE00F588DD /* SignupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC593A80254F57AE00F588DD /* SignupViewController.swift */; };
@@ -135,7 +134,6 @@
 		CA6B3FD5E385BCEC34B609B4 /* Pods-Excite-ExciteUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Excite-ExciteUITests.debug.xcconfig"; path = "Target Support Files/Pods-Excite-ExciteUITests/Pods-Excite-ExciteUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		EC3F87EB2519B29900B31446 /* SignupViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupViewModel.swift; sourceTree = "<group>"; };
 		EC3F87ED2519B2B200B31446 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
-		EC3F87F32519B43E00B31446 /* SignupCollectionViewCellDeprecated.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupCollectionViewCellDeprecated.swift; sourceTree = "<group>"; };
 		EC3F87F52526F0EF00B31446 /* SignupModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupModels.swift; sourceTree = "<group>"; };
 		EC4F636E24C6BCFD00477779 /* Barcelony.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = Barcelony.ttf; path = Excite/Utils/Barcelony.ttf; sourceTree = SOURCE_ROOT; };
 		EC593A80254F57AE00F588DD /* SignupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupViewController.swift; sourceTree = "<group>"; };
@@ -404,7 +402,6 @@
 		EC3F87F22519B42B00B31446 /* Signup */ = {
 			isa = PBXGroup;
 			children = (
-				EC3F87F32519B43E00B31446 /* SignupCollectionViewCellDeprecated.swift */,
 				EC593A84254F583600F588DD /* QuestionCardView.swift */,
 				EC593A86254F584700F588DD /* PhotosCardView.swift */,
 				EC593A82254F580600F588DD /* CardViewCell.swift */,
@@ -700,7 +697,6 @@
 				7032881624F7AAC9002228ED /* QuestionCollectionViewCell.swift in Sources */,
 				70AA64CF247F6D4E00F56CB3 /* ChatViewController.swift in Sources */,
 				7010798324A6CC1F00E640B9 /* DatingAudioVideoViewControllerExtensions.swift in Sources */,
-				EC3F87F42519B43E00B31446 /* SignupCollectionViewCellDeprecated.swift in Sources */,
 				709B2C3D24C2B40E008BA374 /* ProfileViewModel.swift in Sources */,
 				701F1CD8249D70080096B564 /* DatingAudioVideoViewController.swift in Sources */,
 				70CDFC4224FCC6680068CF37 /* MultipleChoiceButton.swift in Sources */,

@@ -28,7 +28,6 @@ extension UICollectionView {
 }
 
 class SignupViewController: UIViewController {
-    // MARK: - Properties
     let colors = GradientBackground()
     
     var currentUser: User?
@@ -43,8 +42,6 @@ class SignupViewController: UIViewController {
     
     var questionsFlat = [ (String, SignupModels.Question? )]()
     var profileImages = [UIImage]()
-    // MARK: - Lifecycle
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.constructBackground()
@@ -101,14 +98,12 @@ class SignupViewController: UIViewController {
         self.navigationController?.setNavigationBarHidden(false, animated: animated)
     }
     
-    // MARK: - Selectors
     func constructBackground() {
         let backgroundLayer = self.colors.gradientLayer
         backgroundLayer.frame = view.frame
         view.layer.insertSublayer(backgroundLayer, at: 0)
     }
     
-    // MARK: - Helpers
 }
 
 
@@ -117,52 +112,25 @@ extension SignupViewController: UICollectionViewDelegate, UICollectionViewDataSo
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return self.questionsFlat.count
     }
-    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        if (indexPath.row == self.questionsFlat.count - 1 ) {
-            
-            // construct the profile via the questionsFlat
-            
-            
-            // TODO:
-            // 2. Photos page
-            // 3. Push up to Firebase and log in
-            // why don't we register the object
-            
-//            self.viewModel?.user?.profile = Profile(photos: <#T##[String]#>, socials: <#T##[SocialProfile]#>, freeResponse: <#T##[FreeResponse]#>, lat: <#T##Double#>, lon: <#T##Double#>, personalDetails: <#T##PersonalDetails#>, familyPlans: <#T##[MultipleChoiceAnswer]#>, vices: <#T##[MultipleChoiceAnswer]#>, personalityAnswers: <#T##[Personality]#>, signupQuestions: <#T##[SignupModels.Question]#>)
-            
-            // then update the Firebase
-            // and then finally push the User to the ViewController
-//            NetworkRequester.updateUser(user: currentUser!)
-//            let newViewController = MainTabBarController()
-//            self.navigationController?.pushViewController(newViewController, animated: false)
-         }
-    }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CardViewCell.reuseIdentifier, for: indexPath) as? CardViewCell {
             let currentAttribute = self.questionsFlat[indexPath.row].0
             let currentQuestion = self.questionsFlat[indexPath.row].1
-            // also load which attribute the question will add to
             cell.initialize()
-            print("Cell \(indexPath.row). We're at question \(currentQuestion?.question)")
             DispatchQueue.main.async {
                         
                 if self.acceptedAttributes.contains(currentAttribute), let question = currentQuestion as? SignupModels.Question {
                     cell.viewPlaceholder!.addSubview(QuestionCardView(for: currentAttribute, question: question, frame: cell.viewPlaceholder!.frame) {(updatedQuestion) in
-                        // if completion handler is somehow triggered, we need to save that field and then
-                        // overwrite 
                         for (attribute, question) in self.questionsFlat {
                             if attribute==currentAttribute && question?.id==updatedQuestion.id {
-//                                print("OVERWRITING QUESTION'S ANSWER \(question?.question)")
                                 question?.answerChoice = updatedQuestion.answerChoice
                                 break
                             }
                         }
                     })
                 } else if currentAttribute == "photos" {
-                    cell.viewPlaceholder!.addSubview(PhotosCardView(photos: self.profileImages, frame: cell.viewPlaceholder!.frame, currentViewController: self) {
-                        (photos) in
-//                        print("INSIDE OF THE CALLER OF PHOTOS CARD VIEW")
+                    cell.viewPlaceholder!.addSubview(PhotosCardView(photos: self.profileImages, frame: cell.viewPlaceholder!.frame, currentViewController: self) { (photos) in
                         self.profileImages = photos
                     })
                 }
@@ -178,19 +146,46 @@ extension SignupViewController: UICollectionViewDelegate, UICollectionViewDataSo
                         // 6. newViewController.viewModel.user = user
                         // 7. push View Controller baby!
                         
-                        for question in self.questions {
-                            
+                        
+//                        self.viewModel?.user?.profile = Profile(photos: [String], socials: [SocialProfile], freeResponse: <#T##[FreeResponse]#>, lat: <#T##Double#>, lon: <#T##Double#>, personalDetails: <#T##PersonalDetails#>, familyPlans: [MultipleChoiceAnswer], vices: <#T##[MultipleChoiceAnswer]#>, personalityAnswers: <#T##[Personality]#><#T##[SignupModels.Question]#>)
+                        var photos = [String]()
+                        var socials = [SocialProfile]()
+                        var freeResponse = [FreeResponse]()
+                        var lat = 0 // dummy value
+                        var lon = 0 // dummy value
+                        var personalDetails: PersonalDetails
+                        var familyPlans = [MultipleChoiceAnswer]()
+                        var personalityAnswers = [Personality]()
+                        for (attribute, questions) in self.questions {
+                            if attribute=="familyPlans" {
+                                
+                            } else if attribute=="vices" {
+                                
+                            } else if attribute=="photos" {
+                                //                if let uploadData = image.pngData() {
+                                //                       storageRef.put(uploadData, metadata: nil) { (metadata, error) in
+                                //                           if error != nil {
+                                //                               print("error")
+                                //                               completion(nil)
+                                //                           } else {
+                                //                               completion((metadata?.downloadURL()?.absoluteString)!))
+                                //                               // your uploaded photo url.
+                                //                           }
+                                //                      }
+                                //                }
+                                
+                                // would need to get the String ID of each image
+                            } else if
                             print(question.value)
                         }
                         for photo in self.profileImages {
                             print(photo)
                         }
 //                        let newViewController = MainTabBarController()
-//                        self.navigationController?.pushViewController(newViewController, animated: false)
+//                        self.navigationController?.pushViewController(newViewController, animated: true)
                     })
                 }
             }
-            // find a way to save the answers from the UIView
             cell.nextButtonAction = {
                 var visibleRect    = CGRect()
                 visibleRect.origin = self.collectionView.contentOffset
@@ -219,90 +214,11 @@ extension SignupViewController: UICollectionViewDelegate, UICollectionViewDataSo
             return cell
         }
         return UICollectionViewCell()
-
     }
-
-    func saveAnswer() {
-        print("SAVING ANSWER")
-    }
-    // saves the user fields
-//    func saveFieldInUserObject(questionId: String, answerChoice: String?) {
-//
-//        self.questions[questionId]?.answerChoice = answerChoice
-//
-//    }
-
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let height = self.collectionView.frame.height
         let width = self.collectionView.frame.width
         return CGSize(width: width, height: height)
     }
-
 }
-
-
-
-//        if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cells[indexPath.row].reuseIdentifier, for: indexPath) as? CardViewQuestionCell {
-//
-//        }
-//        if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CardViewCell.reuseIdentifier, for: indexPath) as? CardViewPhotosCell {
-//
-//            cell.initialize(questionId: Array(questions)[indexPath.row].key, questionNum: indexPath.row, question: Array(questions)[indexPath.row].value)
-//
-//            cell.nextButtonAction = {
-//                (answerChoice) in
-//                let indexPath = self.collectionView.indexPathsForVisibleItems.first.flatMap({
-//                    IndexPath(item: $0.row + 1, section: $0.section)
-//                })
-//                if indexPath!.row < self.questions.count {
-//                    self.collectionView.scrollToItem(at: indexPath!, at: .right, animated: true)
-//                } else {
-//                }
-//                self.saveFieldInUserObject(questionId: Array(self.questions)[indexPath!.row].key, answerChoice: answerChoice)
-//            }
-//            cell.backButtonAction = {
-//                (answerChoice) in
-//                let indexPath = self.collectionView.indexPathsForVisibleItems.first.flatMap({
-//                    IndexPath(item: $0.row - 1, section: $0.section)
-//                })
-//
-//                if indexPath!.row >= 0 {
-//                    self.collectionView.scrollToItem(at: indexPath!, at: .left, animated: true)
-//                } else {
-//                }
-//                self.saveFieldInUserObject(questionId: Array(self.questions)[indexPath!.row].key, answerChoice: answerChoice)
-//            }
-//
-//         return cell
-//         }
-
-
-// FINAL TODO: -----------------------------------
-// so I would render all of the cells inside of collectionViewCEll first
-// then register the input for photos last
-
-// two types of cells
-// one for individual questions
-// the other for group of questions
-// those are two children of a generic type
-
-// that generic type will be the one that shows up inside of the SignupViewController
-
-// the way we will identify what types of questions there are is that inside of this file
-// there will be a dictonary [ String : [Question] ]
-// where the key will be from a network call
-// QuestionType (this will be documentID)
-// [Question] Generic question object that I already have
-
-// ID the questions as well so any time you want to edit a specific one then you can
-
-// then we will have a generic collectionViewCell
-// that renders views
-// which can take either an individual question
-// or one that renders photo inputs
-
-// so the collectionViewCell will have a generic card inside of it
-// the first cards will be constructed from the questions from the collection inside of the dictionary`
-// then at the end we will have one individual custom cell that has the photo inputs
-
-// -------------------------------------------------

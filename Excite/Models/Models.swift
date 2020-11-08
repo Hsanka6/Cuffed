@@ -113,7 +113,6 @@ class Profile: Codable {
     var vices: [MultipleChoiceAnswer]
     // traits that you describe yourself as upon sign-up
     var personalityAnswers: [Personality]
-    var signupQuestions: [SignupModels.Question]
     
     private enum CodingKeys: String, CodingKey {
         case photos
@@ -125,10 +124,9 @@ class Profile: Codable {
         case familyPlans
         case vices
         case personalityAnswers
-        case signupQuestions
     }
 
-    init(photos: [String], socials: [SocialProfile], freeResponse: [FreeResponse], lat: Double, lon: Double, personalDetails: PersonalDetails, familyPlans: [MultipleChoiceAnswer], vices: [MultipleChoiceAnswer], personalityAnswers: [Personality], signupQuestions: [SignupModels.Question]) {
+    init(photos: [String], socials: [SocialProfile], freeResponse: [FreeResponse], lat: Double, lon: Double, personalDetails: PersonalDetails, familyPlans: [MultipleChoiceAnswer], vices: [MultipleChoiceAnswer], personalityAnswers: [Personality]) {
         self.photos = photos
         self.socials = socials
         self.freeResponse = freeResponse
@@ -138,7 +136,6 @@ class Profile: Codable {
         self.familyPlans = familyPlans
         self.vices = vices
         self.personalityAnswers = personalityAnswers
-        self.signupQuestions = signupQuestions
     }
 
     required init(from decoder: Decoder) throws {
@@ -153,7 +150,6 @@ class Profile: Codable {
         let familyPlans = try container.decode(Array<MultipleChoiceAnswer>.self, forKey: .familyPlans )
         let vices = try container.decode(Array<MultipleChoiceAnswer>.self, forKey: .vices )
         let personalityAnswers = try container.decode(Array<Personality>.self, forKey: .personalityAnswers )
-        let signupQuestions = try container.decode(Array<SignupModels.Question>.self, forKey: .signupQuestions )
         self.photos = photos
         self.socials = socials
         self.freeResponse = freeResponse
@@ -163,7 +159,6 @@ class Profile: Codable {
         self.familyPlans = familyPlans
         self.vices = vices
         self.personalityAnswers = personalityAnswers
-        self.signupQuestions = signupQuestions
     }
     
     
