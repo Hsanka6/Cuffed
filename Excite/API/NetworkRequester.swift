@@ -76,14 +76,15 @@ class NetworkRequester: NetworkRequesterProtocol {
         }
     }
 
-    static func updateUser(user: User) {
-        dump(user)
+    static func updateUser(user: User, completion: @escaping() -> Void) {
         let database = Firestore.firestore()
-        print("GOT TO UPDATE USER")
-        print(user.profile!)
-        print(user.userId)
+        // there are 4 network calls here whoops lol
         database.collection("Users").document(user.userId).setData([ "profile": user.profile!.makeFromDict() ], merge: true)
-        
+        database.collection("Users").document(user.userId).setData([ "userId": user.userId ], merge: true)
+        database.collection("Users").document(user.userId).setData([ "name": user.name ], merge: true)
+        database.collection("Users").document(user.userId).setData([ "email": user.email ], merge: true)
+        database.collection("Users").document(user.userId).setData([ "isPremium": user.isPremium ?? false ], merge: true)
+        completion()
     }
     
     // return a key of questions organized by documentID as key and an array of corresponding questions as values.

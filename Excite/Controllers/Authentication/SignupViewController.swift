@@ -32,7 +32,8 @@ class SignupViewController: UIViewController {
     
     var currentUser: User?
     var viewModel: SignupViewModel?
-    let acceptedAttributes=["familyPlans", "vices"]
+    
+    let acceptedAttributes=["familyPlans", "vices", "socials", "freeResponse", "personalDetails", "personalityAnswers"]
     let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
     // key is what type of attribute it should refer to
     // value is the array of questions for that particular attribute
@@ -136,18 +137,21 @@ extension SignupViewController: UICollectionViewDelegate, UICollectionViewDataSo
                 }
                 else if currentAttribute == "completed" {
                     cell.viewPlaceholder!.addSubview(SignupFinishedCardView(frame: cell.viewPlaceholder!.frame ) {
-                        // do checks first
-                        // if everythign else is good, then
-                        // 1. checks for all of the details to be completed organized by keys
-                        // 2. Then, we need to get the current user
-                        // 3. Construct a profile object
-                        // 4. attach Profile object to user
-                        // 5. let newViewController = MainTabBarController
-                        // 6. newViewController.viewModel.user = user
-                        // 7. push View Controller baby!
+                        // SHORTCOMINGS:
                         
+                        // need to polish UI quite a bit
+                        // need some checks for fields
+                        // need error messages in case signup is fucked up
+                        // need to for conditional next and back buttons upon completion of answerChoice
+                        // need to gather personalDetails info, including latitude and longitude information
+                        // need to convert photos as [UIImage]() to [String] before pushing up to Firebase
+                        // free response questions need to have image attached to them. Currently don't do that
+                        // some values inside of the signup process like profileQuestions shouldnt really be in signup
+                        // so we should actually make Profile be a bit more selective in the constructor and be able to take null arguments
+                        // for certain fields and just probably keep photos, socials, personal Details, family Plans and vices (basically everything except personalityAnswers)
+                        // for free response answers as of RN you can't click on next button and have the field save. you either have to press enter or click outside of the uitextfield to save
+                        // I do not render personalityAnswers inside the Signup
                         
-//                        self.viewModel?.user?.profile = Profile(photos: [String], socials: [SocialProfile], freeResponse: <#T##[FreeResponse]#>, lat: <#T##Double#>, lon: <#T##Double#>, personalDetails: <#T##PersonalDetails#>, familyPlans: [MultipleChoiceAnswer], vices: <#T##[MultipleChoiceAnswer]#>, personalityAnswers: <#T##[Personality]#><#T##[SignupModels.Question]#>)
                         var photos = [String]()
                         var socials = [SocialProfile]()
                         var freeResponse = [FreeResponse]()
@@ -155,13 +159,15 @@ extension SignupViewController: UICollectionViewDelegate, UICollectionViewDataSo
                         var lon = 0 // dummy value
                         var personalDetails: PersonalDetails
                         var familyPlans = [MultipleChoiceAnswer]()
+                        var vices = [MultipleChoiceAnswer]()
                         var personalityAnswers = [Personality]()
                         for (attribute, questions) in self.questions {
-                            if attribute=="familyPlans" {
-                                
-                            } else if attribute=="vices" {
-                                
-                            } else if attribute=="photos" {
+                            
+                            if attribute=="photos" {
+                                photos.append("dummy-photo-string")
+                                for photo in self.profileImages {
+                                    photos.append("dummy-photo-string")
+                                }
                                 //                if let uploadData = image.pngData() {
                                 //                       storageRef.put(uploadData, metadata: nil) { (metadata, error) in
                                 //                           if error != nil {
@@ -175,14 +181,50 @@ extension SignupViewController: UICollectionViewDelegate, UICollectionViewDataSo
                                 //                }
                                 
                                 // would need to get the String ID of each image
-                            } else if
-                            print(question.value)
+                            } else if attribute=="socials" {
+                                for question in questions {
+                                    socials.append(SocialProfile(platform: question.question, link: question.answerChoice!))
+                                }
+                            } else if attribute=="freeResponse" {
+                                for question in questions {
+                                    // image empty rn
+                                    freeResponse.append(FreeResponse(question: question.question, answer: question.answerChoice ?? "", image: ""))
+                                }
+                            } else if attribute=="familyPlans" {
+                                for question in questions {
+                                    guard let mcFamilyPlanQuestion = question as? SignupModels.MultipleChoice else {continue}
+                                    familyPlans.append(MultipleChoiceAnswer(answer: mcFamilyPlanQuestion.answerChoice!, question: mcFamilyPlanQuestion.question, answerChoices: mcFamilyPlanQuestion.answers, short: mcFamilyPlanQuestion.short))
+                                }
+                            } else if attribute=="vices" {
+                                for question in questions {
+                                    guard let mcViceQuestion = question as? SignupModels.MultipleChoice else {continue}
+                                    vices.append(MultipleChoiceAnswer(answer: mcViceQuestion.answerChoice!, question: mcViceQuestion.question, answerChoices: mcViceQuestion.answers, short: mcViceQuestion.short))
+                                }
+                            } else if attribute=="personalityAnswers" {
+                                for question in questions {
+                                    guard let mcPersonalityQuestion = question as? SignupModels.MultipleChoice else {continue}
+                                    personalityAnswers.append(Personality(answer: mcPersonalityQuestion.answerChoice!, question: mcPersonalityQuestion.question, answerChoices: mcPersonalityQuestion.answers, short: mcPersonalityQuestion.short, topValue: "", bottomValue: ""))
+                                }
+                            }
                         }
-                        for photo in self.profileImages {
-                            print(photo)
+                        
+                        personalDetails = PersonalDetails(fullName: self.viewModel!.user!.name , age: 23, height: "", gender: GenderType.MALE, ethnicity: "Filipino", location: "San Diego", jobTitle: "SWE", company: "Two Sigma")
+                        
+                        self.viewModel?.user?.profile = Profile(photos: photos,
+                                                               socials: socials,
+                                                               freeResponse: freeResponse,
+                                                               lat: Double(lat),
+                                                               lon: Double(lon),
+                                                               personalDetails: personalDetails,
+                                                               familyPlans: familyPlans,
+                                                               vices: vices,
+                                                               personalityAnswers: personalityAnswers)
+                        
+                        NetworkRequester.updateUser(user: self.viewModel!.user!) {
+                            let newViewController = MainTabBarController()
+                            newViewController.user = self.viewModel?.user
+                            self.navigationController?.pushViewController(newViewController, animated: true)
                         }
-//                        let newViewController = MainTabBarController()
-//                        self.navigationController?.pushViewController(newViewController, animated: true)
                     })
                 }
             }

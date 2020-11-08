@@ -213,6 +213,12 @@ class Personality: MultipleChoiceAnswer {
         case short
      }
         
+    init(answer: String, question: String, answerChoices: [String], short: String, topValue: String, bottomValue: String) {
+        self.topValue = topValue
+        self.bottomValue = bottomValue
+        super.init(answer: answer, question: question, answerChoices: answerChoices, short: short)
+        
+    }
     required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: Key.self)
         let question = try container.decode(String.self, forKey: .question)

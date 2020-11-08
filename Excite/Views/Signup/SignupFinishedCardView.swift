@@ -36,7 +36,7 @@ class SignupFinishedCardView: UIView {
         self.addSubview(finishButton)
         finishButton.snp.makeConstraints { (make) in
             make.center.equalToSuperview()
-            make.width.equalToSuperview()
+            make.width.equalToSuperview().multipliedBy(0.8)
             make.height.equalTo(40)
         }
         finishButton.isUserInteractionEnabled = true
