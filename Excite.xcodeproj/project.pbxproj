@@ -60,6 +60,7 @@
 		EC593A85254F583600F588DD /* QuestionCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC593A84254F583600F588DD /* QuestionCardView.swift */; };
 		EC593A87254F584700F588DD /* PhotosCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC593A86254F584700F588DD /* PhotosCardView.swift */; };
 		EC85994E255536E500AFF136 /* MultipleChoiceQuestionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC85994D255536E500AFF136 /* MultipleChoiceQuestionViewCell.swift */; };
+		EC8599532557A3BA00AFF136 /* SignupFinishedCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC8599522557A3BA00AFF136 /* SignupFinishedCardView.swift */; };
 		ECC6C8372533DE8E00221E5B /* SignupCellMultipleChoiceAnswerDeprecated.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC6C8362533DE8E00221E5B /* SignupCellMultipleChoiceAnswerDeprecated.swift */; };
 /* End PBXBuildFile section */
 
@@ -145,6 +146,7 @@
 		EC593A84254F583600F588DD /* QuestionCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionCardView.swift; sourceTree = "<group>"; };
 		EC593A86254F584700F588DD /* PhotosCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosCardView.swift; sourceTree = "<group>"; };
 		EC85994D255536E500AFF136 /* MultipleChoiceQuestionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultipleChoiceQuestionViewCell.swift; sourceTree = "<group>"; };
+		EC8599522557A3BA00AFF136 /* SignupFinishedCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupFinishedCardView.swift; sourceTree = "<group>"; };
 		ECC6C8362533DE8E00221E5B /* SignupCellMultipleChoiceAnswerDeprecated.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupCellMultipleChoiceAnswerDeprecated.swift; sourceTree = "<group>"; };
 		F60BBCA043E7AD0A43D6B4FD /* Pods-Excite.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Excite.release.xcconfig"; path = "Target Support Files/Pods-Excite/Pods-Excite.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -413,6 +415,7 @@
 				EC593A86254F584700F588DD /* PhotosCardView.swift */,
 				EC593A82254F580600F588DD /* CardViewCell.swift */,
 				EC85994D255536E500AFF136 /* MultipleChoiceQuestionViewCell.swift */,
+				EC8599522557A3BA00AFF136 /* SignupFinishedCardView.swift */,
 			);
 			path = Signup;
 			sourceTree = "<group>";
@@ -716,6 +719,7 @@
 				7054D59A245F7507007DA9BA /* SceneDelegate.swift in Sources */,
 				EC593A87254F584700F588DD /* PhotosCardView.swift in Sources */,
 				7032880F24F65A8E002228ED /* QuestionsTableViewCell.swift in Sources */,
+				EC8599532557A3BA00AFF136 /* SignupFinishedCardView.swift in Sources */,
 				7043B30C24EE6A1B00F1FD89 /* UserTablePersonalityTableViewCell.swift in Sources */,
 				70521E1724FB943900847629 /* AnswerQuestionViewController.swift in Sources */,
 				EC85994E255536E500AFF136 /* MultipleChoiceQuestionViewCell.swift in Sources */,

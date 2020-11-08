@@ -53,16 +53,13 @@ class SignupViewController: UIViewController {
         self.viewModel = SignupViewModel(currentUser)
         NetworkRequester.getProfileQuestions { (questions) in
             self.questions = questions
-            // go through all of the questions
-            
             for (attribute, arrayOfQuestions) in self.questions {
                 for question in arrayOfQuestions {
                     self.questionsFlat.append((attribute, question))
                 }
             }
-//            self.collectionViewCells?.append(PhotosCardView(frame: self.view.frame))
-            // pictures slide appended to last
             self.questionsFlat.append(("photos", nil))
+            self.questionsFlat.append(("completed", nil))
             self.createCollectionView()
             self.collectionView.reloadData()
         }
@@ -131,7 +128,6 @@ extension SignupViewController: UICollectionViewDelegate, UICollectionViewDataSo
             // 3. Push up to Firebase and log in
             // why don't we register the object
             
-            
 //            self.viewModel?.user?.profile = Profile(photos: <#T##[String]#>, socials: <#T##[SocialProfile]#>, freeResponse: <#T##[FreeResponse]#>, lat: <#T##Double#>, lon: <#T##Double#>, personalDetails: <#T##PersonalDetails#>, familyPlans: <#T##[MultipleChoiceAnswer]#>, vices: <#T##[MultipleChoiceAnswer]#>, personalityAnswers: <#T##[Personality]#>, signupQuestions: <#T##[SignupModels.Question]#>)
             
             // then update the Firebase
@@ -157,7 +153,7 @@ extension SignupViewController: UICollectionViewDelegate, UICollectionViewDataSo
                         // overwrite 
                         for (attribute, question) in self.questionsFlat {
                             if attribute==currentAttribute && question?.id==updatedQuestion.id {
-                                print("OVERWRITING QUESTION'S ANSWER \(question?.question)")
+//                                print("OVERWRITING QUESTION'S ANSWER \(question?.question)")
                                 question?.answerChoice = updatedQuestion.answerChoice
                                 break
                             }
@@ -166,8 +162,23 @@ extension SignupViewController: UICollectionViewDelegate, UICollectionViewDataSo
                 } else if currentAttribute == "photos" {
                     cell.viewPlaceholder!.addSubview(PhotosCardView(photos: self.profileImages, frame: cell.viewPlaceholder!.frame, currentViewController: self) {
                         (photos) in
-                        print("INSIDE OF THE CALLER OF PHOTOS CARD VIEW")
+//                        print("INSIDE OF THE CALLER OF PHOTOS CARD VIEW")
                         self.profileImages = photos
+                    })
+                }
+                else if currentAttribute == "completed" {
+                    cell.viewPlaceholder!.addSubview(SignupFinishedCardView(frame: cell.viewPlaceholder!.frame ) {
+                        // do checks first
+                        // if everythign else is good, then
+                        // 1. checks for all of the details to be completed organized by keys 
+                        // 2. Then, we need to get the current user
+                        // 3. Construct a profile object
+                        // 4. attach Profile object to user
+                        // 5. let newViewController = MainTabBarController
+                        // 6. newViewController.viewModel.user = user
+                        // 7. push View Controller baby!
+                        let newViewController = MainTabBarController()
+                        self.navigationController?.pushViewController(newViewController, animated: false)
                     })
                 }
             }

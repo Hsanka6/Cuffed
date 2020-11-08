@@ -20,8 +20,6 @@ class PhotosCardView: UIView {
     init(photos: [UIImage], frame: CGRect, currentViewController: UIViewController, savePhotosCompletionHandler: @escaping([UIImage]) -> Void) {
         self.savePhotosCompletionHandler = savePhotosCompletionHandler
         self.photos = photos
-        print("THIS IS THE AMOUNT OF PHOTOS WE HAVE STORED")
-        print(self.photos.count)
         if self.photos.count < 9 {
             self.photos.append(nil)
         }
@@ -52,14 +50,12 @@ class PhotosCardView: UIView {
     
     func createCollectionView() {
         self.addSubview(collectionView)
-        
         self.collectionView.snp.makeConstraints { (make) in
             make.centerX.equalToSuperview()
             make.top.equalToSuperview().inset(60)
             make.height.equalTo(450)
             make.width.equalToSuperview().multipliedBy(0.9)
         }
-    
         collectionView.dataSource = self
         collectionView.delegate = self
         collectionView.backgroundColor = .clear
@@ -67,7 +63,6 @@ class PhotosCardView: UIView {
         collectionView.showsHorizontalScrollIndicator = true
         collectionView.register(PhotoCollectionViewCell.self, forCellWithReuseIdentifier: PhotoCollectionViewCell.reuseIdentifier)
     }
-
 }
 
 extension PhotosCardView: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
@@ -90,7 +85,8 @@ extension PhotosCardView: UICollectionViewDelegate, UICollectionViewDataSource, 
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let width = (self.collectionView.bounds.width/2) - 20
-        let height = (self.collectionView.bounds.height/2) - 20
+        let height = width
+//        let height = (self.collectionView.bounds.height/2) - 20
         return CGSize(width: width, height: height)
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {

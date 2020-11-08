@@ -9,31 +9,19 @@
 import Foundation
 import UIKit
 
-
-// Render question here, and have references to either the object or pass in a closure function to update user data inside of  SignupViewController
-
-// can either be Multiple Choice or Free Response
 class QuestionCardView: UIView {
     var question: SignupModels.Question
     
-    // free response
     var freeResponseAnswer: UITextField?
     
-    // multiple choice fields
     var selectedIndexPath: IndexPath?
     let mcAnswersCollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
     var saveAnswerCompletion: ((SignupModels.Question)->())?
     init(for attribute: String, question: SignupModels.Question, frame: CGRect, saveClosure: @escaping(SignupModels.Question) -> Void) {
         self.saveAnswerCompletion = saveClosure
         self.question = question
-//        print(self.question.question)
-//        if let answer = self.question.answerChoice {
-//            print("THIS HAS A PREVIOUSLY SET ANSWER \(answer)")
-//        }
-//        else {
-//            print("HAS NEVER HAD AN ANSWER BEFORE")
-//        }
         super.init(frame: frame)
+        
         let questionLabel = UILabel()
         questionLabel.textAlignment = .center
         questionLabel.numberOfLines = 3
@@ -47,7 +35,6 @@ class QuestionCardView: UIView {
             make.right.equalTo(-15)
         }
         renderQuestion()
-        
     }
     convenience init() {
         self.init(for: "", question: SignupModels.Question(id: "", question: "", isMandatory: false, isHidden: true, short: "", answerChoice: ""), frame: CGRect.zero) { _ in }
@@ -69,8 +56,6 @@ class QuestionCardView: UIView {
                 freeResponseAnswer.font            = UIFont.systemFont(ofSize: 30)
                 freeResponseAnswer.attributedPlaceholder = NSAttributedString(string: self.question.short, attributes: [.foregroundColor : UIColor.lightGray])
                 freeResponseAnswer.addTarget(self, action: #selector(self.getFRAnswer(_:)), for: .editingDidEndOnExit)
-//                let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.preserveCurrentAnswer))
-//                freeResponseAnswer.addGestureRecognizer(tapGesture)
                 
                 if let previousAnswer = question.answerChoice {
                     freeResponseAnswer.text = previousAnswer
