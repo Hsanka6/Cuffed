@@ -11,27 +11,24 @@ import UIKit
 import Kingfisher
 
 class PhotosCardView: UIView {
-    public var photos = [String]()
+//    public var photos = [String]()
+    public var photos = [UIImage?]()
+    
     let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
     var currentViewController: UIViewController
-    init(photos: [String], frame: CGRect, currentViewController: UIViewController) {
-        // check if photos is empty
-        // if it is, then render a cell to add a picture
-        // or we can just always render that picture
-        // but render it at the end of the array
-        // if photos.coiunt is < 9
-        // then render the add photos o
-        // else then don't let them add any more
+    var savePhotosCompletionHandler: ([UIImage])->()?
+    init(photos: [UIImage], frame: CGRect, currentViewController: UIViewController, savePhotosCompletionHandler: @escaping([UIImage]) -> Void) {
+        self.savePhotosCompletionHandler = savePhotosCompletionHandler
         self.photos = photos
-        self.photos.append("https://firebasestorage.googleapis.com/v0/b/excitedate-d3518.appspot.com/o/90zcGBSOWIOoK9SRBnWkDpOZYU23%2Fprofile_images%2F0?alt=media&token=a617c9e6-855c-418d-924c-12f76dbd2076")
+        print("THIS IS THE AMOUNT OF PHOTOS WE HAVE STORED")
+        print(self.photos.count)
         if self.photos.count < 9 {
-            self.photos.append("add-photo")
+            self.photos.append(nil)
         }
         self.currentViewController = currentViewController
         super.init(frame: frame)
-//        self.backgroundColor = .green
+        
         let questionLabel = UILabel()
-//        questionLabel.textAlignment = .center
         questionLabel.backgroundColor = .white
         questionLabel.numberOfLines = 3
         questionLabel.textColor = UIColor.black
@@ -80,11 +77,12 @@ extension PhotosCardView: UICollectionViewDelegate, UICollectionViewDataSource, 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
        if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PhotoCollectionViewCell.reuseIdentifier, for: indexPath) as? PhotoCollectionViewCell {
         cell.initialize()
-        let imageString=photos[indexPath.row]
-        if imageString == "add-photo" {
+        let imageString = photos[indexPath.row]
+        if imageString == nil {
             cell.configure(photo: "https://firebasestorage.googleapis.com/v0/b/excitedate-d3518.appspot.com/o/static%2Fsignup%2Fadd-photo.png?alt=media&token=89c4fe3e-5ea4-436b-b547-52d9f9d82744")
         } else {
-            cell.configure(photo: photos[indexPath.row])
+            cell.configureWithImage(photo: photos[indexPath.row]!)
+//            cell.configureWithImage(photo: photos[indexPath.row])
         }
         return cell
         }
@@ -98,12 +96,29 @@ extension PhotosCardView: UICollectionViewDelegate, UICollectionViewDataSource, 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if let cell = collectionView.cellForItem(at: indexPath) as? PhotoCollectionViewCell {
             ImagePickerManager().pickImage(self.currentViewController) { image in
+                
+//                if let uploadData = image.pngData() {
+//                       storageRef.put(uploadData, metadata: nil) { (metadata, error) in
+//                           if error != nil {
+//                               print("error")
+//                               completion(nil)
+//                           } else {
+//                               completion((metadata?.downloadURL()?.absoluteString)!))
+//                               // your uploaded photo url.
+//                           }
+//                      }
+//                }
+                self.photos[indexPath.row] = image
                 cell.configureWithImage(photo: image)
+                
+                self.savePhotosCompletionHandler(self.photos.flatMap { $0 })
+                
+                if indexPath.row == self.photos.count - 1 && self.photos.count < 9 {
+                    self.photos.append(nil)
+                }
+                
+                self.collectionView.reloadData()
             }
         }
-        if self.photos.count < 9 {
-            self.photos.append("add-photo")
-        }
-        self.collectionView.reloadData()
     }
 }

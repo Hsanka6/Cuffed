@@ -42,6 +42,7 @@ class SignupViewController: UIViewController {
     var questions = [ String: [SignupModels.Question] ]()
     
     var questionsFlat = [ (String, SignupModels.Question? )]()
+    var profileImages = [UIImage]()
     // MARK: - Lifecycle
     
     override func viewDidLoad() {
@@ -163,7 +164,11 @@ extension SignupViewController: UICollectionViewDelegate, UICollectionViewDataSo
                         }
                     })
                 } else if currentAttribute == "photos" {
-                    cell.viewPlaceholder!.addSubview(PhotosCardView(photos: [], frame: cell.viewPlaceholder!.frame, currentViewController: self))
+                    cell.viewPlaceholder!.addSubview(PhotosCardView(photos: self.profileImages, frame: cell.viewPlaceholder!.frame, currentViewController: self) {
+                        (photos) in
+                        print("INSIDE OF THE CALLER OF PHOTOS CARD VIEW")
+                        self.profileImages = photos
+                    })
                 }
             }
             // find a way to save the answers from the UIView

@@ -108,6 +108,7 @@ class ImagePickerManager: NSObject, UIImagePickerControllerDelegate, UINavigatio
             alertWarning.show()
         }
     }
+    
     func openGallery() {
         alert.dismiss(animated: true, completion: nil)
         picker.sourceType = .photoLibrary
