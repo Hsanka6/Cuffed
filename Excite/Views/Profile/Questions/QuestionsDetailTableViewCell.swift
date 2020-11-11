@@ -40,12 +40,13 @@ class QuestionsDetailTableViewCell: UITableViewCell {
         userLabel.textAlignment = .left
         userLabel.textColor = UIColor.black
         userLabel.text = freeResponse.question
-        userLabel.numberOfLines = 1
         let userTextField = UILabel()
         userTextField.textColor = UIColor.lightGray
         userTextField.text = freeResponse.answer
+        userTextField.numberOfLines = 2
+        userTextField.font = UIFont.systemFont(ofSize: 15.0)
         
-        stackView.alignment = .leading
+        stackView.alignment = .fill
         stackView.addArrangedSubview(userLabel)
         stackView.spacing = 2
         stackView.axis = .vertical
@@ -58,7 +59,7 @@ class QuestionsDetailTableViewCell: UITableViewCell {
             make.left.equalTo(5)
             make.right.equalTo(-5)
         }
-        
+
         self.stackView = stackView
     }
     

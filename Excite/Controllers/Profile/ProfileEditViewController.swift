@@ -173,7 +173,7 @@ extension ProfileEditViewController: UITableViewDelegate, UITableViewDataSource 
         case .userFamilyPlans:
             return 120
         case .userQuestions:
-           return 250
+           return 300
         }
     }
     func numberOfSections(in tableView: UITableView) -> Int {

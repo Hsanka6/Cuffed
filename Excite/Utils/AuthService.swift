@@ -31,10 +31,7 @@ struct AuthService {
                         print("\(err)")
                     }
                     completion(url)
-//                    NetworkRequesterMock().getUserPhotos(id: "test") { images in
-//                        print("got the first image\(images[0])")
-//                        completion(images)
-//                    }
+
                      
                 }
                

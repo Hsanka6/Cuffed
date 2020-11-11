@@ -84,18 +84,6 @@ class AnswerQuestionViewController: UIViewController {
         answerTF.returnKeyType = UIReturnKeyType.done
         answerTF.clearButtonMode = .whileEditing
         
-             
-        stackView.addArrangedSubview(imageView)
-        let singleTap = UITapGestureRecognizer(target: self, action: #selector(selectImage))
-        imageView.isUserInteractionEnabled = true
-        imageView.addGestureRecognizer(singleTap)
-        imageView.layer.cornerRadius = 15
-        imageView.image = UIImage(named: "user")
-        imageView.clipsToBounds = true
-        imageView.snp.makeConstraints { (make) in
-            make.width.equalToSuperview()
-            make.height.equalTo(imageView.snp.width)
-        }
         
         let editButton = UIBarButtonItem(title: "Save", style: .plain, target: self, action: #selector(action))
         self.navigationItem.rightBarButtonItem  = editButton

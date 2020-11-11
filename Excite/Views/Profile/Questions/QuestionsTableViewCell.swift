@@ -86,7 +86,7 @@ extension QuestionsTableViewCell: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-           return 80
+           return 100
        }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -118,7 +118,7 @@ extension QuestionsTableViewCell: UICollectionViewDelegate, UICollectionViewData
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let width = collectionView.frame.width - 15
-        let height = CGFloat(125) // or what height you want to do
+        let height = CGFloat(150) // or what height you want to do
         return CGSize(width: width, height: height)
     }
 }

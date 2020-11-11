@@ -15,6 +15,7 @@ class ProfileViewController: UIViewController {
     enum ProfileSections: String, CaseIterable {
        case userPhotos
        case userQuestions
+       case userFamilyPlansAndVices
     }
     
     init(viewModel: UserViewModel) {
@@ -46,7 +47,7 @@ class ProfileViewController: UIViewController {
 //        tableView.register(UserTablePersonalityTableViewCell.self, forCellReuseIdentifier: UserTablePersonalityTableViewCell.reuseIdentifier)
 //        tableView.register(UserPrioritiesTableTableViewCell.self, forCellReuseIdentifier: UserPrioritiesTableTableViewCell.reuseIdentifier)
 //        tableView.register(MultipleChoiceTableViewCell.self, forCellReuseIdentifier: MultipleChoiceTableViewCell.reuseIdentifier)
-//        tableView.register(MultipleChoiceTableViewCell.self, forCellReuseIdentifier: MultipleChoiceTableViewCell.newreuseIdentifier)
+        tableView.register(VicesAndFamilyPlansTableViewCell.self, forCellReuseIdentifier: VicesAndFamilyPlansTableViewCell.reuseIdentifier)
         tableView.register(QuestionsTableViewCell.self, forCellReuseIdentifier: QuestionsTableViewCell.profileReuseIdentifier)
         
         
@@ -78,6 +79,8 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
             return 1
         case .userQuestions:
             return 1
+        case .userFamilyPlansAndVices:
+            return 1
         }
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -90,8 +93,17 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
             return cell ?? UITableViewCell()
         case .userQuestions:
             let cell = tableView.dequeueReusableCell(withIdentifier: QuestionsTableViewCell.profileReuseIdentifier, for: indexPath) as? QuestionsTableViewCell
-            if let fr = viewModel.user?.profile?.freeResponse {
-                 cell?.initialize(freeResponse: fr, isTableView: false)
+            if let free = viewModel.user?.profile?.freeResponse {
+                 cell?.initialize(freeResponse: free, isTableView: false)
+            }
+            return cell ?? UITableViewCell()
+        case .userFamilyPlansAndVices:
+            let cell = tableView.dequeueReusableCell(withIdentifier: VicesAndFamilyPlansTableViewCell.reuseIdentifier, for: indexPath) as? VicesAndFamilyPlansTableViewCell
+            if let vices = viewModel.user?.profile?.vices, let familyPlans = viewModel.user?.profile?.familyPlans {
+                var mcs: [MultipleChoiceAnswer] = []
+                mcs.append(contentsOf: vices)
+                mcs.append(contentsOf: familyPlans)
+                cell?.configure(mcAnswers: mcs)
             }
             return cell ?? UITableViewCell()
         }
@@ -101,7 +113,9 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
         case .userPhotos:
            return 350
         case .userQuestions:
-            return 125
+            return 150
+        case .userFamilyPlansAndVices:
+            return 100
         }
     }
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -113,6 +127,8 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
                return 25
            case .userQuestions:
                return 25
+           case .userFamilyPlansAndVices:
+                return 25
            }
     }
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
