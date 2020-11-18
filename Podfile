@@ -17,6 +17,7 @@ target 'Excite' do
   pod 'FBSDKLoginKit'
   pod 'Firebase/Firestore'
   pod 'CodableFirebase'
+  pod 'Firebase/Storage'
   # Optionally, include the Swift extensions if you're using Swift.
   pod 'FirebaseFirestoreSwift'
 

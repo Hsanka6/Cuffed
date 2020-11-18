@@ -12,6 +12,12 @@ import FBSDKLoginKit
 import Firebase
 import FirebaseAuth
 
+// font smaller for questions
+// priority list
+// picking the questions (see figma) freeResponse questions
+// update the Ui
+// error checking
+
 extension UIView {
     var safeArea: ConstraintLayoutGuideDSL {
         return safeAreaLayoutGuide.snp
@@ -137,51 +143,18 @@ extension SignupViewController: UICollectionViewDelegate, UICollectionViewDataSo
                 }
                 else if currentAttribute == "completed" {
                     cell.viewPlaceholder!.addSubview(SignupFinishedCardView(frame: cell.viewPlaceholder!.frame ) {
-                        // SHORTCOMINGS:
-                        
-                        // need to polish UI quite a bit
-                        // need some checks for fields
-                        // need error messages in case signup is fucked up
-                        // need to for conditional next and back buttons upon completion of answerChoice
-                        // need to gather personalDetails info, including latitude and longitude information
-                        // need to convert photos as [UIImage]() to [String] before pushing up to Firebase
-                        // free response questions need to have image attached to them. Currently don't do that
-                        // some values inside of the signup process like profileQuestions shouldnt really be in signup
-                        // so we should actually make Profile be a bit more selective in the constructor and be able to take null arguments
-                        // for certain fields and just probably keep photos, socials, personal Details, family Plans and vices (basically everything except personalityAnswers)
-                        // for free response answers as of RN you can't click on next button and have the field save. you either have to press enter or click outside of the uitextfield to save
-                        // I do not render personalityAnswers inside the Signup
-                        
+//x
                         var photos = [String]()
                         var socials = [SocialProfile]()
                         var freeResponse = [FreeResponse]()
                         var lat = 0 // dummy value
                         var lon = 0 // dummy value
-                        var personalDetails: PersonalDetails
+                        
                         var familyPlans = [MultipleChoiceAnswer]()
                         var vices = [MultipleChoiceAnswer]()
                         var personalityAnswers = [Personality]()
                         for (attribute, questions) in self.questions {
-                            
-                            if attribute=="photos" {
-                                photos.append("dummy-photo-string")
-                                for photo in self.profileImages {
-                                    photos.append("dummy-photo-string")
-                                }
-                                //                if let uploadData = image.pngData() {
-                                //                       storageRef.put(uploadData, metadata: nil) { (metadata, error) in
-                                //                           if error != nil {
-                                //                               print("error")
-                                //                               completion(nil)
-                                //                           } else {
-                                //                               completion((metadata?.downloadURL()?.absoluteString)!))
-                                //                               // your uploaded photo url.
-                                //                           }
-                                //                      }
-                                //                }
-                                
-                                // would need to get the String ID of each image
-                            } else if attribute=="socials" {
+                            if attribute=="socials" {
                                 for question in questions {
                                     socials.append(SocialProfile(platform: question.question, link: question.answerChoice!))
                                 }
@@ -208,8 +181,14 @@ extension SignupViewController: UICollectionViewDelegate, UICollectionViewDataSo
                             }
                         }
                         
-                        personalDetails = PersonalDetails(fullName: self.viewModel!.user!.name , age: 23, height: "", gender: GenderType.MALE, ethnicity: "Filipino", location: "San Diego", jobTitle: "SWE", company: "Two Sigma")
+                        // wait for pictures to upload so we can grab the URLs
                         
+//                        NetworkRequester.updateUserPictures(self.viewModel!.user!.userId, images: self.profileImages, completion: {
+                        let uploadedPhotoURLs: [String] = NetworkRequester.updateUserPictures(self.viewModel!.user!.userId, images: self.profileImages)
+                        for photoURL in uploadedPhotoURLs {
+                            photos.append(photoURL)
+                        }
+                        let personalDetails = PersonalDetails(fullName: self.viewModel!.user!.name , age: 23, height: "", gender: GenderType.MALE, ethnicity: "Filipino", location: "San Diego", jobTitle: "SWE", company: "Two Sigma")
                         self.viewModel?.user?.profile = Profile(photos: photos,
                                                                socials: socials,
                                                                freeResponse: freeResponse,
@@ -219,7 +198,6 @@ extension SignupViewController: UICollectionViewDelegate, UICollectionViewDataSo
                                                                familyPlans: familyPlans,
                                                                vices: vices,
                                                                personalityAnswers: personalityAnswers)
-                        
                         NetworkRequester.updateUser(user: self.viewModel!.user!) {
                             let newViewController = MainTabBarController()
                             newViewController.user = self.viewModel?.user

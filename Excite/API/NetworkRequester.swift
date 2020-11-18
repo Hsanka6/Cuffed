@@ -10,6 +10,7 @@ import Alamofire
 import Firebase
 import FirebaseFirestoreSwift
 import CodableFirebase
+import FirebaseStorage
 
 protocol NetworkRequesterProtocol {
     //func getQuestion(completion: @escaping (Swift.Result<Question, Error>) -> Void)
@@ -56,7 +57,40 @@ class NetworkRequester: NetworkRequesterProtocol {
 //        }
 //    }
 
+    static func storeImages(photo: UIImage, index: Int, userId: String, completion: @escaping (String) -> Void) {
+            guard let imageData = photo.jpegData(compressionQuality: 0.3) else { return }
+        
+           // let filename = NSUUID().uuidString
+            let storage = Storage.storage()
+            let ref = storage.reference(withPath: "/\(userId)/profile_images/\(index)")
+            let result: String
+            ref.putData(imageData, metadata: nil) { (meta, error) in
+                if let error = error {
+                    print("\(error)")
+                    return
+                }
+                ref.downloadURL { (url, error) in
+                    guard let url = url?.absoluteString else { return }
+                    if let err = error {
+                        print("\(err)")
+                    }
+                    print("JAN DEBUG")
+                    print(url)
+                    completion(url)
+                }
+            }
+    }
     
+    static func updateUserPictures(_ id: String, images: [UIImage]) -> [String] {
+        var results = [String]()
+        for (index, image) in images.enumerated() {
+            NetworkRequester.storeImages(photo: image, index: index, userId: id, completion: {
+                photoURL in
+                results.append(photoURL)
+            })
+        }
+        return results
+    }
     func getUser(_ id: String, completion: @escaping(User?) -> Void) {
         Firestore.firestore().collection("Users").document(id).getDocument { (document, error) in
             let result = Result {
