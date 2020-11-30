@@ -81,16 +81,19 @@ class NetworkRequester: NetworkRequesterProtocol {
             }
     }
     
-    static func updateUserPictures(_ id: String, images: [UIImage]) -> [String] {
+    static func updateUserPictures(_ id: String, images: [UIImage], completion: @escaping([String]) -> Void) {
         var results = [String]()
         for (index, image) in images.enumerated() {
             NetworkRequester.storeImages(photo: image, index: index, userId: id, completion: {
                 photoURL in
                 results.append(photoURL)
+                if (index == images.count - 1) {
+                    completion(results)
+                }
             })
         }
-        return results
     }
+    
     func getUser(_ id: String, completion: @escaping(User?) -> Void) {
         Firestore.firestore().collection("Users").document(id).getDocument { (document, error) in
             let result = Result {

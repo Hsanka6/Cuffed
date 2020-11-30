@@ -184,24 +184,24 @@ extension SignupViewController: UICollectionViewDelegate, UICollectionViewDataSo
                         // wait for pictures to upload so we can grab the URLs
                         
 //                        NetworkRequester.updateUserPictures(self.viewModel!.user!.userId, images: self.profileImages, completion: {
-                        let uploadedPhotoURLs: [String] = NetworkRequester.updateUserPictures(self.viewModel!.user!.userId, images: self.profileImages)
-                        for photoURL in uploadedPhotoURLs {
-                            photos.append(photoURL)
-                        }
-                        let personalDetails = PersonalDetails(fullName: self.viewModel!.user!.name , age: 23, height: "", gender: GenderType.MALE, ethnicity: "Filipino", location: "San Diego", jobTitle: "SWE", company: "Two Sigma")
-                        self.viewModel?.user?.profile = Profile(photos: photos,
-                                                               socials: socials,
-                                                               freeResponse: freeResponse,
-                                                               lat: Double(lat),
-                                                               lon: Double(lon),
-                                                               personalDetails: personalDetails,
-                                                               familyPlans: familyPlans,
-                                                               vices: vices,
-                                                               personalityAnswers: personalityAnswers)
-                        NetworkRequester.updateUser(user: self.viewModel!.user!) {
-                            let newViewController = MainTabBarController()
-                            newViewController.user = self.viewModel?.user
-                            self.navigationController?.pushViewController(newViewController, animated: true)
+                        NetworkRequester.updateUserPictures(self.viewModel!.user!.userId, images: self.profileImages) {
+                            uploadedPhotoURLs in
+                            print(uploadedPhotoURLs)
+                            let personalDetails = PersonalDetails(fullName: self.viewModel!.user!.name , age: 23, height: "", gender: GenderType.MALE, ethnicity: "Filipino", location: "San Diego", jobTitle: "SWE", company: "Two Sigma")
+                            self.viewModel?.user?.profile = Profile(photos: uploadedPhotoURLs,
+                                                                   socials: socials,
+                                                                   freeResponse: freeResponse,
+                                                                   lat: Double(lat),
+                                                                   lon: Double(lon),
+                                                                   personalDetails: personalDetails,
+                                                                   familyPlans: familyPlans,
+                                                                   vices: vices,
+                                                                   personalityAnswers: personalityAnswers)
+                            NetworkRequester.updateUser(user: self.viewModel!.user!) {
+                                let newViewController = MainTabBarController()
+                                newViewController.user = self.viewModel?.user
+                                self.navigationController?.pushViewController(newViewController, animated: true)
+                            }
                         }
                     })
                 }
