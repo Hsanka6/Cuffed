@@ -40,7 +40,7 @@ class MainTabBarController: UITabBarController {
         let dateController = FindDateViewController()
         dateController.tabBarItem = UITabBarItem(title: "Find Date", image: UIImage(named: "search-orange"), tag: 0)
 
-        let chatController = ChatViewController()
+        let chatController = ConversationsController()
         chatController.tabBarItem = UITabBarItem(title: "Chat", image: UIImage(named: "chat-orange"), tag: 0)
 
         let profileController = ProfileViewController(viewModel: viewModel)
