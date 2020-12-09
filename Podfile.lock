@@ -291,6 +291,7 @@ PODS:
     - nanopb (~> 0.3)
   - gRPC-Core/Interface (1.21.0)
   - GTMSessionFetcher/Core (1.4.0)
+  - JGProgressHUD (2.0.4)
   - Kingfisher (5.14.1):
     - Kingfisher/Core (= 5.14.1)
   - Kingfisher/Core (5.14.1)
@@ -305,6 +306,9 @@ PODS:
     - MarqueeLabel (~> 4.0.0)
     - SnapKit (~> 5.0.0)
   - PromisesObjC (1.2.8)
+  - SDWebImage (4.4.8):
+    - SDWebImage/Core (= 4.4.8)
+  - SDWebImage/Core (4.4.8)
   - SnapKit (5.0.1)
   - SwiftLint (0.39.2)
   - TwilioVideo (3.2.5)
@@ -314,11 +318,14 @@ DEPENDENCIES:
   - FBSDKLoginKit
   - Firebase/Analytics
   - Firebase/Auth
+  - Firebase/Core
   - Firebase/Firestore
   - Firebase/Storage
   - FirebaseFirestoreSwift
+  - JGProgressHUD (~> 2.0.3)
   - Kingfisher (~> 5.0)
   - NotificationBannerSwift (~> 3.0.0)
+  - SDWebImage (~> 4.4.2)
   - SnapKit (~> 5.0.0)
   - SwiftLint
   - TwilioVideo (~> 3.2)
@@ -349,12 +356,14 @@ SPEC REPOS:
     - "gRPC-C++"
     - gRPC-Core
     - GTMSessionFetcher
+    - JGProgressHUD
     - Kingfisher
     - leveldb-library
     - MarqueeLabel
     - nanopb
     - NotificationBannerSwift
     - PromisesObjC
+    - SDWebImage
     - SnapKit
     - SwiftLint
     - TwilioVideo
@@ -384,16 +393,18 @@ SPEC CHECKSUMS:
   "gRPC-C++": 9dfe7b44821e7b3e44aacad2af29d2c21f7cde83
   gRPC-Core: c9aef9a261a1247e881b18059b84d597293c9947
   GTMSessionFetcher: 6f5c8abbab8a9bce4bb3f057e317728ec6182b10
+  JGProgressHUD: 62658b14e72cccf179efc7a13bcb54d30b92fc22
   Kingfisher: 8050bc6f7f68cbf3908bd04df7ccbac188f6d6d6
   leveldb-library: 55d93ee664b4007aac644a782d11da33fba316f7
   MarqueeLabel: f762aa681ae201f66c1d511858b171f75d83013a
   nanopb: 18003b5e52dab79db540fe93fe9579f399bd1ccd
   NotificationBannerSwift: 713e20f21b6105f4a36a00e5d9fa414a930d3d8e
   PromisesObjC: c119f3cd559f50b7ae681fa59dc1acd19173b7e6
+  SDWebImage: 783af2c3fa36291a250030c4752ee370a9a51d13
   SnapKit: 97b92857e3df3a0c71833cce143274bf6ef8e5eb
   SwiftLint: 22ccbbe3b8008684be5955693bab135e0ed6a447
   TwilioVideo: dec31712aab578a783703c8f699c838bea4adf06
 
-PODFILE CHECKSUM: ddbe564a5fee6ba1a7508c5be6eb43564cffab7e
+PODFILE CHECKSUM: df4ef50de168f66c24049c82a859aa71f291ca5e
 
-COCOAPODS: 1.9.1
+COCOAPODS: 1.9.3

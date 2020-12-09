@@ -7,6 +7,17 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		454887852558F92900AE305A /* ChatController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454887842558F92900AE305A /* ChatController.swift */; };
+		4548878A2558F95700AE305A /* ConversationsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454887892558F95700AE305A /* ConversationsController.swift */; };
+		4548878F2558F97100AE305A /* NewMessageController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4548878E2558F97100AE305A /* NewMessageController.swift */; };
+		4548879B2558FA4300AE305A /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4548879A2558FA4300AE305A /* Message.swift */; };
+		454887B62558FDF500AE305A /* MessageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454887B52558FDF500AE305A /* MessageViewModel.swift */; };
+		454887D52559001600AE305A /* InputContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454887D02559001600AE305A /* InputContainerView.swift */; };
+		454887D62559001600AE305A /* MessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454887D12559001600AE305A /* MessageCell.swift */; };
+		454887D72559001600AE305A /* UserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454887D22559001600AE305A /* UserCell.swift */; };
+		454887D82559001600AE305A /* CustomInputAccessoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454887D32559001600AE305A /* CustomInputAccessoryView.swift */; };
+		454887D92559001600AE305A /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454887D42559001600AE305A /* CustomTextField.swift */; };
+		454887DE255901C400AE305A /* Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454887DD255901C400AE305A /* Service.swift */; };
 		66073770D1998960A838C853 /* Pods_Excite_ExciteUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AD0C498F7288D75FF03593DB /* Pods_Excite_ExciteUITests.framework */; };
 		7001141D2502390E0023CA21 /* MultipleChoiceCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7001141C2502390E0023CA21 /* MultipleChoiceCollectionViewCell.swift */; };
 		700F6B8D24C04D3E008C891F /* ProfileEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 700F6B8C24C04D3E008C891F /* ProfileEditViewController.swift */; };
@@ -77,6 +88,17 @@
 
 /* Begin PBXFileReference section */
 		14F3440FD214E137E869D5F5 /* Pods_ExciteTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ExciteTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		454887842558F92900AE305A /* ChatController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatController.swift; sourceTree = "<group>"; };
+		454887892558F95700AE305A /* ConversationsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConversationsController.swift; sourceTree = "<group>"; };
+		4548878E2558F97100AE305A /* NewMessageController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewMessageController.swift; sourceTree = "<group>"; };
+		4548879A2558FA4300AE305A /* Message.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
+		454887B52558FDF500AE305A /* MessageViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageViewModel.swift; sourceTree = "<group>"; };
+		454887D02559001600AE305A /* InputContainerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputContainerView.swift; sourceTree = "<group>"; };
+		454887D12559001600AE305A /* MessageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageCell.swift; sourceTree = "<group>"; };
+		454887D22559001600AE305A /* UserCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserCell.swift; sourceTree = "<group>"; };
+		454887D32559001600AE305A /* CustomInputAccessoryView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomInputAccessoryView.swift; sourceTree = "<group>"; };
+		454887D42559001600AE305A /* CustomTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
+		454887DD255901C400AE305A /* Service.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Service.swift; sourceTree = "<group>"; };
 		4B3112B2EAD0500421CCA693 /* Pods_Excite.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Excite.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7001141C2502390E0023CA21 /* MultipleChoiceCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultipleChoiceCollectionViewCell.swift; sourceTree = "<group>"; };
 		700F6B8C24C04D3E008C891F /* ProfileEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileEditViewController.swift; sourceTree = "<group>"; };
@@ -167,6 +189,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		454887CF2558FFBC00AE305A /* Messaging */ = {
+			isa = PBXGroup;
+			children = (
+				454887D32559001600AE305A /* CustomInputAccessoryView.swift */,
+				454887D42559001600AE305A /* CustomTextField.swift */,
+				454887D02559001600AE305A /* InputContainerView.swift */,
+				454887D12559001600AE305A /* MessageCell.swift */,
+			);
+			path = Messaging;
+			sourceTree = "<group>";
+		};
 		701F1CD6249D6FBB0096B564 /* DatingAudioVideoControllers */ = {
 			isa = PBXGroup;
 			children = (
@@ -192,6 +225,9 @@
 				70521E1524FB93D400847629 /* Profile */,
 				70AA64CA247F6C2600F56CB3 /* MainTabBarController.swift */,
 				70AA64CE247F6D4E00F56CB3 /* ChatViewController.swift */,
+				454887892558F95700AE305A /* ConversationsController.swift */,
+				4548878E2558F97100AE305A /* NewMessageController.swift */,
+				454887842558F92900AE305A /* ChatController.swift */,
 				70AA64CC247F6D0300F56CB3 /* FindDateViewController.swift */,
 				701F1CD6249D6FBB0096B564 /* DatingAudioVideoControllers */,
 				70CDFC4324FCEF380068CF37 /* EditChoiceViewController.swift */,
@@ -202,6 +238,7 @@
 		7032880B24F658A2002228ED /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				4548879A2558FA4300AE305A /* Message.swift */,
 				703FBBD52481E5C400438F94 /* Models.swift */,
 			);
 			path = Models;
@@ -210,6 +247,8 @@
 		7032880C24F658CE002228ED /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				454887D22559001600AE305A /* UserCell.swift */,
+				454887CF2558FFBC00AE305A /* Messaging */,
 				EC3F87F22519B42B00B31446 /* Signup */,
 				70C52B7324BA4011002CFFEA /* Profile */,
 				70CDFC4124FCC6680068CF37 /* MultipleChoiceButton.swift */,
@@ -223,6 +262,7 @@
 				EC3F87EA2519B27800B31446 /* Authentication */,
 				EC3F87E92519B27000B31446 /* Signup */,
 				709B2C3C24C2B40E008BA374 /* UserViewModel.swift */,
+				454887B52558FDF500AE305A /* MessageViewModel.swift */,
 				708DE8A1253AE3D5004B3735 /* EditChoiceViewModel.swift */,
 			);
 			path = ViewModels;
@@ -245,6 +285,7 @@
 				EC4F636E24C6BCFD00477779 /* Barcelony.ttf */,
 				70FB575D2481D8F900CB24C4 /* Extensions.swift */,
 				7010798024A6C9C300E640B9 /* Settings.swift */,
+				454887DD255901C400AE305A /* Service.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -662,9 +703,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4548878F2558F97100AE305A /* NewMessageController.swift in Sources */,
+				454887D82559001600AE305A /* CustomInputAccessoryView.swift in Sources */,
 				7043B30E24EE6BD200F1FD89 /* UserPersonalityTableViewCell.swift in Sources */,
 				7001141D2502390E0023CA21 /* MultipleChoiceCollectionViewCell.swift in Sources */,
+				4548878A2558F95700AE305A /* ConversationsController.swift in Sources */,
 				709B2C4124C2B737008BA374 /* ProfilePhotosCell.swift in Sources */,
+				454887D52559001600AE305A /* InputContainerView.swift in Sources */,
 				709C394E24F398EA00D8F7E9 /* MultipleChoiceCellTableViewCell.swift in Sources */,
 				70A3AC4D24C3A98A008BB1FF /* UserDetailTableViewCell.swift in Sources */,
 				70A3AC4B24C3A8E7008BB1FF /* UserTableTableViewCell.swift in Sources */,
@@ -678,23 +723,30 @@
 				70AA64CB247F6C2600F56CB3 /* MainTabBarController.swift in Sources */,
 				70FB575E2481D8F900CB24C4 /* Extensions.swift in Sources */,
 				70AA64CD247F6D0300F56CB3 /* FindDateViewController.swift in Sources */,
+				454887D92559001600AE305A /* CustomTextField.swift in Sources */,
 				70AA64D52481D5C100F56CB3 /* ProfileViewController.swift in Sources */,
 				7048578424F36A6B00F47A31 /* UserPrioritiesTableTableViewCell.swift in Sources */,
 				703FBBD62481E5C400438F94 /* Models.swift in Sources */,
 				7032881624F7AAC9002228ED /* QuestionCollectionViewCell.swift in Sources */,
+				454887852558F92900AE305A /* ChatController.swift in Sources */,
 				70AA64CF247F6D4E00F56CB3 /* ChatViewController.swift in Sources */,
 				7010798324A6CC1F00E640B9 /* DatingAudioVideoViewControllerExtensions.swift in Sources */,
+				454887D62559001600AE305A /* MessageCell.swift in Sources */,
 				EC3F87F42519B43E00B31446 /* SignupCollectionViewCell.swift in Sources */,
 				EC3F87F12519B3F500B31446 /* SignupViewController.swift in Sources */,
+				4548879B2558FA4300AE305A /* Message.swift in Sources */,
 				709B2C3D24C2B40E008BA374 /* UserViewModel.swift in Sources */,
+				454887B62558FDF500AE305A /* MessageViewModel.swift in Sources */,
 				701F1CD8249D70080096B564 /* DatingAudioVideoViewController.swift in Sources */,
 				70CDFC4224FCC6680068CF37 /* MultipleChoiceButton.swift in Sources */,
+				454887D72559001600AE305A /* UserCell.swift in Sources */,
 				708DE8A2253AE3D5004B3735 /* EditChoiceViewModel.swift in Sources */,
 				7032881424F7A9C6002228ED /* BrowseQuestionsViewController.swift in Sources */,
 				7010798124A6C9C300E640B9 /* Settings.swift in Sources */,
 				700F6B8D24C04D3E008C891F /* ProfileEditViewController.swift in Sources */,
 				705D27162521418100567D20 /* AuthService.swift in Sources */,
 				EC3F87EC2519B29900B31446 /* SignupViewModel.swift in Sources */,
+				454887DE255901C400AE305A /* Service.swift in Sources */,
 				7054D59A245F7507007DA9BA /* SceneDelegate.swift in Sources */,
 				7032880F24F65A8E002228ED /* QuestionsTableViewCell.swift in Sources */,
 				7043B30C24EE6A1B00F1FD89 /* UserTablePersonalityTableViewCell.swift in Sources */,
