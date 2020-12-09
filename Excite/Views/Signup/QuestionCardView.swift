@@ -69,7 +69,6 @@ class QuestionCardView: UIView {
                 make.height.equalTo(80)
                 make.center.equalToSuperview()
             }
-            
         }
     }
     

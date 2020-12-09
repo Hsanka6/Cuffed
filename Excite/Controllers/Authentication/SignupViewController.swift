@@ -19,13 +19,15 @@ import FirebaseAuth
 // error checking
 
 // since the input of each cell is vastly different, you're going to need to need to add a couple more cells to the collectionView.
-// - priority list
-// - user details (render a static list [not on firebase] of full name input, gender, height, age, and ethnicity)
-// - question picker that picks from a list of questions
-// - the sliders for user personality values
 
 // right now, all it does it renders a cell based on a question input it takes (line 138), or if it is a photos cell, or if it's a "completed" cell
 
+// instead of questioncardview
+
+// - priority list
+// - personal details (render a static list [not on firebase] of full name input, gender, height, age, and ethnicity)
+// - question picker that picks from a list of questions
+// - the sliders for user personality values
 
 extension UIView {
     var safeArea: ConstraintLayoutGuideDSL {
@@ -63,6 +65,10 @@ class SignupViewController: UIViewController {
         self.constructBackground()
         
         self.collectionViewCells = [UIView]()
+        
+        // cells = ["familyPlans" , "vices" .. ]
+        //
+        
         self.viewModel = SignupViewModel(currentUser)
         // use network requester class to pull in a list of questions per category. (see self.acceptedAttributes)
         NetworkRequester.getProfileQuestions { (questions) in
@@ -132,15 +138,24 @@ extension SignupViewController: UICollectionViewDelegate, UICollectionViewDataSo
         return self.questionsFlat.count
     }
     
+    //
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CardViewCell.reuseIdentifier, for: indexPath) as? CardViewCell {
             let currentAttribute = self.questionsFlat[indexPath.row].0
             let currentQuestion = self.questionsFlat[indexPath.row].1
             cell.initialize()
             DispatchQueue.main.async {
-                        
-                if self.acceptedAttributes.contains(currentAttribute), let question = currentQuestion as? SignupModels.Question {
+                    
+                //
+                // if cell[indexPath.row] == "vices"
+                // switch
+                // cell.viewPlaceholder.addSubview(vicesSubView ... ) { preserve user input } 
+                
+                // like Profile Edit View controller
+                
+                if self.acceptedAttributes.contains(currentAttribute), let question = currentQuestion as? SignupModels.Question { // saving the input
                     // we'll want to generalize the UIViews here to also render sliding personality question, then the priority list, then the question Picker
+                    // cell.viewPlaceholder!.addSubview(PriorityListView)
                     cell.viewPlaceholder!.addSubview(QuestionCardView(for: currentAttribute, question: question, frame: cell.viewPlaceholder!.frame) {(updatedQuestion) in
                         for (attribute, question) in self.questionsFlat {
                             if attribute==currentAttribute && question?.id==updatedQuestion.id {
@@ -150,6 +165,7 @@ extension SignupViewController: UICollectionViewDelegate, UICollectionViewDataSo
                         }
                     })
                 }
+                    
                 // if the current slide is photos (it will always be second to last)
                 else if currentAttribute == "photos" {
                     cell.viewPlaceholder!.addSubview(PhotosCardView(photos: self.profileImages, frame: cell.viewPlaceholder!.frame, currentViewController: self) { (photos) in
@@ -220,6 +236,7 @@ extension SignupViewController: UICollectionViewDelegate, UICollectionViewDataSo
                     })
                 }
             }
+            //CardViewCell
             cell.nextButtonAction = {
                 var visibleRect    = CGRect()
                 visibleRect.origin = self.collectionView.contentOffset
