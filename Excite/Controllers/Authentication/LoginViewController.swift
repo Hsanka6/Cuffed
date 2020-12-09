@@ -84,19 +84,20 @@ class LoginViewController: UIViewController, LoginButtonDelegate {
         }
     }
     
-    // sign in assigns the viewModel's currentUser object
+    // we log in to Facebook here using FacebookAuthProvider
     func redirect() {
         let credential = FacebookAuthProvider.credential(withAccessToken: AccessToken.current!.tokenString)
         
         Auth.auth().signIn(with: credential) { (authResult, error) in
             guard let authResult = authResult else { print(error); return }
             let firUser = authResult.user
+            // if we find a user in our database with the ID returned that has a profile associated with that ID, we'll log them in
+            // otherwise, we'll register them
             NetworkRequester().getUser(firUser.uid) { (user) in
                 self.viewModel.currentUser = user
                 if self.viewModel.completeUser() {
                     let newViewController = MainTabBarController()
-                    // do something like:
-                    // newViewController.currentUser = self.viewModel.currentUser
+                    newViewController.user = self.viewModel.currentUser;
                     self.navigationController?.pushViewController(newViewController, animated: false)
                 } else {
                     self.viewModel.currentUser = User(firebaseUser: firUser)

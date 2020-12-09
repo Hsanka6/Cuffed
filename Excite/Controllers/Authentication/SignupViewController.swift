@@ -18,6 +18,15 @@ import FirebaseAuth
 // update the Ui
 // error checking
 
+// since the input of each cell is vastly different, you're going to need to need to add a couple more cells to the collectionView.
+// - priority list
+// - user details (render a static list [not on firebase] of full name input, gender, height, age, and ethnicity)
+// - question picker that picks from a list of questions
+// - the sliders for user personality values
+
+// right now, all it does it renders a cell based on a question input it takes (line 138), or if it is a photos cell, or if it's a "completed" cell
+
+
 extension UIView {
     var safeArea: ConstraintLayoutGuideDSL {
         return safeAreaLayoutGuide.snp
@@ -55,6 +64,7 @@ class SignupViewController: UIViewController {
         
         self.collectionViewCells = [UIView]()
         self.viewModel = SignupViewModel(currentUser)
+        // use network requester class to pull in a list of questions per category. (see self.acceptedAttributes)
         NetworkRequester.getProfileQuestions { (questions) in
             self.questions = questions
             for (attribute, arrayOfQuestions) in self.questions {
@@ -64,6 +74,8 @@ class SignupViewController: UIViewController {
             }
             self.questionsFlat.append(("photos", nil))
             self.questionsFlat.append(("completed", nil))
+            // here, we create the collectionView that will be used to render each cell.
+            // where we will be using the questionsFlat array as a data structure to determine which cell to render
             self.createCollectionView()
             self.collectionView.reloadData()
         }
@@ -128,6 +140,7 @@ extension SignupViewController: UICollectionViewDelegate, UICollectionViewDataSo
             DispatchQueue.main.async {
                         
                 if self.acceptedAttributes.contains(currentAttribute), let question = currentQuestion as? SignupModels.Question {
+                    // we'll want to generalize the UIViews here to also render sliding personality question, then the priority list, then the question Picker
                     cell.viewPlaceholder!.addSubview(QuestionCardView(for: currentAttribute, question: question, frame: cell.viewPlaceholder!.frame) {(updatedQuestion) in
                         for (attribute, question) in self.questionsFlat {
                             if attribute==currentAttribute && question?.id==updatedQuestion.id {
@@ -136,12 +149,17 @@ extension SignupViewController: UICollectionViewDelegate, UICollectionViewDataSo
                             }
                         }
                     })
-                } else if currentAttribute == "photos" {
+                }
+                // if the current slide is photos (it will always be second to last)
+                else if currentAttribute == "photos" {
                     cell.viewPlaceholder!.addSubview(PhotosCardView(photos: self.profileImages, frame: cell.viewPlaceholder!.frame, currentViewController: self) { (photos) in
                         self.profileImages = photos
                     })
                 }
+                // will be the last
                 else if currentAttribute == "completed" {
+                    // passes in a closure that is a button action that whn the Completed button is pressed, it will take  up all of the values inside of the underlying
+                    // data inside of the array and then push it all up to Firebase
                     cell.viewPlaceholder!.addSubview(SignupFinishedCardView(frame: cell.viewPlaceholder!.frame ) {
 //x
                         var photos = [String]()
@@ -181,12 +199,8 @@ extension SignupViewController: UICollectionViewDelegate, UICollectionViewDataSo
                             }
                         }
                         
-                        // wait for pictures to upload so we can grab the URLs
-                        
-//                        NetworkRequester.updateUserPictures(self.viewModel!.user!.userId, images: self.profileImages, completion: {
                         NetworkRequester.updateUserPictures(self.viewModel!.user!.userId, images: self.profileImages) {
                             uploadedPhotoURLs in
-                            print(uploadedPhotoURLs)
                             let personalDetails = PersonalDetails(fullName: self.viewModel!.user!.name , age: 23, height: "", gender: GenderType.MALE, ethnicity: "Filipino", location: "San Diego", jobTitle: "SWE", company: "Two Sigma")
                             self.viewModel?.user?.profile = Profile(photos: uploadedPhotoURLs,
                                                                    socials: socials,
